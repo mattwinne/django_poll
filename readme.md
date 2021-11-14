@@ -1,1 +1,1 @@
-#django_poll Poll application from Django tutorial
+#django_poll Poll application from Django tutorial.
