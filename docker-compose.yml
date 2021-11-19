@@ -13,11 +13,27 @@ services:
 
   django:
     container_name: django
-    build: .
+    build:
+      context: .
+      dockerfile: conf/django/Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app:rw
+      - ./back:/app:rw
     ports:
       - "8000:8000"
     depends_on:
       - postgres
+    env_file:
+      - .env
+
+  react:
+    container_name: react
+    build:
+      context: .
+      dockerfile: ./conf/react/Dockerfile
+    command: yarn run start:dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./front/src:/app/src:rw
+      - ./front/public:/app/public:rw
