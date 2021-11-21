@@ -35,11 +35,16 @@ const Dashboard = () => {
   );
 
   return (
+
+    
     <div>
       Hello from the dashboard.
       <br />
       {displayResults()}
+      <h1>What's up</h1>
+
     </div>
+
   );
 };
 

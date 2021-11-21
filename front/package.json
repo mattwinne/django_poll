@@ -34,7 +34,8 @@
     "node-sass": "4.14.1",
     "prop-types": "^15.7.2",
     "autoprefixer": "^9.5.1",
-    "@fortawesome/react-fontawesome": "0.1.9"
+    "@fortawesome/react-fontawesome": "0.1.9",
+    "styled-components":"^5.3.3"
   },
   "devDependencies": {
     "webpack-cli": "^3.3.2",
