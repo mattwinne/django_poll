@@ -27,7 +27,7 @@ const Dashboard = () => {
       }
     };
     fetchHelloWorld();
-  }, []);0
+  }, []);
 
   // If there is an error show that otherwise the data
   const displayResults = () => (

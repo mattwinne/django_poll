@@ -1,28 +1,49 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link,
+        useLocation
+} from 'react-router-dom';
+import useQuestions from "components/Questions"
+import useChoices from "components/Choices"
 
 const Detail = () => {
-    const question = ("What is the best metal band of all time?")
-    const choices = ["Judas Priest", "Black Sabbath", "Iron Maiden", "Pantera"]
+    const location = useLocation()
+    const pathID = location.pathname.slice(-1);
+    const question = useQuestions().filter((q)=>{
+        return q.id == pathID
+    });
+    const choices = useChoices().filter((c)=>{
+        return c.question == pathID
+    });
+
 
     return (
     <div> 
-        <h1 style={{color: "blue", fontSize: "32px"}}>{question}</h1>
-        {
+     
+    <h1 style={{color: "blue", fontSize: "32px"}}>Polls</h1>
+
+    {question.length > 0 ? (
+            question.map((item) => (
+                <li><h1 style={{color: "black", fontSize: "18px"}}>{item.text}</h1>	</li>))
+        ) : (
+                <h2 style={{color: "black", fontSize: "10px"}}> ...loading questions</h2>
+        )}
+    <form>
+    {choices.length > 0 ? (
+            choices.map((item) => (
+                <h1 style={{color: "black", fontSize: "14px"}}> 
+                <input type="radio" value={item.text} name="choice" />{item.text}</h1>))
+        ) : (
+                <h2 style={{color: "black", fontSize: "10px"}}> ...loading poll</h2>
+        )}
+
         
-        choices.map(choice =>
-            <h1 style={{color: "black", fontSize: "16px"}}> <input type="radio" value={choice} name="gender" />{choice}</h1>
-                   )
-        }
+    <Link to="/results">
+            <button type="submit">Vote</button>
+    </Link>
+    </form>
+    <br></br>
 
-        <Link to="/results">
-            <button type="button">
-                Vote
-            </button>
-        </Link>
-<br></br>
-<h1 style={{color: "blue", fontSize: "16px"}}><Link to={'/index'}>Back to polls</Link></h1>
-
+    <h1 style={{color: "blue", fontSize: "12px"}}><Link to={'/index'}>Back to polls</Link></h1>
 
     </div>
             )

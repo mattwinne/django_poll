@@ -16,10 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from mysite3 import settings
-from mysite3.views import hello_world
+from mysite3.views import (
+    hello_world,
+    q_list,
+    QuestionViewSet,
+    ChoiceViewSet
+)
+from rest_framework.routers import DefaultRouter
 
+router = DefaultRouter()
+router.register(r'api/questions', QuestionViewSet, basename='questions')
+router.register(r'api/choices', ChoiceViewSet, basename='choices')
 urlpatterns = [
     path("polls/", include("polls.urls")),
     path("admin/", admin.site.urls),
+    path("api/q_list/", q_list, name="q_list"),
     path("api/hello_world/", hello_world, name="hello_world"),
 ]
+urlpatterns += router.urls
