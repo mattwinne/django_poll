@@ -3,6 +3,7 @@ import Dashboard from "components/Dashboard";
 import Index from "components/Index";
 import Detail from "components/Detail";
 import Results from "components/Results";
+import Example from "components/Example";
 import React from "react";
 
 const App = () => (
@@ -11,6 +12,8 @@ const App = () => (
       <Route path="/index" component={Index} />
       <Route path="/detail" component={Detail} />
       <Route path="/results" component={Results} />
+      <Route path="/example" component={Example} />
+
   </Router>
 );
 
