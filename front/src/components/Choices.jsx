@@ -7,10 +7,8 @@ export default function useChoices() {
 		fetch("/api/choices/")
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data)
 				setChoices(data)
 			})
 	}, [])
-console.log(choices)
 	return choices
 }

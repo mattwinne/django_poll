@@ -1,37 +1,32 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React, {useState} from "react";
+import { Link,
+        useLocation
+} from 'react-router-dom';
+import useQuestions from "components/Questions"
+import useChoices from "components/Choices"
 
 const Results = () => {
-    const question = ("What is the best metal band of all time?")
-    const results = [
-        {
-            votes: 7,
-            text: "Judas Priest",
-        },
-        { 
-            votes:2,
-            text: "Black Sabbath",
-            isCompleted: true
-        },
-        {
-            votes:1,
-            text: "Iron Maiden",
-            
-        },
-        {
-            votes:4,
-            text: "Pantera",
-            
-        }
-    ]
-    console.log(results.text);
+    const location = useLocation()
+    const pathID = location.pathname.slice(-1);
+    const question = useQuestions().filter((q)=>{
+        return q.id == pathID
+    });
+    const results = useChoices().filter((c)=>{
+        return c.question == pathID
+    });
+
     return (
        
  <div>
-     <h1 style={{color: "blue", fontSize: "32px"}}>{question}</h1>
+    {question.length > 0 ? (
+            question.map((item) => (
+                <li><h1 style={{color: "blue", fontSize: "18px"}}>{item.text}</h1>	</li>))
+        ) : (
+                <h2 style={{color: "black", fontSize: "10px"}}> ...loading questions</h2>
+        )}
      {
           results.map(result => 
-            <h1 style={{color: "black", fontSize: "16px"}}>{result.text} {result.votes} votes</h1>)
+            <li style={{color: "black", fontSize: "16px"}}>{result.text} --  {result.votes} votes</li>)
         }
 
 
