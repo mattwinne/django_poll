@@ -1,19 +1,16 @@
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import Dashboard from "components/Dashboard";
-import Index from "components/Index";
 import Detail from "components/Detail";
-import Results from "components/Results";
-import Example from "components/Example";
+import Index from "components/Index";
 import React from "react";
+import Results from "components/Results";
 
 const App = () => (
   <Router>
     <Route exact path="/" component={Dashboard} />
-      <Route path="/index" component={Index} />
-      <Route path="/detail" component={Detail} />
-      <Route path="/results" component={Results} />
-      <Route path="/example" component={Example} />
-
+    <Route path="/index" component={Index} />
+    <Route path="/detail" component={Detail} />
+    <Route path="/results" component={Results} />
   </Router>
 );
 
