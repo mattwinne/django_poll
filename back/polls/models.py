@@ -24,7 +24,7 @@ class Question(models.Model):
 
 class Choice(models.Model):
     id = models.BigAutoField(primary_key=True)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
