@@ -8,8 +8,6 @@ const Detail = () => {
 
   const pageQuestion = useQuestions(pathID);
   const pageChoices = pageQuestion["choices"];
-  console.log(pageQuestion)
-  console.log(pageChoices)
 
   const [radio, setRadio] = useState([]);
 
@@ -33,14 +31,11 @@ const Detail = () => {
     });
   };
 
-
   return (
     <>
-      {console.log("return portion")}
-        <h1 style={{ color: "blue", fontSize: "18px" }}>{pageQuestion.text}</h1>
+      <h1 style={{ color: "blue", fontSize: "18px" }}>{pageQuestion.text}</h1>
 
-      {/* This code breaks it because pageChoices is undefined at the moment the code is read 
-      {pageChoices.map((item) => (
+      {pageChoices ? pageChoices.map((item) => (
         <li style={{ color: "black", fontSize: "16px" }}>
           <input
             type="radio"
@@ -48,14 +43,15 @@ const Detail = () => {
             name="choice"
             onChange={(e) => {
               setRadio(e.target.value);
+              console.log(e.target.value)
             }}
           />
           {item.text}
         </li>
-      ))} 
-      {!pageChoices.length && (
+      )) : console.log("nope")} 
+      {/* {!pageChoices.length && (
         <h2 style={{ color: "black", fontSize: "10px" }}> ...loading poll</h2>
-      )}*/}
+      )} */}
 
       <br />
 

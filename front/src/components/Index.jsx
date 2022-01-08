@@ -5,17 +5,18 @@ import useQuestions from "components/Questions";
 // that it displays the five latest polls.
 const Index = () => {
   const questions = useQuestions();
+  console.log(questions)
   const listQuestion = (item) => {
     const pollHeader = `-${item.id}:${item.text}`;
     const publishDate = `Published: ${item.pubDate}`;
 
-    return (
-      <li>
-        <h1 style={{ color: "black", fontSize: "16px" }}>
-          <Link to={`/detail/${item.id}`}>{pollHeader}</Link>
-        </h1>
-        <h2 style={{ color: "black", fontSize: "10px" }}>{publishDate}</h2>
-      </li>
+  return (
+    <li>
+      <h1 style={{ color: "black", fontSize: "16px" }}>
+        <Link to={`/detail/${item.id}`}>{pollHeader}</Link>
+      </h1>
+      <h2 style={{ color: "black", fontSize: "10px" }}>{publishDate}</h2>
+    </li>
     );
   };
   const noQuestions = () => (
