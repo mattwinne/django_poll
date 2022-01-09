@@ -9,21 +9,16 @@ const Detail = () => {
   const pageQuestion = useQuestions(pathID);
   const pageChoices = pageQuestion["choices"];
 
+
   const [radio, setRadio] = useState([]);
 
   const updateVote = () => {
-    const newData = {
-      id: parseInt(radio[0], 10),
-      votes: parseInt(radio[2], 10) + 1,
-    };
-
-    fetch(`/api/choices/${radio[0]}/`, {
-      method: "PATCH",
+    fetch(`/api/up_vote/${radio}/`, {
+      method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newData),
+      }
     }).then((result) => {
       result.json().then(() => {
         window.location.replace(`/results/${pathID}`);
@@ -39,7 +34,7 @@ const Detail = () => {
         <li style={{ color: "black", fontSize: "16px" }}>
           <input
             type="radio"
-            value={[item.id, item.votes]}
+            value={item.id}
             name="choice"
             onChange={(e) => {
               setRadio(e.target.value);

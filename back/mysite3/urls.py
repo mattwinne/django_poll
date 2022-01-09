@@ -19,6 +19,7 @@ from mysite3 import settings
 from mysite3.views import (
     hello_world,
     q_list,
+    up_vote,
     QuestionViewSet,
     ChoiceViewSet
 )
@@ -31,5 +32,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/q_list/", q_list, name="q_list"),
     path("api/hello_world/", hello_world, name="hello_world"),
+    path("api/up_vote/<int:choice_id>/", up_vote, name="up_vote"),
 ]
 urlpatterns += router.urls
