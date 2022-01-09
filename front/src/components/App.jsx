@@ -7,7 +7,7 @@ import Results from "components/Results";
 
 const App = () => (
   <Router>
-    <Route exact path="/" component={Dashboard} />
+    <Route exact path="/" component={Index} />
     <Route path="/index" component={Index} />
     <Route path="/detail" component={Detail} />
     <Route path="/results" component={Results} />

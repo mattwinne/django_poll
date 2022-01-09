@@ -5,15 +5,13 @@ export default function useQuestions(id) {
   
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
-      const baseURL = "/api/questions/";
-      const URL = id ? `${baseURL}${id}` : baseURL;
-      console.log("URL:" + URL)
-      fetch(URL)
-       .then((response) => response.json())
-       .then((data) => {
-         console.log("data: " + data)
-          setQuestions(data);
-       });
+    const baseURL = "/api/questions/";
+    const URL = id ? `${baseURL}${id}` : baseURL;
+    fetch(URL)
+      .then((response) => response.json())
+      .then((data) => {
+        setQuestions(data);
+      });
   }, [id]);
 
 return questions;

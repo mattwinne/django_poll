@@ -5,27 +5,25 @@ import useQuestions from "components/Questions";
 // that it displays the five latest polls.
 const Index = () => {
   const questions = useQuestions();
-  console.log(questions)
   const listQuestion = (item) => {
-    const pollHeader = `-${item.id}:${item.text}`;
+    const pollHeader = `- ${item.text}`;
     const publishDate = `Published: ${item.pubDate}`;
-
-  return (
-    <li>
-      <h1 style={{ color: "black", fontSize: "16px" }}>
-        <Link to={`/detail/${item.id}`}>{pollHeader}</Link>
-      </h1>
-      <h2 style={{ color: "black", fontSize: "10px" }}>{publishDate}</h2>
-    </li>
+    return (
+      <>
+        <h1 style={{ color: "black", fontSize: "16px" }}>
+          <Link to={`/detail/${item.id}`}>{pollHeader}</Link>
+        </h1>
+        <h2 style={{ color: "black", fontSize: "10px" }}>{publishDate}</h2>
+      </>
+      );
+    };
+    const noQuestions = () => (
+      <h2 style={{ color: "black", fontSize: "10px" }}>...loading questions</h2>
     );
-  };
-  const noQuestions = () => (
-    <h2 style={{ color: "black", fontSize: "10px" }}>...loading questions</h2>
-  );
 
   return (
     <>
-      <h1 style={{ color: "blue", fontSize: "32px" }}>Polls</h1>
+      <h1 style={{ color: "blue", fontSize: "18px" }}>Polls</h1>
       {questions.length > 0
         ? questions.map((item) => listQuestion(item))
         : noQuestions()}
