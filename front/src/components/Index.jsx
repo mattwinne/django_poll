@@ -15,11 +15,11 @@ const Index = () => {
         </h1>
         <h2 style={{ color: "black", fontSize: "10px" }}>{publishDate}</h2>
       </>
-      );
-    };
-    const noQuestions = () => (
-      <h2 style={{ color: "black", fontSize: "10px" }}>...loading questions</h2>
     );
+  };
+  const noQuestions = () => (
+    <h2 style={{ color: "black", fontSize: "10px" }}>...loading questions</h2>
+  );
 
   return (
     <>

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 // Custom hook that returns all of the questions in the database as an array.
 export default function useQuestions(id) {
-  
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
     const baseURL = "/api/questions/";
@@ -14,6 +13,5 @@ export default function useQuestions(id) {
       });
   }, [id]);
 
-return questions;
-} 
-  
+  return questions;
+}
