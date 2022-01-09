@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import useQuestions from "components/Questions";
-// Currently displays all questions in database. Not practical if there are a lot of questions. Need to update so
-// that it displays the five latest polls.
+
 const Index = () => {
   const questions = useQuestions();
   const listQuestion = (item) => {
@@ -25,7 +24,7 @@ const Index = () => {
     <>
       <h1 style={{ color: "blue", fontSize: "18px" }}>Polls</h1>
       {questions.length > 0
-        ? questions.map((item) => listQuestion(item))
+        ? questions.slice(-5).map((item) => listQuestion(item))
         : noQuestions()}
     </>
   );
