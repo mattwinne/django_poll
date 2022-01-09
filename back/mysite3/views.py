@@ -20,9 +20,16 @@ def hello_world(request):
 @api_view(["get"])
 @permission_classes([AllowAny])
 def q_list(request):
-    print("deez nuts")
     serializer = QuestionSeralizer(Question.objects.all())
     return Response(serializer.data)
+
+@api_view(["get"])
+@permission_classes([AllowAny])
+def up_vote(request, choice_id):
+    choice = get_object_or_404(Choice, pk=choice_id)
+    choice.votes += 1
+    choice.save()
+    return Response("done")
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -34,19 +41,14 @@ class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
     def list(self, request):
-        print("def list")
         queryset = Question.objects.all()
-        print(queryset)
         serializer = self.get_serializer(queryset, many =True)
-        print(serializer)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        print("def retrive")
         queryset = Question.objects.all()
         user = get_object_or_404(queryset, pk=pk)
         serializer = QuestionSeralizer(user)
-        print(serializer.data)
         return Response(serializer.data)
 
 class ChoiceViewSet(viewsets.ModelViewSet):
@@ -58,19 +60,14 @@ class ChoiceViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
     def list(self, request):
-        print("def list")
         queryset = Choice.objects.all()
-        print(queryset)
         serializer = self.get_serializer(queryset, many =True)
-        print(serializer)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        print("def retrive")
         queryset = Choice.objects.all()
         user = get_object_or_404(queryset, pk=pk)
         serializer = ChoiceSerializer(user)
-        print(serializer.data)
         return Response(serializer.data)
     
 

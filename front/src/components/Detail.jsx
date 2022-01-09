@@ -5,55 +5,46 @@ import useQuestions from "components/Questions";
 const Detail = () => {
   const location = useLocation();
   const pathID = location.pathname.slice(-1);
-
   const pageQuestion = useQuestions(pathID);
-  const pageChoices = pageQuestion["choices"];
-
-  const [radio, setRadio] = useState([]);
+  const pageChoices = pageQuestion.choices;
+  const [radio, setRadio] = useState([0]);
 
   const updateVote = () => {
-    const newData = {
-      id: parseInt(radio[0], 10),
-      votes: parseInt(radio[2], 10) + 1,
-    };
-
-    fetch(`/api/choices/${radio[0]}/`, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newData),
-    }).then((result) => {
-      result.json().then(() => {
-        window.location.replace(`/results/${pathID}`);
+    if (radio != 0) {
+      fetch(`/api/up_vote/${radio}/`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((result) => {
+        result.json().then(() => {
+          window.location.replace(`/results/${pathID}`);
+        });
       });
-    });
+    }
   };
 
   return (
     <>
       <h1 style={{ color: "blue", fontSize: "18px" }}>{pageQuestion.text}</h1>
-
-      {pageChoices ? pageChoices.map((item) => (
-        <li style={{ color: "black", fontSize: "16px" }}>
-          <input
-            type="radio"
-            value={[item.id, item.votes]}
-            name="choice"
-            onChange={(e) => {
-              setRadio(e.target.value);
-              console.log(e.target.value)
-            }}
-          />
-          {item.text}
-        </li>
-      )) : console.log("nope")} 
-      {/* {!pageChoices.length && (
+      {pageChoices ? (
+        pageChoices.map((item) => (
+          <h1 style={{ color: "black", fontSize: "16px" }}>
+            <input
+              type="radio"
+              value={item.id}
+              name="choice"
+              onChange={(e) => {
+                setRadio(e.target.value);
+              }}
+            />
+            {item.text}
+          </h1>
+        ))
+      ) : (
         <h2 style={{ color: "black", fontSize: "10px" }}> ...loading poll</h2>
-      )} */}
-
-      <br />
+      )}
 
       <button className="mybutton" type="button" onClick={() => updateVote()}>
         Vote
@@ -61,7 +52,7 @@ const Detail = () => {
 
       <br />
 
-      <h1 style={{ color: "blue", fontSize: "12px" }}>
+      <h1 style={{ color: "blue", fontSize: "16px" }}>
         <Link to="/index">Back to polls</Link>
       </h1>
     </>
