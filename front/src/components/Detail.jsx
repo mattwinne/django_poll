@@ -1,14 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import useQuestions from "components/Questions";
 
 const Detail = () => {
-  const location = useLocation();
-  const pathID = location.pathname.slice(-1);
-  const pageQuestion = useQuestions(pathID);
+  const slug = window.location.href.substring(window.location.href.lastIndexOf("/") + 1);
+  const pageQuestion = useQuestions(slug);
   const pageChoices = pageQuestion.choices;
-  const [radio, setRadio] = useState([0]);
-
+  const [radio, setRadio] = useState([0])
   const updateVote = () => {
     if (radio != 0) {
       fetch(`/api/up_vote/${radio}/`, {
@@ -19,7 +17,8 @@ const Detail = () => {
         },
       }).then((result) => {
         result.json().then(() => {
-          window.location.replace(`/results/${pathID}`);
+          console.log(slug)
+          window.location.replace(`/results/${slug}`);
         });
       });
     }
@@ -30,7 +29,8 @@ const Detail = () => {
       <h1 style={{ color: "blue", fontSize: "18px" }}>{pageQuestion.text}</h1>
       {pageChoices ? (
         pageChoices.map((item) => (
-          <h1 style={{ color: "black", fontSize: "16px" }}>
+          <h1 style={{ color: "black", fontSize: "16px" }}
+              key ={item.id}>
             <input
               type="radio"
               value={item.id}

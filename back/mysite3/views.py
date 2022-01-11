@@ -1,8 +1,5 @@
 from django.db import connection
-from django.http import HttpResponse
 from django.views.generic import View
-from rest_framework import serializers
-from rest_framework.serializers import Serializer
 from polls.models import Question, Choice
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -10,18 +7,6 @@ from rest_framework.response import Response
 from polls.serializers import ChoiceSerializer, QuestionSeralizer
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
-
-
-@api_view(["get"])
-@permission_classes([AllowAny])
-def hello_world(request):
-    return Response({"message": "Hello, world!"})
-
-@api_view(["get"])
-@permission_classes([AllowAny])
-def q_list(request):
-    serializer = QuestionSeralizer(Question.objects.all())
-    return Response(serializer.data)
 
 @api_view(["get"])
 @permission_classes([AllowAny])
@@ -70,10 +55,3 @@ class ChoiceViewSet(viewsets.ModelViewSet):
         serializer = ChoiceSerializer(user)
         return Response(serializer.data)
     
-
-# @api_view(["get"])
-# @permission_classes([AllowAny])
-# def question_list(request):
-#    return Response(["hello", "goodbye", "so long"])
-#    return Response({"list return"})
-

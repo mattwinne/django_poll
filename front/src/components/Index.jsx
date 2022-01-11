@@ -6,15 +6,19 @@ const Index = () => {
   const questions = useQuestions();
   const listQuestion = (item) => {
     const pollHeader = `- ${item.text}`;
-    const publishDate = `Published: ${item.pubDate}`;
+    //const publishDate = `Published: ${item.pubDate}`;
+    //assignment of a different key to each DOM element is a react requirement
     return (
-      <>
-        <h1 style={{ color: "black", fontSize: "16px" }}>
-          <Link to={`/detail/${item.id}`}>{pollHeader}</Link>
-        </h1>
-        <h2 style={{ color: "black", fontSize: "10px" }}>{publishDate}</h2>
-      </>
-    );
+
+      <h1 style={{ color: "black", fontSize: "16px" }}
+          key = {item.id}>
+        <Link to={`/detail/${item.id}`}>{pollHeader}</Link>
+      </h1>
+      /* <h1 style={{ color: "black", fontSize: "10px" }}
+      key = {item.id + 1}>{publishDate}
+      </h1> */
+    )
+    
   };
   const noQuestions = () => (
     <h2 style={{ color: "black", fontSize: "10px" }}>...loading questions</h2>
