@@ -6,6 +6,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
         fields = ['id', 'question', 'text', 'votes']
+        ordering = ['id']
 
 class QuestionSeralizer(serializers.ModelSerializer):
     choices = ChoiceSerializer(many=True, read_only=True)
