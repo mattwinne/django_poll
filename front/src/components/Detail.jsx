@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import useQuestions from "components/Questions";
 
 const Detail = () => {
-  const slug = window.location.href.substring(window.location.href.lastIndexOf("/") + 1);
+  const location = useLocation();
+  const history = useHistory();
+  const slug = location.state.slug;
   const pageQuestion = useQuestions(slug);
   const pageChoices = pageQuestion.choices;
-  const [radio, setRadio] = useState([0])
+  const [radio, setRadio] = useState([0]);
   const updateVote = () => {
     if (radio != 0) {
-      fetch(`/api/up_vote/${radio}/`, {
+      fetch(`/api/choices/${radio}/up_vote/`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -17,8 +19,7 @@ const Detail = () => {
         },
       }).then((result) => {
         result.json().then(() => {
-          console.log(slug)
-          window.location.replace(`/results/${slug}`);
+          history.push(`/results/${slug}`, { slug: slug });
         });
       });
     }
@@ -29,8 +30,7 @@ const Detail = () => {
       <h1 style={{ color: "blue", fontSize: "18px" }}>{pageQuestion.text}</h1>
       {pageChoices ? (
         pageChoices.map((item) => (
-          <h1 style={{ color: "black", fontSize: "16px" }}
-              key ={item.id}>
+          <h1 style={{ color: "black", fontSize: "16px" }} key={item.id}>
             <input
               type="radio"
               value={item.id}
