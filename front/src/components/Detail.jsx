@@ -8,6 +8,9 @@ const Detail = () => {
   const slug = location.state.slug;
   const pageQuestion = useQuestions(slug);
   const pageChoices = pageQuestion.choices;
+  if (pageChoices) {
+    pageChoices.sort((a, b) => (a.id > b.id ? 1 : -1));
+  }
   const [radio, setRadio] = useState([0]);
   const updateVote = () => {
     if (radio != 0) {

@@ -14,11 +14,10 @@ class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSeralizer
     permission_classes = [AllowAny]
 
-    @action(detail=False, methods=["get"])
-    def get_queryset(self, pk=None):
-        """Return the last five published questions."""
-        question_set = Question.objects.order_by("-pub_date")[:5]
-        serializer = self.get_serializer(question_set, many =True)
+    @action(detail=True, methods=["get"])
+    def list_n_questions(self, requests, pk=id):
+        question_set = Question.objects.order_by("-pub_date")[:int(pk)]
+        serializer = self.get_serializer(question_set, many=True)
         return Response(serializer.data)
 
     def list(self, request):
@@ -37,6 +36,7 @@ class ChoiceViewSet(viewsets.ModelViewSet):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
     permission_classes = [AllowAny]
+    
 
     @action(detail=True, methods=["get"])
     def up_vote(self, request, pk=None):

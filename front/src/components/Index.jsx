@@ -3,7 +3,8 @@ import React from "react";
 import useQuestions from "components/Questions";
 
 const Index = () => {
-  const questions = useQuestions("get_queryset");
+  const questionsInList = 5;
+  const questions = useQuestions(`${questionsInList}/list_n_questions`);
   const listQuestion = (item) => {
     const pollHeader = `- ${item.text}`;
 
