@@ -43,7 +43,7 @@ class ChoiceViewSet(viewsets.ModelViewSet):
         choice = self.get_object()
         choice.votes += 1
         choice.save()
-        return Response("done")
+        return Response(choice.votes)
 
     def list(self, request):
         queryset = Choice.objects.all()
@@ -55,4 +55,5 @@ class ChoiceViewSet(viewsets.ModelViewSet):
         user = get_object_or_404(queryset, pk=pk)
         serializer = ChoiceSerializer(user)
         return Response(serializer.data)
+        
     
