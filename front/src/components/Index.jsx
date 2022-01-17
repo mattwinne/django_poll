@@ -1,20 +1,19 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import useQuestions from "components/Questions";
-// Currently displays all questions in database. Not practical if there are a lot of questions. Need to update so
-// that it displays the five latest polls.
+
 const Index = () => {
-  const questions = useQuestions();
+  const questionsInList = 5;
+  const questions = useQuestions(`${questionsInList}/list_n_questions`);
   const listQuestion = (item) => {
     const pollHeader = `- ${item.text}`;
-    const publishDate = `Published: ${item.pubDate}`;
+
     return (
-      <>
-        <h1 style={{ color: "black", fontSize: "16px" }}>
-          <Link to={`/detail/${item.id}`}>{pollHeader}</Link>
-        </h1>
-        <h2 style={{ color: "black", fontSize: "10px" }}>{publishDate}</h2>
-      </>
+      <h1 style={{ color: "black", fontSize: "16px" }} key={item.id}>
+        <Link to={{ pathname: `/detail/${item.id}`, state: { slug: item.id } }}>
+          {pollHeader}
+        </Link>
+      </h1>
     );
   };
   const noQuestions = () => (

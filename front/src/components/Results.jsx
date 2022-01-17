@@ -4,13 +4,19 @@ import useQuestions from "components/Questions";
 
 const Results = () => {
   const location = useLocation();
-  const pathID = location.pathname.slice(-1);
-  const question = useQuestions(pathID);
+  const slug = location.state.slug;
+  const question = useQuestions(slug);
   const results = question.choices;
-
+  if (results) {
+    results.sort((a, b) => (a.id > b.id ? 1 : -1));
+  }
   const displayResults = (result) => {
     const resultLine = `- ${result.text}:    ${result.votes} votes`;
-    return <h1 style={{ color: "black", fontSize: "16px" }}>{resultLine}</h1>;
+    return (
+      <h1 style={{ color: "black", fontSize: "16px" }} key={result.id}>
+        {resultLine}
+      </h1>
+    );
   };
   const noResults = () => {
     return (
@@ -20,7 +26,7 @@ const Results = () => {
   return (
     <>
       <h1 style={{ color: "blue", fontSize: "18px" }}>{question.text}</h1>
-      {results ? results.map((result) => (displayResults(result))) : noResults}
+      {results ? results.map((result) => displayResults(result)) : noResults()}
       <h1 style={{ color: "blue", fontSize: "16px" }}>
         <Link to="/index">Back to polls</Link>
       </h1>
