@@ -12,25 +12,25 @@ class TestAPI(APITestCase):
         response = self.client.get(self.urlQ)
         result = response.json()
 
-        self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(result, list)
+        assert response.status_code == 200
+        assert type(result) == list
 
     def test_get_question(self):
         pk = 8
         response = self.client.get(self.urlQ + f"{pk}/")
         result = response.json()
 
-        self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(result, object)
-        self.assertEqual(result["text"], "Best D2 class")
+        assert response.status_code == 200
+        assert type(result) == dict
+        assert result["text"] == "Best D2 class"
 
     def test_get_questionlist(self):
         listSize = 5
         response = self.client.get(self.urlQ + f"{listSize}/list_n_questions/")
         result = response.json()
-        self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(result, list)
-        self.assertEqual(len(result), listSize)
+        assert response.status_code == 200
+        assert type(result) == list
+        assert len(result) == listSize
         
     def test_post_question(self):
         data = {
@@ -43,23 +43,23 @@ class TestAPI(APITestCase):
             ]
         }
         response = self.client.post(self.urlQ, data=data)
-        self.assertEqual(response.status_code, 201)
+        assert response.status_code == 201
     
     def test_get_choices(self):
         response = self.client.get(self.urlC)
         result = response.json()
 
-        self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(result, list)
+        assert response.status_code == 200
+        assert type(result) == list
 
     def test_get_choice(self):
         pk = 6
         response = self.client.get(self.urlC + f"{pk}/")
         result = response.json()
 
-        self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(result, object)
-        self.assertEqual(result["text"], "Eagle")
+        assert response.status_code == 200
+        assert type(result) == dict
+        assert result["text"] == "Eagle"
     
     def test_up_vote(self):
         pk = 3
@@ -69,5 +69,5 @@ class TestAPI(APITestCase):
 
         response = self.client.get(self.urlC + f"{pk}/up_vote/")
         result = response.json()
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(result, choiceResultVotes + 1)
+        assert response.status_code == 200
+        assert result == choiceResultVotes + 1
