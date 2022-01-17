@@ -6,18 +6,18 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0006_auto_20211124_2112'),
+        ("polls", "0006_auto_20211124_2112"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='choice',
-            old_name='id',
-            new_name='pkid',
+            model_name="choice",
+            old_name="id",
+            new_name="pkid",
         ),
         migrations.RenameField(
-            model_name='question',
-            old_name='id',
-            new_name='pkid',
+            model_name="question",
+            old_name="id",
+            new_name="pkid",
         ),
     ]

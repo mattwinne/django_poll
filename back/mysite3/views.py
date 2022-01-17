@@ -1,12 +1,12 @@
-from django.db import connection
-from django.views.generic import View
-from polls.models import Question, Choice
-from rest_framework.decorators import api_view, permission_classes, action
+from django.shortcuts import get_object_or_404
+from polls.models import Choice, Question
+from polls.serializers import ChoiceSerializer, QuestionSeralizer
+
+from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from polls.serializers import ChoiceSerializer, QuestionSeralizer
-from rest_framework import viewsets
-from django.shortcuts import get_object_or_404
+
 
 class QuestionViewSet(viewsets.ModelViewSet):
 
@@ -16,13 +16,13 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["get"])
     def list_n_questions(self, requests, pk=id):
-        question_set = Question.objects.order_by("-pub_date")[:int(pk)]
+        question_set = Question.objects.order_by("-pub_date")[: int(pk)]
         serializer = self.get_serializer(question_set, many=True)
         return Response(serializer.data)
 
     def list(self, request):
         queryset = Question.objects.all()
-        serializer = self.get_serializer(queryset, many =True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -31,12 +31,12 @@ class QuestionViewSet(viewsets.ModelViewSet):
         serializer = QuestionSeralizer(user)
         return Response(serializer.data)
 
+
 class ChoiceViewSet(viewsets.ModelViewSet):
 
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
     permission_classes = [AllowAny]
-    
 
     @action(detail=True, methods=["get"])
     def up_vote(self, request, pk=None):
@@ -47,7 +47,7 @@ class ChoiceViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         queryset = Choice.objects.all()
-        serializer = self.get_serializer(queryset, many =True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -55,5 +55,3 @@ class ChoiceViewSet(viewsets.ModelViewSet):
         user = get_object_or_404(queryset, pk=pk)
         serializer = ChoiceSerializer(user)
         return Response(serializer.data)
-        
-    

@@ -6,18 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0002_customer_order_product_tag'),
+        ("polls", "0002_customer_order_product_tag"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='question',
-            old_name='question_text',
-            new_name='text',
+            model_name="question",
+            old_name="question_text",
+            new_name="text",
         ),
         migrations.AlterField(
-            model_name='question',
-            name='pub_date',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='date published'),
+            model_name="question",
+            name="pub_date",
+            field=models.DateTimeField(
+                auto_now_add=True, verbose_name="date published"
+            ),
         ),
     ]
