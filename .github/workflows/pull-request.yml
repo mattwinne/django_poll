@@ -15,7 +15,7 @@ jobs:
       run: docker-compose -f "docker-compose.yml" up -d --build
 
     - name: Lint
-      run: docker exec -it django tox -e flake8
+      run: docker exec django tox -e flake8
     
     - name: Stop containers
       if: always()
