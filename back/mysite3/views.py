@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-#Adding comment as a test
+
 class QuestionViewSet(viewsets.ModelViewSet):
 
     queryset = Question.objects.all()
