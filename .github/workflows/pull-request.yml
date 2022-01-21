@@ -14,16 +14,21 @@ jobs:
     - name: Start containers
       run: docker-compose -f "docker-compose.yml" up -d --build
 
-    - name: Lint
+    - name: Flake8
       run: docker exec django tox -e flake8
+
+    - name: Black
       run: docker exec django tox -e black
+
+    - name: ESLint
       run: docker exec react yarn lint
 
-    - name: Test
+    - name: Test mysite3
       run: docker exec -django pytest --cov-report term-missing --cov=mysite3 --ds=mysite3.settings
+
+    - name: Test polls
       run: docker exec -django pytest --cov-report term-missing --cov=polls --ds=mysite3.settings
 
-    
     - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose.yml" down
