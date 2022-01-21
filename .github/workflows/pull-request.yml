@@ -1,0 +1,23 @@
+name: pull request
+
+on: pull_request
+
+jobs:
+  docker:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    -name: Start containers
+      run: docker-compose -f "docker-compose.yml" up -d --build
+
+    -name: Lint
+      run: docker exec -it django tox -e flake8
+    
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
+
