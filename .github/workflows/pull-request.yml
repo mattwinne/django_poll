@@ -3,7 +3,7 @@ name: pull request
 on: pull_request
 
 env:
-  CACHE_IMAGE: riffraffer/docker-ci-cache
+  CACHE_IMAGE: ./
   DOCKER_BUILDKIT: 1
   COMPOSE_DOCKER_CLI_BUILD: 1
 
