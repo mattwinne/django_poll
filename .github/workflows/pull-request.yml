@@ -18,11 +18,9 @@ jobs:
       - name: Log in to docker hub
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker images
-        run: docker-compose build --build-arg BUILDKIT_INLINE_CACHE=1
-      - name: Push django to docker hub
-        run: docker push mysite3_django:latest
-      - name: Push react to docker hub
-        run: docker push mysite3_react:latest
+        run: docker-compose -f "docker-compose.yml" up -d --build-arg BUILDKIT_INLINE_CACHE=1
+      - name: Push to docker hub
+        run: docker push latest
 
       - name: Flake8
         if: always()
