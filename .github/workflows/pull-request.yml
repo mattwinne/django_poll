@@ -30,7 +30,8 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        context: docker-compose.yml
+        context: ./
+        file: ./docker-compose.yml
         push: false
         tags: user/app:latest
         cache-from: type=local,src=/tmp/.buildx-cache
