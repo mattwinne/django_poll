@@ -26,17 +26,7 @@ jobs:
           registry: ghcr.io
           username: mattwinne
           password: ${{ secrets.MY_TOKEN }}
-      - name: Build django image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./conf/django
-          builder: ${{ steps.buildx.outputs.name }}
-          file: Dockerfile
-          push: true
-          tags: ghcr.io/mattwinne/cache_docker/ci_dlc:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-      - name: Build react image
+      - name: Build image
         uses: docker/build-push-action@v2
         with:
           context: .
