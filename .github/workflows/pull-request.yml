@@ -39,7 +39,7 @@ jobs:
       - name: Build react image
         uses: docker/build-push-action@v2
         with:
-          context: ./conf/react
+          context: .
           builder: ${{ steps.buildx.outputs.name }}
           file: Dockerfile
           push: true
