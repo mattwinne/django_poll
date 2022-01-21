@@ -50,17 +50,6 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-    steps:
-      - name: Checkout master
-        uses: actions/checkout@v1
-      - name: Log in to docker hub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build Docker images
-        run: docker buildx bake -f docker-compose.yml
-      - name: Push django to docker hub
-        run: docker push mysite3_django:latest
-      - name: Push react to docker hub
-        run: docker push mysite3_react:latest
 
   lint_and_test:
     needs: build_docker # Wait for build step to finish
