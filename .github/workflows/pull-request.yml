@@ -62,10 +62,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Lint code
-        run: |
-          pre-commit install
-          pre-commit run
-      - name: Run tests
-        run: pytest tests
+      - name: Docker up
+        run: docker-compose -f "docker-compose.yml"
+      - name: Flake8
+        if: always()
+        run: docker exec django tox -e flake8
+
+      - name: Black
+        if: always()
+        run: docker exec django tox -e black
+
+      - name: ESLint
+        if: always()
+        run: docker exec react yarn lint
+
+      - name: Test mysite3
+        if: always()
+        run: docker exec -django pytest --cov-report term-missing --cov=mysite3 --ds=mysite3.settings
+
+      - name: Test polls
+        if: always()
+        run: docker exec -django pytest --cov-report term-missing --cov=polls --ds=mysite3.settings
 
