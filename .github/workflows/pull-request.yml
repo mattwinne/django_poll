@@ -33,7 +33,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: conf/django/Dockerfile
           push: true
-          tags: ghcr.io/mattwinne/cache_docker/ci_dlc:latest
+          tags: ghcr.io/mattwinne/django/ci_dlc:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
       - name: Build react image
@@ -43,7 +43,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: conf/react/Dockerfile
           push: true
-          tags: ghcr.io/mattwinne/cache_docker/ci_dlc:latest
+          tags: ghcr.io/mattwinne/react/ci_dlc:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
       - name: Move cache
@@ -55,7 +55,8 @@ jobs:
     needs: build_docker # Wait for build step to finish
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/mattwinne/cache_docker/ci_dlc:latest
+      image: ghcr.io/mattwinne/django/ci_dlc:latest
+      image: ghcr.io/mattwinne/react/ci_dlc:latest
       credentials:
         username: mattwinne
         password: ${{ secrets.MY_TOKEN }}
