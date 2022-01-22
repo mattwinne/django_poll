@@ -50,3 +50,22 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      - name: Flake8
+        if: always()
+        run: docker exec django tox -e flake8
+
+      - name: Black
+        if: always()
+        run: docker exec django tox -e black
+
+      - name: ESLint
+        if: always()
+        run: docker exec react yarn lint
+
+      - name: Test mysite3
+        if: always()
+        run: docker exec -django pytest --cov-report term-missing --cov=mysite3 --ds=mysite3.settings
+
+      - name: Test polls
+        if: always()
+        run: docker exec -django pytest --cov-report term-missing --cov=polls --ds=mysite3.settings
