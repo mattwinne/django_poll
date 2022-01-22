@@ -3,68 +3,37 @@ name: pull request
 on: pull_request
 
 jobs:
-  build_docker:
-    timeout-minutes: 20
+  docker:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@master
-        with:
-          install: true
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-multi-buildx
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: mattwinne
-          password: ${{ secrets.MY_TOKEN }}
-      - name: Build django image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          builder: ${{ steps.buildx.outputs.name }}
-          file: conf/django/Dockerfile
-          push: true
-          tags: ghcr.io/mattwinne/django/ci_dlc:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-      - name: Build react image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          builder: ${{ steps.buildx.outputs.name }}
-          file: conf/react/Dockerfile
-          push: true
-          tags: ghcr.io/mattwinne/react/ci_dlc:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-  lint_and_test:
-    needs: build_docker # Wait for build step to finish
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/mattwinne/django/ci_dlc:latest
-      credentials:
-        username: mattwinne
-        password: ${{ secrets.MY_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Flake8
-        if: always()
-        run: docker exec django tox -e flake8
-      - name: Black
-        if: always()
-        run: docker exec django tox -e black
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Start containers
+      run: docker-compose -f "docker-compose.yml" up -d --build
+
+    - name: Flake8
+      if: always()
+      run: docker exec django tox -e flake8
+
+    - name: Black
+      if: always()
+      run: docker exec django tox -e black
+
+    - name: ESLint
+      if: always()
+      run: docker exec react yarn lint
+
+    - name: Test mysite3
+      if: always()
+      run: docker exec django pytest --cov-report term-missing --cov=mysite3 --ds=mysite3.settings
+
+    - name: Test polls
+      if: always()
+      run: docker exec django pytest --cov-report term-missing --cov=polls --ds=mysite3.settings
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
