@@ -56,32 +56,15 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/mattwinne/django/ci_dlc:latest
-      image: ghcr.io/mattwinne/react/ci_dlc:latest
       credentials:
         username: mattwinne
         password: ${{ secrets.MY_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
-      - name: Docker up
-        run: docker-compose -f "docker-compose.yml"
       - name: Flake8
         if: always()
         run: docker exec django tox -e flake8
-
       - name: Black
         if: always()
         run: docker exec django tox -e black
-
-      - name: ESLint
-        if: always()
-        run: docker exec react yarn lint
-
-      - name: Test mysite3
-        if: always()
-        run: docker exec -django pytest --cov-report term-missing --cov=mysite3 --ds=mysite3.settings
-
-      - name: Test polls
-        if: always()
-        run: docker exec -django pytest --cov-report term-missing --cov=polls --ds=mysite3.settings
-
