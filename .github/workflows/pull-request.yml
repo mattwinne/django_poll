@@ -3,7 +3,7 @@ name: pull request
 on: pull_request
 
 jobs:
-  docker:
+  build_docker:
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
@@ -50,22 +50,22 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-      - name: Flake8
-        if: always()
-        run: docker exec django tox -e flake8
 
-      - name: Black
-        if: always()
-        run: docker exec django tox -e black
+  lint_and_test:
+    needs: build_docker # Wait for build step to finish
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/mattwinne/cache_docker/ci_dlc:latest
+      credentials:
+        username: mattwinne
+        password: ${{ secrets.MY_TOKEN }}
 
-      - name: ESLint
-        if: always()
-        run: docker exec react yarn lint
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lint code
+        run: |
+          pre-commit install
+          pre-commit run
+      - name: Run tests
+        run: pytest tests
 
-      - name: Test mysite3
-        if: always()
-        run: docker exec -django pytest --cov-report term-missing --cov=mysite3 --ds=mysite3.settings
-
-      - name: Test polls
-        if: always()
-        run: docker exec -django pytest --cov-report term-missing --cov=polls --ds=mysite3.settings
