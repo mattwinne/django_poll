@@ -5,7 +5,7 @@ import useQuestions from "components/Questions";
 const Detail = () => {
   const location = useLocation();
   const history = useHistory();
-  const slug = location.state.slug;
+  const { slug } = location.state;
   const pageQuestion = useQuestions(slug);
   const pageChoices = pageQuestion.choices;
   if (pageChoices) {
@@ -13,7 +13,7 @@ const Detail = () => {
   }
   const [radio, setRadio] = useState([0]);
   const updateVote = () => {
-    if (radio != 0) {
+    if (radio !== 0) {
       fetch(`/api/choices/${radio}/up_vote/`, {
         method: "GET",
         headers: {
@@ -22,7 +22,7 @@ const Detail = () => {
         },
       }).then((result) => {
         result.json().then(() => {
-          history.push(`/results/${slug}`, { slug: slug });
+          history.push(`/results/${slug}`, { slug });
         });
       });
     }

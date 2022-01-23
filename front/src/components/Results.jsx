@@ -4,7 +4,7 @@ import useQuestions from "components/Questions";
 
 const Results = () => {
   const location = useLocation();
-  const slug = location.state.slug;
+  const { slug } = location.state;
   const question = useQuestions(slug);
   const results = question.choices;
   if (results) {

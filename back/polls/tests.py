@@ -1,10 +1,9 @@
-from django.core.management import call_command
-from rest_framework.test import APITestCase
-
 import datetime
 
+from django.core.management import call_command
 from django.test import TestCase
 from django.utils import timezone
+from rest_framework.test import APITestCase
 
 from .models import Choice, Question
 
@@ -89,7 +88,7 @@ class QuestionModelTests(TestCase):
     def test_was_published_recently_with_future_question(self):
         time = timezone.now() + datetime.timedelta(days=30)
         future_question = Question(pub_date=time)
-        assert future_question.was_published_recently() == False
+        assert future_question.was_published_recently() is False
 
     def test__str__Question(self):
         question = Question(text="Favorite color")

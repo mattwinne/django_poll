@@ -5,7 +5,6 @@ import NotFound from "components/NotFound";
 import React from "react";
 import Results from "components/Results";
 
-
 const App = () => (
   <Router>
     <Switch>
