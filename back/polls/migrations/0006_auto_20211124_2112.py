@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0005_rename_choice_text_choice_text'),
+        ("polls", "0005_rename_choice_text_choice_text"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='choice',
-            name='id',
+            model_name="choice",
+            name="id",
             field=models.BigAutoField(primary_key=True, serialize=False),
         ),
         migrations.AlterField(
-            model_name='question',
-            name='id',
+            model_name="question",
+            name="id",
             field=models.BigAutoField(primary_key=True, serialize=False),
         ),
     ]

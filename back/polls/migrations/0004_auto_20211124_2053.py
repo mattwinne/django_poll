@@ -6,32 +6,32 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0003_auto_20211123_0738'),
+        ("polls", "0003_auto_20211123_0738"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='order',
-            name='customer',
+            model_name="order",
+            name="customer",
         ),
         migrations.RemoveField(
-            model_name='order',
-            name='product',
+            model_name="order",
+            name="product",
         ),
         migrations.RemoveField(
-            model_name='product',
-            name='tags',
+            model_name="product",
+            name="tags",
         ),
         migrations.DeleteModel(
-            name='Customer',
+            name="Customer",
         ),
         migrations.DeleteModel(
-            name='Order',
+            name="Order",
         ),
         migrations.DeleteModel(
-            name='Product',
+            name="Product",
         ),
         migrations.DeleteModel(
-            name='Tag',
+            name="Tag",
         ),
     ]

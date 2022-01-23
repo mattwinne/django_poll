@@ -1,48 +1,57 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-from django.views import generic
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
-from .models import Choice, Question
-
-
-class IndexView(generic.ListView):
-    template_name = "polls/index.html"
-    context_object_name = "latest_question_list"
-
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.order_by("-pub_date")[:5]
+from polls.models import Choice, Question
+from polls.serializers import ChoiceSerializer, QuestionSeralizer
 
 
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = "polls/detail.html"
+class QuestionViewSet(viewsets.ModelViewSet):
+
+    queryset = Question.objects.all()
+    serializer_class = QuestionSeralizer
+    permission_classes = [AllowAny]
+
+    @action(detail=True, methods=["get"])
+    def list_n_questions(self, requests, pk=id):
+        question_set = Question.objects.order_by("-pub_date")[: int(pk)]
+        serializer = self.get_serializer(question_set, many=True)
+        return Response(serializer.data)
+
+    def list(self, request):
+        queryset = Question.objects.all()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Question.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = QuestionSeralizer(user)
+        return Response(serializer.data)
 
 
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = "polls/results.html"
+class ChoiceViewSet(viewsets.ModelViewSet):
 
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
+    permission_classes = [AllowAny]
 
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST["choice"])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(
-            request,
-            "polls/detail.html",
-            {
-                "question": question,
-                "error_message": "You didn't select a choice.",
-            },
-        )
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+    @action(detail=True, methods=["get"])
+    def up_vote(self, request, pk=None):
+        choice = self.get_object()
+        choice.votes += 1
+        choice.save()
+        return Response(choice.votes)
+
+    def list(self, request):
+        queryset = Choice.objects.all()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Choice.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = ChoiceSerializer(user)
+        return Response(serializer.data)
