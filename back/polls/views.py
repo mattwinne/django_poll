@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from polls.models import Choice, Question
 from polls.serializers import ChoiceSerializer, QuestionSeralizer
 
-#test comment
+
 class QuestionViewSet(viewsets.ModelViewSet):
 
     queryset = Question.objects.all()
