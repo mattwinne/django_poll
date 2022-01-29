@@ -28,6 +28,7 @@ ALLOWED_HOSTS = ["0.0.0.0", "DJANGO", "0.0.0.0:8000"]
 # Application definition
 
 INSTALLED_APPS = [
+    "accounts",
     "polls.apps.PollsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -145,3 +146,5 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "accounts.UserAccount"
