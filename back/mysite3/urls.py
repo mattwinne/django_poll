@@ -10,4 +10,4 @@ router.register(r"api/choices", ChoiceViewSet, basename="choices")
 urlpatterns = [path("admin/", admin.site.urls)]
 urlpatterns += router.urls
 
-urlpatterns = router.urls
+
