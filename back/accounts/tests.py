@@ -5,6 +5,7 @@ from django.test import TestCase
 from . import factories
 
 
+# comment for test
 class UserAccountTests(TestCase):
     def test_new_superuser(self):
         db = get_user_model()
