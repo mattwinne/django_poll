@@ -30,10 +30,6 @@ jobs:
       if: always()
       run: docker exec django python manage.py migrate
 
-    - name: dcleanup
-      if: always()
-      run: dcleanup
-
     - name: Flake8
       if: always()
       run: docker exec django tox -e flake8
