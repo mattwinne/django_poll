@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ["0.0.0.0", "DJANGO", "0.0.0.0:8000"]
 
 INSTALLED_APPS = [
     "polls.apps.PollsConfig",
+    "accounts",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -36,7 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "accounts",
 ]
 
 MIDDLEWARE = [
