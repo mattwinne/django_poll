@@ -5,6 +5,7 @@ sleep 2s
 
 echo "Migrating the db..."
 python manage.py makemigrations
+python manage.py makemigrations polls
 python manage.py migrate
 
 if [ ${DEBUG:=0} -ne 1 ]
