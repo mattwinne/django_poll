@@ -22,13 +22,14 @@ SECRET_KEY = "django-insecure-p3#t01+io_2i*7+$55d=y03swdn=ll)6zxn3s+e=7z^pk7w%x@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "DJANGO", "0.0.0.0:8000"]
+ALLOWED_HOSTS = ["0.0.0.0", "django", "0.0.0.0:8000"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
     "polls.apps.PollsConfig",
+    "accounts",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -145,3 +146,5 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "accounts.User"

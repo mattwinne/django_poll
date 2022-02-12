@@ -14,6 +14,22 @@ jobs:
     - name: Start containers
       run: docker-compose -f "docker-compose.yml" up -d --build
 
+    - name: Make Migrations
+      if: always()
+      run: docker exec django python manage.py makemigrations
+
+    - name: Migrate
+      if: always()
+      run: docker exec django python manage.py migrate
+
+    - name: Make Migrations Polls
+      if: always()
+      run: docker exec django python manage.py makemigrations accounts
+
+    - name: Migrate Polls
+      if: always()
+      run: docker exec django python manage.py migrate
+
     - name: Flake8
       if: always()
       run: docker exec django tox -e flake8
