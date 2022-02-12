@@ -15,11 +15,17 @@ class TestAPI(APITestCase):
     urlC = "http://0.0.0.0:8000/api/choices/"
 
     def setUp(self):
-        i = 1
-        while i <= 5:
-            factories.QuestionFactory.create(id=i)
-            factories.ChoiceFactory.create(id=i)
-            i += 1
+        q1 = factories.QuestionFactory(id=1)
+        q2 = factories.QuestionFactory(id=2)
+        q3 = factories.QuestionFactory(id=3)
+        q4 = factories.QuestionFactory(id=4)
+        q5 = factories.QuestionFactory(id=5)
+
+        c1 = factories.ChoiceFactory(id=1)
+        c2 = factories.ChoiceFactory(id=2)
+        c3 = factories.ChoiceFactory(id=3)
+        c4 = factories.ChoiceFactory(id=4)
+        c5 = factories.ChoiceFactory(id=5)
 
     def test_get_questions(self):
         response = self.client.get(self.urlQ)
