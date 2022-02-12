@@ -14,10 +14,6 @@ jobs:
     - name: Start containers
       run: docker-compose -f "docker-compose.yml" up -d --build
 
-    - name: Check for migrations
-      if: always()
-      run: docker exec django python manage.py makemigrations --check --dry-run
-
     - name: Flake8
       if: always()
       run: docker exec django tox -e flake8
@@ -32,7 +28,7 @@ jobs:
 
     - name: Test polls
       if: always()
-      run: docker exec django pytest --cov-report term-missing --cov=polls --cov=accounts --ds=mysite3.settings  
+      run: docker exec django pytest --cov-report term-missing --cov=polls --ds=mysite3.settings
 
     - name: Stop containers
       if: always()
