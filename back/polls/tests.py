@@ -15,9 +15,9 @@ class TestAPI(APITestCase):
     urlC = "http://0.0.0.0:8000/api/choices/"
 
     def setUp(self):
-        i = 1
-        l = 11
-        while i <= 5:
+        i = 11
+        l = 21
+        while i <= 15:
             factories.QuestionFactory.create(id=i)
             factories.ChoiceFactory.create(id=l)
             i += 1
@@ -31,7 +31,7 @@ class TestAPI(APITestCase):
         assert type(result) == list
 
     def test_get_question(self):
-        pk = 1
+        pk = 11
         response = self.client.get(self.urlQ + f"{pk}/")
         result = response.json()
 
@@ -67,7 +67,7 @@ class TestAPI(APITestCase):
         assert type(result) == list
 
     def test_get_choice(self):
-        pk = 11
+        pk = 21
         response = self.client.get(self.urlC + f"{pk}/")
         result = response.json()
 
@@ -75,7 +75,7 @@ class TestAPI(APITestCase):
         assert type(result) == dict
 
     def test_up_vote(self):
-        pk = 11
+        pk = 21
         choice = self.client.get(self.urlC + f"{pk}/")
         choiceResult = choice.json()
         choiceResultVotes = choiceResult["votes"]
