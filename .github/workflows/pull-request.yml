@@ -15,6 +15,7 @@ jobs:
       run: docker-compose up -d --build
 
     - name: Check for migrations
+      if: always()
       run: docker exec django python manage.py makemigrations --check --dry-run
 
     - name: Flake8
