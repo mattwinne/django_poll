@@ -1,19 +1,25 @@
 import datetime
 
-from django.core.management import call_command
+import pytest
 from django.test import TestCase
 from django.utils import timezone
 from rest_framework.test import APITestCase
 
+from . import factories
 from .models import Choice, Question
 
 
+@pytest.mark.django_db
 class TestAPI(APITestCase):
     urlQ = "http://0.0.0.0:8000/api/questions/"
     urlC = "http://0.0.0.0:8000/api/choices/"
 
     def setUp(self):
-        call_command("loaddata", "testdb.json", verbosity=0)
+        i = 1
+        while i <= 5:
+            factories.QuestionFactory.create(id=i)
+            factories.ChoiceFactory.create(id=i)
+            i += 1
 
     def test_get_questions(self):
         response = self.client.get(self.urlQ)
@@ -23,13 +29,12 @@ class TestAPI(APITestCase):
         assert type(result) == list
 
     def test_get_question(self):
-        pk = 8
+        pk = 1
         response = self.client.get(self.urlQ + f"{pk}/")
         result = response.json()
 
         assert response.status_code == 200
         assert type(result) == dict
-        assert result["text"] == "Best D2 class"
 
     def test_get_questionlist(self):
         listSize = 5
@@ -60,16 +65,15 @@ class TestAPI(APITestCase):
         assert type(result) == list
 
     def test_get_choice(self):
-        pk = 6
+        pk = 1
         response = self.client.get(self.urlC + f"{pk}/")
         result = response.json()
 
         assert response.status_code == 200
         assert type(result) == dict
-        assert result["text"] == "Eagle"
 
     def test_up_vote(self):
-        pk = 3
+        pk = 1
         choice = self.client.get(self.urlC + f"{pk}/")
         choiceResult = choice.json()
         choiceResultVotes = choiceResult["votes"]
