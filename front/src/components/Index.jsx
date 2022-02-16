@@ -26,6 +26,18 @@ const Index = () => {
       {questions.length > 0
         ? questions.map((item) => listQuestion(item))
         : noQuestions()}
+      <br />
+      <br />
+      <h1 style={{ color: "blue", fontSize: "10px" }}>
+        <Link to="/register">Create an account</Link>
+      </h1>
+      <h1 style={{ color: "blue", fontSize: "10px" }}>
+        <Link to="/login">Login</Link>
+      </h1>
+      <br />
+      <h1 style={{ color: "blue", fontSize: "10px" }}>
+        <Link to="/logout">Logout</Link>
+      </h1>
     </>
   );
 };

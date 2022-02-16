@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
+import axiosInstance from "../axios";
 
-// Custom hook that returns all of the questions in the database as an array.
 export default function useQuestions(id) {
   const [questions, setQuestions] = useState([]);
+
   useEffect(() => {
-    const baseURL = "/api/questions/";
+    const baseURL = "questions/";
     const URL = id ? `${baseURL}${id}` : baseURL;
-    fetch(URL)
-      .then((response) => response.json())
-      .then((data) => {
-        setQuestions(data);
-      });
+    axiosInstance.get(URL).then((res) => {
+      setQuestions(res.data);
+    });
   }, [id]);
 
   return questions;
