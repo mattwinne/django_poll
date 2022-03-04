@@ -1,6 +1,6 @@
 import { Link, useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import axiosInstance from "../axios";
+import fetchWrapper from "../newFetchWrapper";
 import useQuestions from "components/Questions";
 
 const Detail = () => {
@@ -15,7 +15,7 @@ const Detail = () => {
   const [radio, setRadio] = useState([0]);
   const updateVote = () => {
     if (radio !== 0) {
-      axiosInstance.get(`choices/${radio}/up_vote/`).then(() => {
+      fetchWrapper.get(`/api/choices/${radio}/up_vote/`).then(() => {
         history.push(`/results/${slug}`, { slug });
       });
     }

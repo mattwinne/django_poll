@@ -1,6 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import React, { useState } from "react";
-import axiosInstance from "../axios";
+import { fetchHeaders, fetchWrapper } from "../newFetchWrapper";
 
 export default function SignIn() {
   const history = useHistory();
@@ -20,15 +20,15 @@ export default function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axiosInstance
-      .post(`/token/`, {
+    fetchWrapper
+      .post(`/api/token/`, {
         email: formData.email,
         password: formData.password,
       })
       .then((res) => {
-        localStorage.setItem("access_token", res.data.access);
-        localStorage.setItem("refresh_token", res.data.refresh);
-        axiosInstance.defaults.headers.Authorization = `JWT ${localStorage.getItem(
+        localStorage.setItem("access_token", res.access);
+        localStorage.setItem("refresh_token", res.refresh);
+        fetchHeaders.Authorization = `JWT ${localStorage.getItem(
           "access_token"
         )}`;
         history.push("/index");

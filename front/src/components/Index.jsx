@@ -4,7 +4,7 @@ import useQuestions from "components/Questions";
 
 const Index = () => {
   const questionsInList = 5;
-  const questions = useQuestions(`${questionsInList}/list_n_questions`);
+  const questions = useQuestions(`${questionsInList}/list_n_questions/`);
   const listQuestion = (item) => {
     const pollHeader = `- ${item.text}`;
 

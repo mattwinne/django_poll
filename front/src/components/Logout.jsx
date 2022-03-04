@@ -1,17 +1,17 @@
 import { useHistory } from "react-router-dom";
 import React, { useEffect } from "react";
-import axiosInstance from "../axios";
+import { fetchHeaders, fetchWrapper } from "../newFetchWrapper";
 
 export default function SignOut() {
   const history = useHistory();
 
   useEffect(() => {
-    axiosInstance.post("user/logout/blacklist/", {
+    fetchWrapper.post("/api/user/logout/blacklist/", {
       refresh_token: localStorage.getItem("refresh_token"),
     });
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-    axiosInstance.defaults.headers.Authorization = null;
+    fetchHeaders.Authorization = null;
     history.push("/login");
   });
   return <div>Logout</div>;

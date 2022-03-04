@@ -22,7 +22,12 @@ SECRET_KEY = "django-insecure-p3#t01+io_2i*7+$55d=y03swdn=ll)6zxn3s+e=7z^pk7w%x@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "django", "0.0.0.0:8000"]
+ALLOWED_HOSTS = [
+    "0.0.0.0",
+    "django",
+    "0.0.0.0:8000",
+    # 'http://0.0.0.0:4000'
+]
 
 # Application definition
 
@@ -37,11 +42,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -149,7 +156,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=10),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
@@ -162,3 +169,16 @@ SIMPLE_JWT = {
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_TYPE_CLAIM": "token_type",
 }
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ORIGIN_WHITELIST = [
+#     'http://0.0.0.0:4000',
+# ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://0.0.0.0:4000",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://0.0.0.0:4000",
+]

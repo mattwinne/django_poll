@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../axios";
+import fetchWrapper from "../newFetchWrapper";
 
 export default function useQuestions(id) {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    const baseURL = "questions/";
-    const URL = id ? `${baseURL}${id}` : baseURL;
-    axiosInstance.get(URL).then((res) => {
-      setQuestions(res.data);
+    const baseURL = "/api/questions/";
+    const URL = id ? `${baseURL}${id}/` : baseURL;
+    fetchWrapper.get(URL).then((res) => {
+      setQuestions(res);
     });
   }, [id]);
 

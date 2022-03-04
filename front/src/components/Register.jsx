@@ -1,6 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import React, { useState } from "react";
-import axiosInstance from "../axios";
+import fetchWrapper from "../newFetchWrapper";
 
 export default function SignUp() {
   const history = useHistory();
@@ -21,8 +21,8 @@ export default function SignUp() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axiosInstance
-      .post(`user/create/`, {
+    fetchWrapper
+      .post(`/api/user/create/`, {
         email: formData.email,
         user_name: formData.username,
         password: formData.password,
