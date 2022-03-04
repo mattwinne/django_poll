@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
+import fetchWrapper from "../newFetchWrapper";
 
-// Custom hook that returns all of the choices in the database as an array.
 export default function useChoices(id) {
   const [choices, setChoices] = useState([]);
 
   useEffect(() => {
     const baseURL = "/api/choices/";
     const URL = id ? `${baseURL}${id}` : baseURL;
-    fetch(URL)
-      .then((response) => response.json())
-      .then((data) => {
-        setChoices(data);
-      });
+    fetchWrapper.get(URL).then((res) => {
+      setChoices(res);
+    });
   }, [id]);
 
   if (id) {

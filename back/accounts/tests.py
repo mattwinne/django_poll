@@ -52,7 +52,7 @@ class UserAccountTests(TestCase):
         assert user.user_name, "username"
         assert user.first_name, "firstname"
         assert not user.is_superuser
-        assert not user.is_active
+        assert user.is_active
 
         with pytest.raises(ValueError):
             db.objects.create_user(

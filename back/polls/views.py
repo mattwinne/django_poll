@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from polls.models import Choice, Question
@@ -9,10 +9,9 @@ from polls.serializers import ChoiceSerializer, QuestionSeralizer
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
-
+    permission_classes = [IsAuthenticated]
     queryset = Question.objects.all()
     serializer_class = QuestionSeralizer
-    permission_classes = [AllowAny]
 
     @action(detail=True, methods=["get"])
     def list_n_questions(self, requests, pk=id):
@@ -33,10 +32,9 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 
 class ChoiceViewSet(viewsets.ModelViewSet):
-
+    permission_classes = [IsAuthenticated]
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
-    permission_classes = [AllowAny]
 
     @action(detail=True, methods=["get"])
     def up_vote(self, request, pk=None):

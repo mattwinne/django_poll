@@ -1,5 +1,6 @@
 import { Link, useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
+import fetchWrapper from "../newFetchWrapper";
 import useQuestions from "components/Questions";
 
 const Detail = () => {
@@ -14,16 +15,8 @@ const Detail = () => {
   const [radio, setRadio] = useState([0]);
   const updateVote = () => {
     if (radio !== 0) {
-      fetch(`/api/choices/${radio}/up_vote/`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }).then((result) => {
-        result.json().then(() => {
-          history.push(`/results/${slug}`, { slug });
-        });
+      fetchWrapper.get(`/api/choices/${radio}/up_vote/`).then(() => {
+        history.push(`/results/${slug}`, { slug });
       });
     }
   };
