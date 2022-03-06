@@ -1,10 +1,17 @@
 import datetime
 
 import pytest
+# from accounts.models import User, CustomAccountManager
 from accounts.factories import UserFactory
 from django.test import TestCase
 from django.utils import timezone
-from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
+from rest_framework.test import (
+    APIRequestFactory,
+    APITestCase,
+    force_authenticate,
+    # APIClient,
+)
+# from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import factories
 from .models import Choice, Question
@@ -16,12 +23,27 @@ class TestAPI(APITestCase):
     urlQ = "http://0.0.0.0:8000/api/questions/"
     urlC = "http://0.0.0.0:8000/api/choices/"
 
+    # @pytest.fixture
+    # def api_client():
+    #     user = User.objects.create_user(username='john', email='js@js.com', password='js.sj')
+    #     client = APIClient()
+    #     refresh = RefreshToken.for_user(user)
+    #     client.credentials(HTTP_AUTHORIZATION=f'JWT {refresh.access_token}')
+    #     return client
+
     def setUp(self):
 
         i = 11
         while i <= 15:
             factories.QuestionFactory.create(id=i)
             i += 1
+
+    # @pytest.mark.django_db
+    # def test_get_questions(api_client):
+    #     response = api_client().get("http://0.0.0.0:8000/api/questions/")
+    #     data = response.data
+    #     assert response.status_code == 200
+    #     assert type(data) == list
 
     def test_get_questions(self):
         user = UserFactory.create(is_staff=True, is_superuser=True, is_active=True)
@@ -61,9 +83,9 @@ class TestAPI(APITestCase):
         request = factory.get(f"http://0.0.0.0:8000/api/{listSize}/list_n_questions/")
         force_authenticate(request, user=user)
         response = view(request)
+        result = response.data
         assert response.status_code == 200
-        # assert type(result) == list
-        # assert len(result) == listSize
+        assert len(result) == listSize
 
     def test_post_question(self):
         # data = {
