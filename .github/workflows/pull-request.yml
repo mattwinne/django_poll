@@ -3,11 +3,39 @@ name: pull request
 on: pull_request
 
 jobs:
+  create-envfile:
+ 
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_DEBUG: false
+        envkey_SOME_API_KEY: "123456abcdef"
+        envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        some_other_variable: foobar
+        directory: <directory_name>
+        file_name: .env
+        fail_on_empty: false
   docker:
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
     steps:
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        DB_NAME: postgres
+        DB_PASSWORD: postgres
+        DB_USER: postgres
+        DB_HOST: postgres
+        DB_PORT: 5432
+        APP_SERVER: uwsgi
+        SECRET_KEY: djwj38dj38#*Jejd83j#JDj3j)$&DJ#did3#$)J#HD*#Jdueis#83743jd302jdjD#U*d
+        SIGNING_KEY: 4ni6)=nns9w&+g7)3temo#rwdp_dhr+5i6ws+^p&wg2109i)4msdf3d3dj3js39dj2j33d
+        DEBUG: 0
+
     - name: Checkout
       uses: actions/checkout@v1
 
