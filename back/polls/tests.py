@@ -1,6 +1,7 @@
 import datetime
 
 import pytest
+
 # from accounts.models import User, CustomAccountManager
 from accounts.factories import UserFactory
 from django.test import TestCase
@@ -11,6 +12,7 @@ from rest_framework.test import (
     force_authenticate,
     # APIClient,
 )
+
 # from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import factories

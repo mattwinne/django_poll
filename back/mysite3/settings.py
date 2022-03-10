@@ -1,9 +1,9 @@
 import os
+from datetime import timedelta
+from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 
-from datetime import timedelta
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,12 +25,7 @@ DEBUG = int(os.environ.get("DEBUG", 0))
 
 APP_SERVER = os.environ.get("APP_SERVER", "")
 
-ALLOWED_HOSTS = [
-    "0.0.0.0",
-    "django",
-    "0.0.0.0:8000",
-    "http://0.0.0.0:4000"
-]
+ALLOWED_HOSTS = ["0.0.0.0", "django", "0.0.0.0:8000", "http://0.0.0.0:4000"]
 
 # Application definition
 
