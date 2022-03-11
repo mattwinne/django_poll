@@ -8,25 +8,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Make envfile
-      if: always()
-      uses: SpicyPizza/create-envfile@v1.3
-      with:
-        envkey_DB_NAME: postgres
-        envkey_DB_PASSWORD: postgres
-        envkey_DB_USER: postgres
-        envkey_DB_HOST: postgres
-        envkey_DB_PORT: 5432
-        envkey_APP_SERVER: uwsgi
-        envkey_SECRET_KEY: djwj38dj38#*Jejd83j#JDj3j)$&DJ#did3#$)J#HD*#Jdueis#83743jd302jdjD#U*d
-        envkey_SIGNING_KEY: 4ni6)=nns9w&+g7)3temo#rwdp_dhr+5i6ws+^p&wg2109i)4msdf3d3dj3js39dj2j33d
-        envkey_DEBUG: 0
-        directory: .
-        file_name: .env
-
     - name: Checkout
       if: always()
       uses: actions/checkout@v1
+
+    - name: Make envfile
+      if: always()
+      run: |
+        touch .env
+        echo DB_NAME=postgres >> .env
+        echo DB_PASSWORD=postgres >> .env
+        echo DB_USER=postgres >> .env
+        echo DB_HOST=postgres >> .env
+        echo DB_PORT=5432 >> .env
+        echo APP_SERVER=uwsgi >> .env
+        echo SECRET_KEY=djwj38dj38#*Jejd83j#JDj3j)$&DJ#did3#$)J#HD*#Jdueis#83743jd302jdjD#U*d >> .env
+        echo SIGNING_KEY=4ni6)=nns9w&+g7)3temo#rwdp_dhr+5i6ws+^p&wg2109i)4msdf3d3dj3js39dj2j33d >> .env
+        echo DEBUG=0 >> .env
+        cat .env
 
     - name: Start containers
       if: always()
