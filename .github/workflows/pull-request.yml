@@ -17,13 +17,13 @@ jobs:
       run: |
         touch .env
         echo DB_NAME=postgres >> .env
-        echo DB_PASSWORD=postgres >> .env
-        echo DB_USER=postgres >> .env
+        echo DB_PASSWORD=${{ secrets.DB_PASSWORD}} >> .env
+        echo DB_USER=${{ secrets.DB_USER }} >> .env
         echo DB_HOST=postgres >> .env
         echo DB_PORT=5432 >> .env
         echo APP_SERVER=uwsgi >> .env
-        echo SECRET_KEY=djwj38dj38#*Jejd83j#JDj3j)$&DJ#did3#$)J#HD*#Jdueis#83743jd302jdjD#U*d >> .env
-        echo SIGNING_KEY=4ni6)=nns9w&+g7)3temo#rwdp_dhr+5i6ws+^p&wg2109i)4msdf3d3dj3js39dj2j33d >> .env
+        echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+        echo SIGNING_KEY=${{ secrets.SIGNING_KEY }} >> .env
         echo DEBUG=0 >> .env
         cat .env
 
