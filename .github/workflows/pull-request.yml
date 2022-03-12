@@ -9,9 +9,26 @@ jobs:
 
     steps:
     - name: Checkout
+      if: always()
       uses: actions/checkout@v1
 
+    - name: Make envfile
+      if: always()
+      run: |
+        touch .env
+        echo DB_NAME=postgres >> .env
+        echo DB_PASSWORD=${{ secrets.DB_PASSWORD}} >> .env
+        echo DB_USER=${{ secrets.DB_USER }} >> .env
+        echo DB_HOST=postgres >> .env
+        echo DB_PORT=5432 >> .env
+        echo APP_SERVER=uwsgi >> .env
+        echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+        echo SIGNING_KEY=${{ secrets.SIGNING_KEY }} >> .env
+        echo DEBUG=0 >> .env
+        cat .env
+
     - name: Start containers
+      if: always()
       run: docker-compose -f "docker-compose.yml" up -d --build
 
     - name: Make Migrations

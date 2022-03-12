@@ -5,9 +5,9 @@ services:
     container_name: postgres
     image: postgres
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - ~/srv/docker/template-postgres/data:/var/lib/postgresql/data:rw
 
@@ -23,6 +23,9 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
+    env_file:
+      - .env
+    
 
   react:
     container_name: react
