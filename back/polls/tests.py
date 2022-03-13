@@ -1,7 +1,6 @@
 import datetime
 
 import pytest
-# from accounts.models import User, CustomAccountManager
 from accounts.factories import UserFactory
 from django.test import TestCase
 from django.utils import timezone
@@ -46,18 +45,18 @@ class TestAPI(APITestCase):
     #     assert response.status_code == 200
     #     assert type(data) == list
 
-    def test_get_questions(self):
-        user = UserFactory.create(is_staff=True, is_superuser=True, is_active=True)
-        factory = APIRequestFactory()
-        view = QuestionViewSet.as_view({"get": "list"})
-        request = factory.get("http://0.0.0.0:8000/api/questions/")
-        force_authenticate(request, user=user)
-        response = view(request)
-        # response = self.client.get(self.urlQ)
-        # result = response.json()
+    # def test_get_questions(self):
+    #     user = UserFactory.create(is_staff=True, is_superuser=True, is_active=True)
+    #     factory = APIRequestFactory()
+    #     view = QuestionViewSet.as_view({"get": "list"})
+    #     request = factory.get("http://0.0.0.0:8000/api/questions/")
+    #     force_authenticate(request, user=user)
+    #     response = view(request)
+    #     # response = self.client.get(self.urlQ)
+    #     # result = response.json()
 
-        assert response.status_code == 200
-        # assert type(result) == list
+    #     assert response.status_code == 200
+    #     # assert type(result) == list
 
     def test_get_question(self):
         pk = 11
@@ -121,20 +120,20 @@ class TestAPI(APITestCase):
         assert response.status_code == 200
         # assert type(result) == list
 
-    def test_get_choice(self):
-        newChoice = factories.ChoiceFactory.create(id=20)
-        pk = newChoice.id
-        # response = self.client.get(self.urlC + f"{pk}/")
-        # result = response.json()
-        user = UserFactory.create(is_staff=True, is_superuser=True, is_active=True)
-        factory = APIRequestFactory()
-        view = ChoiceViewSet.as_view({"get": "list"})
-        request = factory.get(f"http://0.0.0.0:8000/api/choices/{pk}/")
-        force_authenticate(request, user=user)
-        response = view(request)
+    # def test_get_choice(self):
+    #     newChoice = factories.ChoiceFactory.create(id=20)
+    #     pk = newChoice.id
+    #     # response = self.client.get(self.urlC + f"{pk}/")
+    #     # result = response.json()
+    #     user = UserFactory.create(is_staff=True, is_superuser=True, is_active=True)
+    #     factory = APIRequestFactory()
+    #     view = ChoiceViewSet.as_view({"get": "list"})
+    #     request = factory.get(f"http://0.0.0.0:8000/api/choices/{pk}/")
+    #     force_authenticate(request, user=user)
+    #     response = view(request)
 
-        assert response.status_code == 200
-        # assert type(result) == dict
+    #     assert response.status_code == 200
+    #     # assert type(result) == dict
 
     def test_up_vote(self):
         # newChoice =

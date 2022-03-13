@@ -61,7 +61,7 @@ jobs:
 
     - name: Test polls
       if: always()
-      run: docker exec django pytest --cov-report term-missing --cov=polls --ds=mysite3.settings
+      run: docker exec -u root django tox -e pytest
 
     - name: Stop containers
       if: always()
