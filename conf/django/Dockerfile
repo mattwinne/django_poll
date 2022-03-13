@@ -1,10 +1,10 @@
 FROM python:3.10-slim
-
+ 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE 1
-
+ 
 COPY conf/django/requirements.txt /tmp/requirements.txt
-
+ 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends build-essential \
   && rm -rf /var/lib/apt/lists/* \
@@ -13,14 +13,14 @@ RUN apt-get update \
   && useradd -U app_user \
   && install -d -m 0755 -o app_user -g app_user /app/static \
   && apt-get remove -y build-essential && apt-get -y autoremove
-
+ 
 WORKDIR /app
-
+ 
 USER app_user:app_user
-
+ 
 COPY --chown=app_user:app_user conf/django/docker-entrypoint.sh ..
 COPY --chown=app_user:app_user ./back /app/
-
+ 
 RUN chmod +x ../*.sh
 EXPOSE 8000
 ENTRYPOINT ["../docker-entrypoint.sh"]

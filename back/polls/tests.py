@@ -1,7 +1,6 @@
 import datetime
 
 import pytest
-
 # from accounts.models import User, CustomAccountManager
 from accounts.factories import UserFactory
 from django.test import TestCase

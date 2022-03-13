@@ -49,11 +49,11 @@ jobs:
 
     - name: Flake8
       if: always()
-      run: docker exec django tox -e flake8
+      run: docker exec -u root django tox -e flake8
 
     - name: Black
       if: always()
-      run: docker exec django tox -e black
+      run: docker exec -u root django tox -e black
 
     - name: ESLint
       if: always()
