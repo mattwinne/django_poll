@@ -11,7 +11,7 @@ if [ ${DEBUG:=0} -ne 1 ]
 then
   echo "Collecting static files into STATIC_ROOT..."
   python manage.py collectstatic --noinput
-  if [ ${APP_SERVER} == "wsgi" ]
+  if [ ${APP_SERVER} == "uwsgi" ]
   then
     echo "Launching uWSGI"
     echo ${APP_SERVER}
