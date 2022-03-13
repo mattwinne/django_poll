@@ -9,7 +9,7 @@ RUN npm config set unsafe-perm true
 RUN npm install yarn && \
     yarn global add webpack@5.70.0 && \
     yarn global add webpack-dev-server@4.7.4 && \
-    yarn global add eslint@5.16.0 && \
+    yarn global add eslint@8.11.0 && \
     yarn install
 
 RUN mv /tmp/node_modules /
