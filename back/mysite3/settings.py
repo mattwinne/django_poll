@@ -180,3 +180,6 @@ CORS_ALLOWED_ORIGINS = [
 CSRF_TRUSTED_ORIGINS = [
     "http://0.0.0.0:4000",
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_URL = os.environ.get("STATIC_URL", "/static/")

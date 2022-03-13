@@ -6,6 +6,8 @@
 *.pyc
 /static/*
 static/*
+/back/static/*
+back/static/*
 # Packages
 *.egg
 *.egg-info
