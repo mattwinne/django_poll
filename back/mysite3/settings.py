@@ -4,7 +4,8 @@ from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 
-
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +26,7 @@ DEBUG = int(os.environ.get("DEBUG", 0))
 
 APP_SERVER = os.environ.get("APP_SERVER", "")
 
-ALLOWED_HOSTS = ["0.0.0.0", "django", "0.0.0.0:8000", "http://0.0.0.0:4000"]
+ALLOWED_HOSTS = ["0.0.0.0", "django", "0.0.0.0:8000", "http://0.0.0.0:4000", "http://0.0.0.0:80"]
 
 # Application definition
 
@@ -144,6 +145,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = os.environ.get("STATIC_URL", "/static/")
 
 # Default primary key field type
@@ -175,11 +177,12 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://0.0.0.0:4000",
+    "http://0.0.0.0:80"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://0.0.0.0:4000",
+    "http://0.0.0.0:80"
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATIC_URL = os.environ.get("STATIC_URL", "/static/")
+

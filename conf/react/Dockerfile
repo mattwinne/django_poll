@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:14-alpine as dev
 
 WORKDIR /tmp
 COPY front/package.json /tmp/
@@ -25,3 +25,22 @@ COPY /front/.eslintrc.json /app/
 
 COPY /conf/react/webpack.dev.js /app/
 COPY /conf/react/webpack.common.js /app/
+
+FROM dev as serve
+
+ENV NODE_ENV=production
+
+COPY ./front /app/
+COPY /conf/react/nginx.conf /app/
+COPY /conf/react/webpack.prod.js /app/
+
+RUN yarn run build:prod
+
+FROM nginx:1.21.6-alpine as prod
+
+COPY --from=serve /app/build /app/
+COPY --from=serve /app/nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
