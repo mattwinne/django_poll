@@ -29,11 +29,7 @@ jobs:
 
     - name: Build containers
       if: always()
-      run: docker-compose build
-    
-    - name: Start containers
-      if: always()
-      run: docker-compose up
+      run: docker-compose up -d --build
 
     - name: Flake8
       if: always()
