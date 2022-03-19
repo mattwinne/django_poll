@@ -24,28 +24,12 @@ jobs:
         echo APP_SERVER=uwsgi >> .env
         echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
         echo SIGNING_KEY=${{ secrets.SIGNING_KEY }} >> .env
-        echo DEBUG=0 >> .env
+        echo DEBUG=1 >> .env
         cat .env
 
-    - name: Start containers
+    - name: Build containers
       if: always()
-      run: docker-compose -f "docker-compose.yml" up -d --build
-
-    - name: Make Migrations
-      if: always()
-      run: docker exec django python manage.py makemigrations
-
-    - name: Migrate
-      if: always()
-      run: docker exec django python manage.py migrate
-
-    - name: Make Migrations Polls
-      if: always()
-      run: docker exec django python manage.py makemigrations accounts
-
-    - name: Migrate Polls
-      if: always()
-      run: docker exec django python manage.py migrate
+      run: docker-compose up -d --build
 
     - name: Flake8
       if: always()

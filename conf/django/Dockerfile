@@ -10,17 +10,12 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/* \
   && pip install --no-cache-dir -r /tmp/requirements.txt \
   && rm -rf /tmp/requirements.txt \
-  && useradd -U app_user \
-  && install -d -m 0755 -o app_user -g app_user /app/static \
   && apt-get remove -y build-essential && apt-get -y autoremove
- 
+
 WORKDIR /app
  
-USER app_user:app_user
+COPY conf/django/docker-entrypoint.sh ..
+COPY ./back /app/
  
-COPY --chown=app_user:app_user conf/django/docker-entrypoint.sh ..
-COPY --chown=app_user:app_user ./back /app/
- 
-RUN chmod +x ../*.sh
 EXPOSE 8000
 ENTRYPOINT ["../docker-entrypoint.sh"]

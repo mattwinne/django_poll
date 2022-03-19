@@ -9,11 +9,14 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, './build'),
-    filename: 'bundle.js',
+    filename: '[name].js',
     publicPath: '/',
   },
   plugins: [
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/
+    }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin(
       {

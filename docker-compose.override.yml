@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  django:
+    command: python manage.py runserver 0.0.0.0:8000
+    
+  react:
+    build:
+      target: dev
+    command: yarn run start:dev
+    ports:
+      - 4000:4000
