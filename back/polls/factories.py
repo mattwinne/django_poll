@@ -17,5 +17,5 @@ class ChoiceFactory(DjangoModelFactory):
         model = models.Choice
 
     text = factory.Faker("text")
-    question = factory.SubFactory(QuestionFactory, id=None)
+    question = factory.SubFactory(QuestionFactory)
     votes = factory.fuzzy.FuzzyInteger(0, 100)

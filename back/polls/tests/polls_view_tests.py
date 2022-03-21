@@ -16,16 +16,16 @@ from polls.views import ChoiceViewSet, QuestionViewSet
 class TestAPI(APITestCase):
     def setUp(self):
 
-        self.qfactory1 = factories.QuestionFactory.create(id=1)
-        self.qfactory2 = factories.QuestionFactory.create(id=2)
-        self.qfactory3 = factories.QuestionFactory.create(id=3)
-        self.qfactory4 = factories.QuestionFactory.create(id=4)
-        self.qfactory5 = factories.QuestionFactory.create(id=5)
+        self.qfactory1 = factories.QuestionFactory.create(id=50)
+        self.qfactory2 = factories.QuestionFactory.create(id=51)
+        self.qfactory3 = factories.QuestionFactory.create(id=52)
+        self.qfactory4 = factories.QuestionFactory.create(id=53)
+        self.qfactory5 = factories.QuestionFactory.create(id=54)
 
-        self.cfactory1 = factories.ChoiceFactory.create(id=25)
-        self.cfactory2 = factories.ChoiceFactory.create(id=26)
-        self.cfactory3 = factories.ChoiceFactory.create(id=27)
-        self.cfactory4 = factories.ChoiceFactory.create(id=28)
+        self.cfactory1 = factories.ChoiceFactory.create(id=100)
+        self.cfactory2 = factories.ChoiceFactory.create(id=101)
+        self.cfactory3 = factories.ChoiceFactory.create(id=102)
+        self.cfactory4 = factories.ChoiceFactory.create(id=103)
 
         self.user = UserFactory.create(is_staff=True, is_superuser=True, is_active=True)
 
