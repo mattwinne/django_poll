@@ -22,10 +22,10 @@ class TestAPI(APITestCase):
         self.qfactory4 = factories.QuestionFactory.create(id=4)
         self.qfactory5 = factories.QuestionFactory.create(id=5)
 
-        self.cfactory1 = factories.ChoiceFactory.create()
-        self.cfactory2 = factories.ChoiceFactory.create()
-        self.cfactory3 = factories.ChoiceFactory.create()
-        self.cfactory4 = factories.ChoiceFactory.create()
+        self.cfactory1 = factories.ChoiceFactory.create(id=25)
+        self.cfactory2 = factories.ChoiceFactory.create(id=26)
+        self.cfactory3 = factories.ChoiceFactory.create(id=27)
+        self.cfactory4 = factories.ChoiceFactory.create(id=28)
 
         self.user = UserFactory.create(is_staff=True, is_superuser=True, is_active=True)
 
