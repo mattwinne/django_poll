@@ -1,3 +1,4 @@
+
 import pytest
 from accounts.factories import UserFactory
 from accounts.views import BlacklistTokenUpdateView, CustomUserCreate
@@ -35,12 +36,16 @@ class TestAccountsAPI(APITestCase):
         assert response.status_code == 400
 
     def test_BlacklistTokenUpdateView_post(self):
-        JWT1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXB"
-        JWT2 = "lIjoicmVmcmVzaCIsImV4cCI6MTY0ODY5NjY3NiwiaWF0IjoxNjQ3ODMyNjc2LCJqdGkiOiIyZTI0"
-        JWT3 = "YjdjNzgwNDg0MGU1YWE2ODliOTg5NTBkNDlhYyIsInVzZXJfaWQiOjF9.q2"
-        JWT4 = "IqDijqyx05awpqVltBm6Sjbtg6lVhsE_9pVGtZR5U"
-        JWT = JWT1 + JWT2 + JWT3 + JWT4
-        token = {"refresh_token": JWT}
+        #Breaking the string up to meet flake8 linting requirements
+        JWT1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90"
+        JWT2 = "eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0ODcwMzAwOSwiaWF0Ijox"
+        JWT3 = "NjQ3ODM5MDA5LCJqdGkiOiIzMTJkMGU2ZWQwNmQ0N"
+        JWT4 = "WY5OTUzNGY4NGU5ZTZjOWQwOSIsInVzZXJfaWQiOjF9.c"
+        JWT5 = "-bg49py17OpOxnST_ZFVECDqFXAwkjqyFi0X_aCQ_M"
+        JWT = JWT1 + JWT2 + JWT3 + JWT4 + JWT5
+        token = {
+            "refresh_token": JWT
+        }
 
         view = BlacklistTokenUpdateView.as_view()
         request = self.factory.post("/api/user/logout/blacklist/", token)
