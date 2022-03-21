@@ -1,8 +1,7 @@
 import pytest
+from accounts import factories
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-
-from . import factories
 
 
 class UserAccountTests(TestCase):
