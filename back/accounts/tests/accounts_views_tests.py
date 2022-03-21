@@ -37,11 +37,11 @@ class TestAccountsAPI(APITestCase):
 
     def test_BlacklistTokenUpdateView_post(self):
         #Breaking the string up to meet flake8 linting requirements
-        JWT1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90e"
-        JWT2 = "XBlIjoicmVmcmVzaCIsImV4cCI6MTY0ODcwMzY4NSwiaWF0Ijo"
-        JWT3 = "xNjQ3ODM5Njg1LCJqdGkiOiI5YWRjY2Q3MTUyZjE0NjI1YTU0N"
-        JWT4 = "Tg1ODg3MTgxZWFlZCIsInVzZXJfaWQiOjF9.GwfQ7n25hlPpjt"
-        JWT5 = "NGQdKsBbyyP985mtAciCJpBB5AxI0"
+        JWT1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b"
+        JWT2 = "2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0ODcw"
+        JWT3 = "NDM2NCwiaWF0IjoxNjQ3ODQwMzY0LCJqdGkiOiJjMWM1Yz"
+        JWT4 = "VmMzE1M2U0MGZjYjE3OWRjZjVjMzkzMWJkYyIsIn"
+        JWT5 = "VzZXJfaWQiOjF9.SFFJW60-L5kcrbM35KwjyiSXCaoftTdfd4Z3HZVugEY"
         JWT = JWT1 + JWT2 + JWT3 + JWT4 + JWT5
         token = {
             "refresh_token": JWT
