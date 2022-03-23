@@ -2,7 +2,6 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,12 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "")
-if SECRET_KEY == "":
-    SECRET_KEY = get_random_secret_key()
 
 SIGNING_KEY = os.environ.get("SIGNING_KEY", "")
-if SIGNING_KEY == "":
-    SIGNING_KEY = get_random_secret_key()
 
 # SECRET_KEY = "django-insecure-p3#t01+io_2i*7+$55d=y03swdn=ll)6zxn3s+e=7z^pk7w%x@"
 
@@ -24,7 +19,13 @@ DEBUG = int(os.environ.get("DEBUG", 0))
 
 APP_SERVER = os.environ.get("APP_SERVER", "")
 
-ALLOWED_HOSTS = ["0.0.0.0", "django", "0.0.0.0:8000", "http://0.0.0.0:4000", "http://0.0.0.0:80"]
+ALLOWED_HOSTS = [
+    "0.0.0.0",
+    "django",
+    "0.0.0.0:8000",
+    "http://0.0.0.0:4000",
+    "http://0.0.0.0:80",
+]
 
 # Application definition
 
@@ -87,6 +88,11 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "TEST_REQUEST_RENDERER_CLASSES": [
+        "rest_framework.renderers.MultiPartRenderer",
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.TemplateHTMLRenderer",
+    ],
 }
 
 WSGI_APPLICATION = "mysite3.wsgi.application"
@@ -173,12 +179,6 @@ SIMPLE_JWT = {
 #     'http://0.0.0.0:4000',
 # ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://0.0.0.0:4000",
-    "http://0.0.0.0:80"
-]
+CORS_ALLOWED_ORIGINS = ["http://0.0.0.0:4000", "http://0.0.0.0:80"]
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://0.0.0.0:4000",
-    "http://0.0.0.0:80"
-]
+CSRF_TRUSTED_ORIGINS = ["http://0.0.0.0:4000", "http://0.0.0.0:80"]
