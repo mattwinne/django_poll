@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import fetchWrapper from "../newFetchWrapper";
 import useQuestions from "components/Questions";
 
-const Detail = () => {
+function Detail() {
   const location = useLocation();
   const history = useHistory();
   const { slug } = location.state;
@@ -53,6 +53,6 @@ const Detail = () => {
       </h1>
     </>
   );
-};
+}
 
 export default Detail;

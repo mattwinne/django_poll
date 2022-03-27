@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import React from "react";
 import useQuestions from "components/Questions";
 
-const Results = () => {
+function Results() {
   const location = useLocation();
   const { slug } = location.state;
   const question = useQuestions(slug);
@@ -32,6 +32,6 @@ const Results = () => {
       </h1>
     </>
   );
-};
+}
 
 export default Results;

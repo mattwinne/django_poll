@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import useQuestions from "components/Questions";
 
-const Index = () => {
+function Index() {
   const questionsInList = 5;
   const questions = useQuestions(`${questionsInList}/list_n_questions`);
   const listQuestion = (item) => {
@@ -27,6 +27,9 @@ const Index = () => {
         ? questions.map((item) => listQuestion(item))
         : noQuestions()}
       <br />
+      <h1 style={{ color: "blue", fontSize: "10px" }}>
+        <Link to="/create">Create a Poll</Link>
+      </h1>
       <br />
       <h1 style={{ color: "blue", fontSize: "10px" }}>
         <Link to="/register">Create an account</Link>
@@ -34,12 +37,11 @@ const Index = () => {
       <h1 style={{ color: "blue", fontSize: "10px" }}>
         <Link to="/login">Login</Link>
       </h1>
-      <br />
       <h1 style={{ color: "blue", fontSize: "10px" }}>
         <Link to="/logout">Logout</Link>
       </h1>
     </>
   );
-};
+}
 
 export default Index;

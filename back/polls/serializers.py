@@ -9,7 +9,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
         fields = ["id", "question", "text", "votes"]
 
 
-class QuestionSeralizer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     choices = ChoiceSerializer(many=True, read_only=True)
 
     class Meta:
