@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import React, { useEffect } from "react";
-import { fetchHeaders, fetchWrapper } from "../newFetchWrapper";
+import { fetchHeaders, fetchWrapper } from "../fetchWrapper";
 
 export default function SignOut() {
   const history = useHistory();

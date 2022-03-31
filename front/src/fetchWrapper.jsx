@@ -2,7 +2,7 @@ function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
-      const error = (data && data.message) || response.statusText;
+      const error = data || response.statusText;
       return Promise.reject(error);
     }
     return data;
@@ -11,9 +11,7 @@ function handleResponse(response) {
 
 export const fetchHeaders = {
   "Access-Control-Allow-Origin": "*",
-  Authorization: localStorage.getItem("access_token")
-    ? `JWT ${localStorage.getItem("access_token")}`
-    : null,
+  Authorization: `JWT ${localStorage.getItem("access_token")}` || null,
   "Content-Type": "application/json",
   accept: "application/json",
 };

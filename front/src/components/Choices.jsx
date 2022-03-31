@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import fetchWrapper from "../newFetchWrapper";
+import fetchWrapper from "../fetchWrapper";
 
 export default function useChoices(id) {
   const [choices, setChoices] = useState([]);

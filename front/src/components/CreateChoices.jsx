@@ -1,6 +1,6 @@
 import { Link, useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import fetchWrapper from "../newFetchWrapper";
+import fetchWrapper from "../fetchWrapper";
 
 export default function CreateChoices() {
   const history = useHistory();
@@ -10,6 +10,7 @@ export default function CreateChoices() {
   const initialFormData = Object.freeze({
     question: "",
   });
+  const [error, setError] = useState("");
   const [choices, setChoices] = useState([]);
   const [formData, updateFormData] = useState(initialFormData);
   const handleChange = (e) => {
@@ -20,17 +21,25 @@ export default function CreateChoices() {
   };
 
   const handleSubmit = (e) => {
+    setError("");
     e.preventDefault();
     fetchWrapper
       .post(`/api/choices/`, { text: formData.choice, question: slug })
       .then((res) => {
         setChoices(choices.concat(res.text));
+      })
+      .catch((err) => {
+        setError(err.text);
       });
   };
 
   const displayChoices = (choice) => {
     const choiceLine = `- ${choice}`;
-    return <h1 style={{ color: "black", fontSize: "16px" }}>{choiceLine}</h1>;
+    return (
+      <h1 style={{ color: "black", fontSize: "16px" }} key={choice}>
+        {choiceLine}
+      </h1>
+    );
   };
 
   const noChoices = () => {
@@ -58,10 +67,11 @@ export default function CreateChoices() {
           onChange={handleChange}
         />
       </label>
-      <br />
+      <h2 style={{ color: "red", fontSize: "16px" }}> {error}</h2>
       <button className="mybutton" type="button" onClick={handleSubmit}>
         Create Choice
       </button>
+
       <br />
       <br />
       <button className="mybutton" type="button" onClick={finish}>

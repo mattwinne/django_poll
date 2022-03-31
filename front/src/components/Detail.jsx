@@ -1,6 +1,6 @@
 import { Link, useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import fetchWrapper from "../newFetchWrapper";
+import fetchWrapper from "../fetchWrapper";
 import useQuestions from "components/Questions";
 
 function Detail() {
@@ -9,15 +9,19 @@ function Detail() {
   const { slug } = location.state;
   const pageQuestion = useQuestions(slug);
   const pageChoices = pageQuestion.choices;
+  const [error, setError] = useState("");
   if (pageChoices) {
     pageChoices.sort((a, b) => (a.id > b.id ? 1 : -1));
   }
   const [radio, setRadio] = useState([0]);
   const updateVote = () => {
-    if (radio !== 0) {
+    setError("");
+    if (radio != 0) {
       fetchWrapper.get(`/api/choices/${radio}/up_vote/`).then(() => {
         history.push(`/results/${slug}`, { slug });
       });
+    } else {
+      setError("Must select a choice");
     }
   };
 
@@ -45,7 +49,8 @@ function Detail() {
       <button className="mybutton" type="button" onClick={() => updateVote()}>
         Vote
       </button>
-
+      <br />
+      <h2 style={{ color: "red", fontSize: "16px" }}> {error}</h2>
       <br />
 
       <h1 style={{ color: "blue", fontSize: "16px" }}>
