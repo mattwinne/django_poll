@@ -1,6 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import React, { useState } from "react";
-import { fetchHeaders, fetchWrapper } from "../newFetchWrapper";
+import { fetchHeaders, fetchWrapper } from "../fetchWrapper";
 
 export default function SignIn() {
   const history = useHistory();
@@ -10,7 +10,9 @@ export default function SignIn() {
   });
 
   const [formData, updateFormData] = useState(initialFormData);
-
+  const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const handleChange = (e) => {
     updateFormData({
       ...formData,
@@ -19,6 +21,10 @@ export default function SignIn() {
   };
 
   const handleSubmit = (e) => {
+    setError("");
+    setPasswordError("");
+    setEmailError("");
+
     e.preventDefault();
     fetchWrapper
       .post(`/api/token/`, {
@@ -32,6 +38,17 @@ export default function SignIn() {
           "access_token"
         )}`;
         history.push("/index");
+      })
+      .catch((err) => {
+        if (err.email) {
+          setEmailError(err.email);
+        }
+        if (err.password) {
+          setPasswordError(err.password);
+        }
+        if (err.isString) {
+          setError(err);
+        }
       });
   };
 
@@ -51,7 +68,7 @@ export default function SignIn() {
           onChange={handleChange}
         />
       </label>
-      <br />
+      <h2 style={{ color: "red", fontSize: "12px" }}> {emailError}</h2>
       <label htmlFor="password">
         Password
         <input
@@ -65,11 +82,12 @@ export default function SignIn() {
           onChange={handleChange}
         />
       </label>
-      <br />
+      <h2 style={{ color: "red", fontSize: "12px" }}> {passwordError}</h2>
       <button className="mybutton" type="button" onClick={handleSubmit}>
         Login
       </button>
       <br />
+      <h2 style={{ color: "red", fontSize: "12px" }}> {error}</h2>
       <br />
       <h1 style={{ color: "blue", fontSize: "10px" }}>
         <Link to="/index">Back to polls</Link>

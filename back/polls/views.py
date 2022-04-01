@@ -1,17 +1,17 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from polls.models import Choice, Question
-from polls.serializers import ChoiceSerializer, QuestionSeralizer
+from polls.serializers import ChoiceSerializer, QuestionSerializer
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Question.objects.all()
-    serializer_class = QuestionSeralizer
+    serializer_class = QuestionSerializer
 
     @action(detail=True, methods=["get"])
     def list_n_questions(self, requests, pk=id):
@@ -27,8 +27,25 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         queryset = Question.objects.all()
         user = get_object_or_404(queryset, pk=pk)
-        serializer = QuestionSeralizer(user)
+        serializer = QuestionSerializer(user)
         return Response(serializer.data)
+
+    def create(self, request):
+        # serializer = QuestionSerializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+        # print(serializer.data)
+        # serializer.save(serializer)
+        # question = self.get_queryset()
+        # question.save()
+        # return Response(question)
+        serializer = QuestionSerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            question = serializer.save()
+            if question:
+                json = serializer.data
+                return Response(json, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChoiceViewSet(viewsets.ModelViewSet):
@@ -53,3 +70,13 @@ class ChoiceViewSet(viewsets.ModelViewSet):
         user = get_object_or_404(queryset, pk=pk)
         serializer = ChoiceSerializer(user)
         return Response(serializer.data)
+
+    def create(self, request):
+        serializer = ChoiceSerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            choice = serializer.save()
+            if choice:
+                json = serializer.data
+                return Response(json, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

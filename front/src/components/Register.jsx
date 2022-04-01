@@ -1,6 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import React, { useState } from "react";
-import fetchWrapper from "../newFetchWrapper";
+import fetchWrapper from "../fetchWrapper";
 
 export default function SignUp() {
   const history = useHistory();
@@ -11,6 +11,10 @@ export default function SignUp() {
   });
 
   const [formData, updateFormData] = useState(initialFormData);
+  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (e) => {
     updateFormData({
@@ -20,6 +24,10 @@ export default function SignUp() {
     });
   };
   const handleSubmit = (e) => {
+    setError("");
+    setUsernameError("");
+    setPasswordError("");
+    setEmailError("");
     e.preventDefault();
     fetchWrapper
       .post(`/api/user/create/`, {
@@ -29,6 +37,20 @@ export default function SignUp() {
       })
       .then(() => {
         history.push("/login");
+      })
+      .catch((err) => {
+        if (err.email) {
+          setEmailError(err.email);
+        }
+        if (err.userName) {
+          setUsernameError(err.userName);
+        }
+        if (err.password) {
+          setPasswordError(err.password);
+        }
+        if (err.isString) {
+          setError(err);
+        }
       });
   };
 
@@ -48,7 +70,7 @@ export default function SignUp() {
           onChange={handleChange}
         />
       </label>
-      <br />
+      <h2 style={{ color: "red", fontSize: "12px" }}> {emailError}</h2>
       <label htmlFor="username">
         Username
         <input
@@ -62,7 +84,7 @@ export default function SignUp() {
           onChange={handleChange}
         />
       </label>
-      <br />
+      <h2 style={{ color: "red", fontSize: "12px" }}> {usernameError}</h2>
       <label htmlFor="password">
         Password
         <input
@@ -76,11 +98,12 @@ export default function SignUp() {
           onChange={handleChange}
         />
       </label>
-      <br />
+      <h2 style={{ color: "red", fontSize: "12px" }}> {passwordError}</h2>
       <button className="mybutton" type="button" onClick={handleSubmit}>
         Create Account
       </button>
       <br />
+      <h2 style={{ color: "red", fontSize: "12px" }}> {error}</h2>
       <br />
       <h1 style={{ color: "blue", fontSize: "10px" }}>
         <Link to="/index">Back to polls</Link>

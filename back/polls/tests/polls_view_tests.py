@@ -56,6 +56,26 @@ class TestAPI(APITestCase):
         assert response.status_code == 200
         assert content["text"] == self.qfactory1.text
 
+    def test_QuestionViewSet_post(self):
+        payload = {"text": "some question"}
+
+        view = QuestionViewSet.as_view({"post": "create"})
+        request = self.factory.post("/api/questions/", payload)
+        force_authenticate(request, user=self.user)
+        response = view(request)
+
+        assert response.status_code == 201
+
+    def test_QuestionViewSet_post_invalid(self):
+        payload = {"invalid": "some question"}
+
+        view = QuestionViewSet.as_view({"post": "create"})
+        request = self.factory.post("/api/questions/", payload)
+        force_authenticate(request, user=self.user)
+        response = view(request)
+
+        assert response.status_code == 400
+
     def test_QuestionViewSet_list_n_questions(self):
         listSize = 5
         view = QuestionViewSet.as_view({"get": "list_n_questions"})
@@ -90,6 +110,26 @@ class TestAPI(APITestCase):
         content = json.loads(response.content)
         assert response.status_code == 200
         assert content["text"] == self.cfactory1.text
+
+    def test_ChoiceViewSet_post(self):
+        payload = {"text": "Prince", "question": 50}
+
+        view = ChoiceViewSet.as_view({"post": "create"})
+        request = self.factory.post("/api/choices/", payload)
+        force_authenticate(request, user=self.user)
+        response = view(request)
+
+        assert response.status_code == 201
+
+    def test_ChoiceViewSet_post_invalid(self):
+        payload = {"invalid": "Prince", "invalid2": 50}
+
+        view = ChoiceViewSet.as_view({"post": "create"})
+        request = self.factory.post("/api/choices/", payload)
+        force_authenticate(request, user=self.user)
+        response = view(request)
+
+        assert response.status_code == 400
 
     def test_up_vote(self):
         pk = self.cfactory4.id

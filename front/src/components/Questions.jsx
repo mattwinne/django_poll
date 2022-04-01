@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import fetchWrapper from "../newFetchWrapper";
+import fetchWrapper from "../fetchWrapper";
 
 export default function useQuestions(id) {
   const [questions, setQuestions] = useState([]);
