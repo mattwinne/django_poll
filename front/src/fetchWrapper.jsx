@@ -61,6 +61,18 @@ async function get(url) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
+async function patch(url, body) {
+  if (tokenExpired()) {
+    await tokenRefresh();
+  }
+  const requestOptions = {
+    method: "PATCH",
+    headers: fetchHeaders,
+    body: JSON.stringify(body),
+  };
+  return fetch(url, requestOptions).then(handleResponse);
+}
+
 async function post(url, body) {
   if (tokenExpired()) {
     await tokenRefresh();
@@ -98,6 +110,7 @@ async function del(url) {
 
 export const fetchWrapper = {
   get,
+  patch,
   post,
   put,
   delete: del,

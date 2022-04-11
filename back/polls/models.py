@@ -1,5 +1,6 @@
 import datetime
 
+from accounts.models import User
 from django.contrib import admin
 from django.db import models
 from django.utils import timezone
@@ -9,6 +10,9 @@ class Question(models.Model):
     id = models.BigAutoField(primary_key=True)
     text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published", auto_now_add=True)
+    user = models.ForeignKey(
+        User, related_name="questions", on_delete=models.CASCADE, null=True, blank=True
+    )
 
     def __str__(self):
         return self.text

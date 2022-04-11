@@ -1,3 +1,4 @@
+from accounts.views import UserViewSet
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
@@ -8,9 +9,11 @@ from rest_framework_simplejwt.views import (
 
 from polls.views import ChoiceViewSet, QuestionViewSet
 
+
 router = DefaultRouter()
 router.register(r"api/questions", QuestionViewSet, basename="questions")
 router.register(r"api/choices", ChoiceViewSet, basename="choices")
+router.register(r"api/users", UserViewSet, basename="users")
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/user/", include("accounts.urls", namespace="accounts")),

@@ -1,8 +1,19 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.forms import Textarea
+from rest_framework_simplejwt.token_blacklist import models
+from rest_framework_simplejwt.token_blacklist.admin import OutstandingTokenAdmin
 
 from .models import User
+
+
+class NewOutstandingTokenAdmin(OutstandingTokenAdmin):
+    def has_delete_permission(self, *args, **kwargs):
+        return True
+
+
+admin.site.unregister(models.OutstandingToken)
+admin.site.register(models.OutstandingToken, NewOutstandingTokenAdmin)
 
 
 class UserAdminConfig(UserAdmin):
