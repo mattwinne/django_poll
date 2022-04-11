@@ -1,7 +1,7 @@
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import fetchWrapper from "../fetchWrapper";
 import useQuestions from "components/Questions";
+import fetchWrapper from "../fetchWrapper";
 
 function Detail() {
   const location = useLocation();
@@ -49,13 +49,7 @@ function Detail() {
       <button className="mybutton" type="button" onClick={() => updateVote()}>
         Vote
       </button>
-      <br />
       <h2 style={{ color: "red", fontSize: "16px" }}> {error}</h2>
-      <br />
-
-      <h1 style={{ color: "blue", fontSize: "16px" }}>
-        <Link to="/index">Back to polls</Link>
-      </h1>
     </>
   );
 }

@@ -9,8 +9,54 @@ class TestAccountsAPI(APITestCase):
     def setUp(self):
 
         self.user = UserFactory.create(is_staff=True, is_superuser=True, is_active=True)
+        self.user2 = UserFactory.create(
+            is_staff=True,
+            is_superuser=True,
+            is_active=True,
+            user_name="user1",
+            id=2,
+            email="mymail1@mail.com",
+        )
+        self.user3 = UserFactory.create(
+            is_staff=True,
+            is_superuser=True,
+            is_active=True,
+            user_name="user2",
+            id=3,
+            email="mymail2@mail.com",
+        )
+        self.user4 = UserFactory.create(
+            is_staff=True,
+            is_superuser=True,
+            is_active=True,
+            user_name="user3",
+            id=4,
+            email="mymail3@mail.com",
+        )
+        self.user5 = UserFactory.create(
+            is_staff=True,
+            is_superuser=True,
+            is_active=True,
+            user_name="user4",
+            id=5,
+            email="mymail4@mail.com",
+        )
 
         self.factory = APIRequestFactory()
+
+    # def test_UserViewSet_retrieve(self):
+    #     pk = self.user.id
+    #     print(pk)
+    #     view = UserViewSet.as_view({"get": "retrieve"})
+    #     request = self.factory.get(f"/api/users/{pk}/")
+    #     force_authenticate(request, user=self.user)
+    #     response = view(request, pk)
+    #     response.render()
+    #     content = json.loads(response.content)
+    #     print(response)
+    #     print(content)
+    #     assert response.status_code == 200
+    #     assert content["userName"] == self.user.user_name
 
     def test_CustomUserCreate_post(self):
         user_info = {
@@ -38,10 +84,10 @@ class TestAccountsAPI(APITestCase):
         # Breaking the string up to meet flake8 linting requirements
 
         JWT1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b"
-        JWT2 = "2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0ODcw"
-        JWT3 = "NDM2NCwiaWF0IjoxNjQ3ODQwMzY0LCJqdGkiOiJjMWM1Yz"
-        JWT4 = "VmMzE1M2U0MGZjYjE3OWRjZjVjMzkzMWJkYyIsIn"
-        JWT5 = "VzZXJfaWQiOjF9.SFFJW60-L5kcrbM35KwjyiSXCaoftTdfd4Z3HZVugEY"
+        JWT2 = "2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0OTgy"
+        JWT3 = "NzAwMiwiaWF0IjoxNjQ4OTYzMDAyLCJqdGkiOiJhODk1"
+        JWT4 = "YzU0ZWMzZjc0M2E3YTk3ZmQ2MDBlODZhNDE3NiIsInVz"
+        JWT5 = "ZXJfaWQiOjR9.BzvFKT68XC7GQZq5v-9sP9L84HrHY30cD7oTZXGhpDo"
         JWT = JWT1 + JWT2 + JWT3 + JWT4 + JWT5
         token = {"refresh_token": JWT}
 

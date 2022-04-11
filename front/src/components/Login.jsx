@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import { fetchHeaders, fetchWrapper } from "../fetchWrapper";
 
@@ -89,12 +89,6 @@ export default function SignIn() {
       <br />
       <h2 style={{ color: "red", fontSize: "12px" }}> {error}</h2>
       <br />
-      <h1 style={{ color: "blue", fontSize: "10px" }}>
-        <Link to="/index">Back to polls</Link>
-      </h1>
-      <h1 style={{ color: "blue", fontSize: "10px" }}>
-        <Link to="/register">Create an account</Link>
-      </h1>
     </>
   );
 }

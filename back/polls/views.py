@@ -31,15 +31,10 @@ class QuestionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        # serializer = QuestionSerializer(data=request.data)
-        # serializer.is_valid(raise_exception=True)
-        # print(serializer.data)
-        # serializer.save(serializer)
-        # question = self.get_queryset()
-        # question.save()
-        # return Response(question)
-        serializer = QuestionSerializer(data=request.data)
-        print(request.data)
+        data = request.data
+        data["user"] = request.user.id
+        print(data)
+        serializer = QuestionSerializer(data=data)
         if serializer.is_valid():
             question = serializer.save()
             if question:
