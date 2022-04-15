@@ -8,12 +8,28 @@ function handleResponse(response) {
     return data;
   });
 }
-
-export const fetchHeaders = {
-  "Access-Control-Allow-Origin": "*",
+export const refreshBypassURL = [
+  "/api/user/logout/blacklist/",
+  "/api/user/create/",
+];
+export const header = {
+  "Access-Control-Allow-Or`igin": "*",
   Authorization: `JWT ${localStorage.getItem("access_token")}` || null,
   "Content-Type": "application/json",
   accept: "application/json",
+};
+export const headerNoAuth = {
+  "Access-Control-Allow-Or`igin": "*",
+  "Content-Type": "application/json",
+  accept: "application/json",
+};
+
+const fetchHeaders = (url) => {
+  if (refreshBypassURL.includes(url)) {
+    return headerNoAuth;
+  }
+
+  return header;
 };
 
 function tokenExpired() {
@@ -37,7 +53,7 @@ async function tokenRefresh() {
   const url = "/api/token/refresh/";
   const requestOptions = {
     method: "POST",
-    headers: fetchHeaders,
+    headers: fetchHeaders(url),
     body: JSON.stringify({ refresh: refreshToken }),
   };
   const response = await fetch(url, requestOptions)
@@ -45,7 +61,7 @@ async function tokenRefresh() {
     .then((res) => {
       localStorage.setItem("access_token", res.access);
       localStorage.setItem("refresh_token", res.refresh);
-      fetchHeaders.Authorization = `JWT ${res.access}`;
+      header.Authorization = `JWT ${res.access}`;
     });
   return response;
 }
@@ -56,7 +72,7 @@ async function get(url) {
   }
   const requestOptions = {
     method: "GET",
-    headers: fetchHeaders,
+    headers: fetchHeaders(url),
   };
   return fetch(url, requestOptions).then(handleResponse);
 }
@@ -67,19 +83,19 @@ async function patch(url, body) {
   }
   const requestOptions = {
     method: "PATCH",
-    headers: fetchHeaders,
+    headers: fetchHeaders(url),
     body: JSON.stringify(body),
   };
   return fetch(url, requestOptions).then(handleResponse);
 }
 
 async function post(url, body) {
-  if (tokenExpired()) {
+  if (tokenExpired() && refreshBypassURL.includes(url) === false) {
     await tokenRefresh();
   }
   const requestOptions = {
     method: "POST",
-    headers: fetchHeaders,
+    headers: fetchHeaders(url),
     body: JSON.stringify(body),
   };
   return fetch(url, requestOptions).then(handleResponse);
@@ -91,7 +107,7 @@ async function put(url, body) {
   }
   const requestOptions = {
     method: "PUT",
-    headers: fetchHeaders,
+    headers: fetchHeaders(url),
     body: JSON.stringify(body),
   };
   return fetch(url, requestOptions).then(handleResponse);
@@ -103,7 +119,7 @@ async function del(url) {
   }
   const requestOptions = {
     method: "DELETE",
-    headers: fetchHeaders,
+    headers: fetchHeaders(url),
   };
   return fetch(url, requestOptions).then(handleResponse);
 }

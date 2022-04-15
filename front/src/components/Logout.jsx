@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import React, { useEffect } from "react";
-import { fetchHeaders, fetchWrapper } from "../fetchWrapper";
+import { fetchWrapper, header } from "../fetchWrapper";
 
 export default function SignOut() {
   const history = useHistory();
@@ -11,7 +11,7 @@ export default function SignOut() {
     });
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-    fetchHeaders.Authorization = null;
+    header.Authorization = null;
     history.push("/login");
   });
   return <div>Logout</div>;

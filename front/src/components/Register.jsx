@@ -1,6 +1,17 @@
-import { Link, useHistory } from "react-router-dom";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import fetchWrapper from "../fetchWrapper";
+import theme from "../styles";
 
 export default function SignUp() {
   const history = useHistory();
@@ -12,9 +23,9 @@ export default function SignUp() {
 
   const [formData, updateFormData] = useState(initialFormData);
   const [error, setError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("Email Address");
+  const [usernameError, setUsernameError] = useState("Username");
+  const [passwordError, setPasswordError] = useState("Password");
 
   const handleChange = (e) => {
     updateFormData({
@@ -55,59 +66,70 @@ export default function SignUp() {
   };
 
   return (
-    <>
-      <h1 style={{ color: "blue", fontSize: "18px" }}>Register an account</h1>
-      <label htmlFor="email">
-        Email
-        <input
-          type="text"
-          id="email"
-          name="email"
-          required
-          minLength="4"
-          maxLength="255"
-          size="10"
-          onChange={handleChange}
-        />
-      </label>
-      <h2 style={{ color: "red", fontSize: "12px" }}> {emailError}</h2>
-      <label htmlFor="username">
-        Username
-        <input
-          type="text"
-          id="username"
-          name="username"
-          required
-          minLength="4"
-          maxLength="25"
-          size="10"
-          onChange={handleChange}
-        />
-      </label>
-      <h2 style={{ color: "red", fontSize: "12px" }}> {usernameError}</h2>
-      <label htmlFor="password">
-        Password
-        <input
-          type="text"
-          id="password"
-          name="password"
-          required
-          minLength="8"
-          maxLength="256"
-          size="10"
-          onChange={handleChange}
-        />
-      </label>
-      <h2 style={{ color: "red", fontSize: "12px" }}> {passwordError}</h2>
-      <button className="mybutton" type="button" onClick={handleSubmit}>
-        Create Account
-      </button>
-      <br />
-      <h2 style={{ color: "red", fontSize: "12px" }}> {error}</h2>
-      <br />
-      <h1 style={{ color: "blue", fontSize: "10px" }}>
-        <Link to="/index">Back to polls</Link>
-      </h1>
-    </>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} />
+          <Typography component="h1" variant="h5">
+            Register
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label={emailError}
+              name="email"
+              autoFocus
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="username"
+              label={usernameError}
+              type="username"
+              id="username"
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label={passwordError}
+              type="password"
+              id="password"
+              onChange={handleChange}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
+            >
+              Create Account
+            </Button>
+          </Box>
+        </Box>
+        <Typography>{error}</Typography>
+      </Container>
+    </ThemeProvider>
   );
 }

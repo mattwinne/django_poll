@@ -1,6 +1,19 @@
+import {
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
-import { fetchHeaders, fetchWrapper } from "../fetchWrapper";
+import { fetchWrapper, header } from "../fetchWrapper";
+import theme from "../styles";
 
 export default function SignIn() {
   const history = useHistory();
@@ -11,8 +24,8 @@ export default function SignIn() {
 
   const [formData, updateFormData] = useState(initialFormData);
   const [error, setError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("Password");
+  const [emailError, setEmailError] = useState("Email Address");
   const handleChange = (e) => {
     updateFormData({
       ...formData,
@@ -34,9 +47,7 @@ export default function SignIn() {
       .then((res) => {
         localStorage.setItem("access_token", res.access);
         localStorage.setItem("refresh_token", res.refresh);
-        fetchHeaders.Authorization = `JWT ${localStorage.getItem(
-          "access_token"
-        )}`;
+        header.Authorization = `JWT ${localStorage.getItem("access_token")}`;
         history.push("/index");
       })
       .catch((err) => {
@@ -53,42 +64,65 @@ export default function SignIn() {
   };
 
   return (
-    <>
-      <h1 style={{ color: "blue", fontSize: "18px" }}>Login</h1>
-      <label htmlFor="email">
-        Email
-        <input
-          type="text"
-          id="email"
-          name="email"
-          required
-          minLength="4"
-          maxLength="255"
-          size="10"
-          onChange={handleChange}
-        />
-      </label>
-      <h2 style={{ color: "red", fontSize: "12px" }}> {emailError}</h2>
-      <label htmlFor="password">
-        Password
-        <input
-          type="text"
-          id="password"
-          name="password"
-          required
-          minLength="8"
-          maxLength="256"
-          size="10"
-          onChange={handleChange}
-        />
-      </label>
-      <h2 style={{ color: "red", fontSize: "12px" }}> {passwordError}</h2>
-      <button className="mybutton" type="button" onClick={handleSubmit}>
-        Login
-      </button>
-      <br />
-      <h2 style={{ color: "red", fontSize: "12px" }}> {error}</h2>
-      <br />
-    </>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} />
+          <Typography component="h1" variant="h5">
+            Log in
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label={emailError}
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label={passwordError}
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={handleChange}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Log In
+            </Button>
+            <Typography>{error}</Typography>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }

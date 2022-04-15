@@ -1,6 +1,9 @@
-import { Link, useHistory } from "react-router-dom";
+import { Button, TextField, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import fetchWrapper from "../fetchWrapper";
+import theme from "../styles";
 
 export default function CreatePoll() {
   const history = useHistory();
@@ -9,7 +12,7 @@ export default function CreatePoll() {
   });
 
   const [formData, updateFormData] = useState(initialFormData);
-  const [error, setError] = useState("");
+  const [error, setError] = useState("Enter question here...");
   const handleChange = (e) => {
     updateFormData({
       ...formData,
@@ -34,30 +37,24 @@ export default function CreatePoll() {
   };
 
   return (
-    <>
-      <h1 style={{ color: "blue", fontSize: "18px" }}>Create a Poll</h1>
-      <label htmlFor="question">
-        Question:
-        <input
-          type="text"
-          id="question"
-          name="question"
-          required
-          minLength="1"
-          maxLength="256"
-          size="10"
-          onChange={handleChange}
-        />
-      </label>
-      <h2 style={{ color: "red", fontSize: "16px" }}> {error}</h2>
-      <button className="mybutton" type="button" onClick={handleSubmit}>
-        Create Poll
-      </button>
-
-      <br />
-      <h1 style={{ color: "blue", fontSize: "10px" }}>
-        <Link to="/index">Back to polls</Link>
-      </h1>
-    </>
+    <ThemeProvider theme={theme}>
+      <Typography
+        variant="h4"
+        sx={{ marginBottom: "4px", color: "primary.main" }}
+      >
+        Make a Poll
+      </Typography>
+      <TextField
+        fullWidth
+        id="outlined-basic"
+        label={error}
+        name="question"
+        variant="outlined"
+        onChange={handleChange}
+      />
+      <Button onClick={handleSubmit} size="xl">
+        Create
+      </Button>
+    </ThemeProvider>
   );
 }
