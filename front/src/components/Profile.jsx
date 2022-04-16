@@ -1,12 +1,26 @@
-import { Link } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardContent,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import fetchWrapper from "../fetchWrapper";
+import theme from "../styles";
 
 function Profile() {
   const [userName, setUserName] = useState("");
   const [myQuestions, setMyQuestions] = useState([""]);
   const initialFormData = Object.freeze("");
   const [formData, updateFormData] = useState(initialFormData);
+  const history = useHistory();
   const handleChange = (e) => {
     updateFormData({
       ...formData,
@@ -22,14 +36,25 @@ function Profile() {
     });
   }, []);
   const listQuestion = (item) => {
-    const pollHeader = `- ${item.text}`;
-    const route = `/results/${item.id}`;
     return (
-      <h1 style={{ color: "black", fontSize: "12px" }} key={item.id}>
-        <Link to={{ pathname: route, state: { slug: item.id } }}>
-          {pollHeader}
-        </Link>
-      </h1>
+      <Box sx={{ width: "100%" }}>
+        <Stack spacing={6}>
+          <Card>
+            <CardActionArea
+              onClick={() =>
+                history.push({
+                  pathname: `/results/${item.id}`,
+                  state: { slug: item.id },
+                })
+              }
+            >
+              <CardContent>
+                <Typography>{item.text}</Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Stack>
+      </Box>
     );
   };
   function changeUsername() {
@@ -39,32 +64,38 @@ function Profile() {
   }
 
   return (
-    <>
-      <h1 style={{ color: "blue", fontSize: "16px" }}>Profile</h1>
-      <h1 style={{ color: "black", fontSize: "12px" }}>
-        Username: {userName}
-        <label htmlFor="userName">
-          <input
-            type="text"
-            id="userName"
+    <ThemeProvider theme={theme}>
+      <Typography
+        variant="h4"
+        sx={{ marginBottom: "4px", color: "primary.main" }}
+      >
+        Profile Dashboard
+      </Typography>
+      <Grid container spacing={3} justifyContent="left">
+        <Grid item>
+          <TextField
+            fullWidth
+            id="outlined-basic"
+            label={userName}
             name="userName"
-            required
-            minLength="4"
-            maxLength="255"
-            size="10"
+            size="sm"
             onChange={handleChange}
           />
-        </label>
-        <button className="mybutton" type="button" onClick={changeUsername}>
-          Change username
-        </button>
-      </h1>
-      <h1 style={{ color: "black", fontSize: "12px" }}>Your Polls:</h1>
+        </Grid>
+        <Grid item>
+          <Button onClick={changeUsername} size="xl">
+            Change Username
+          </Button>
+        </Grid>
+      </Grid>
+      <Typography
+        variant="h5"
+        sx={{ marginTop: "10px", color: "primary.main" }}
+      >
+        Your Polls
+      </Typography>
       {myQuestions.map((item) => listQuestion(item))}
-      <h1 style={{ color: "blue", fontSize: "10px" }}>
-        <Link to="/create">Create a Poll</Link>
-      </h1>
-    </>
+    </ThemeProvider>
   );
 }
 

@@ -1,6 +1,18 @@
-import { Link, useHistory, useLocation } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import fetchWrapper from "../fetchWrapper";
+import theme from "../styles";
 
 export default function CreateChoices() {
   const history = useHistory();
@@ -34,54 +46,52 @@ export default function CreateChoices() {
   };
 
   const displayChoices = (choice) => {
-    const choiceLine = `- ${choice}`;
     return (
-      <h1 style={{ color: "black", fontSize: "16px" }} key={choice}>
-        {choiceLine}
-      </h1>
+      <ThemeProvider theme={theme}>
+        <Box sx={{ width: "100%", marginBottom: "15px" }}>
+          <Stack spacing={6}>
+            <Card>
+              <CardContent>
+                <Typography key={choice}>{choice}</Typography>
+              </CardContent>
+            </Card>
+          </Stack>
+        </Box>
+      </ThemeProvider>
     );
   };
 
-  const noChoices = () => {
-    return <h2 style={{ color: "black", fontSize: "16px" }}> Add choices</h2>;
-  };
   const finish = () => {
     history.push("/index");
   };
   return (
-    <>
-      <h1 style={{ color: "blue", fontSize: "18px" }}>Create a Poll</h1>
-      <h2 style={{ color: "black", fontSize: "16px" }}> {question}</h2>
-      {choices ? choices.map((choice) => displayChoices(choice)) : noChoices()}
-
-      <label htmlFor="choice">
-        Choice:
-        <input
-          type="text"
-          id="choice"
-          name="choice"
-          required
-          minLength="1"
-          maxLength="256"
-          size="10"
-          onChange={handleChange}
-        />
-      </label>
-      <h2 style={{ color: "red", fontSize: "16px" }}> {error}</h2>
-      <button className="mybutton" type="button" onClick={handleSubmit}>
+    <ThemeProvider theme={theme}>
+      <Typography
+        variant="h4"
+        sx={{ marginBottom: "4px", color: "primary.main" }}
+      >
+        {question}
+      </Typography>
+      {choices ? (
+        choices.map((choice) => displayChoices(choice))
+      ) : (
+        <CircularProgress />
+      )}
+      <TextField
+        fullWidth
+        id="outlined-basic"
+        label="Enter choice here..."
+        name="choice"
+        variant="outlined"
+        onChange={handleChange}
+      />
+      <Button onClick={handleSubmit} size="xl">
         Create Choice
-      </button>
-
-      <br />
-      <br />
-      <button className="mybutton" type="button" onClick={finish}>
-        Finish Poll
-      </button>
-      <br />
-      <br />
-      <h1 style={{ color: "blue", fontSize: "10px" }}>
-        <Link to="/index">Back to polls</Link>
-      </h1>
-    </>
+      </Button>
+      <Button onClick={finish} size="xl">
+        Finish
+      </Button>
+      <Typography>{error}</Typography>
+    </ThemeProvider>
   );
 }

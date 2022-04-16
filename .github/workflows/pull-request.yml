@@ -42,6 +42,7 @@ jobs:
     - name: ESLint
       if: always()
       run: docker exec react yarn lint
+      continue-on-error: true
 
     - name: Test polls
       if: always()
