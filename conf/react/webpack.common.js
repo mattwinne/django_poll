@@ -41,16 +41,18 @@ module.exports = {
               [
                 'babel-plugin-import',
                 {
-                  'libraryName': '@material-ui/core',
-                  'camel2DashComponentName': false,
+                  libraryName: '@mui/material',
+                  libraryDirectory: '',
+                  camel2DashComponentName: false,
                 },
                 'core',
               ],
               [
                 'babel-plugin-import',
                 {
-                  'libraryName': '@material-ui/icons',
-                  'camel2DashComponentName': false,
+                  libraryName: '@mui/icons-material',
+                  libraryDirectory: '',
+                  camel2DashComponentName: false,
                 },
                 'icons',
               ],

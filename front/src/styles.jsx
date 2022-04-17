@@ -1,14 +1,14 @@
 import { createTheme } from "@mui/material/styles";
 
 const Colors = {
-  primary: "#00adb5",
-  secondary: "#95defb",
+  primary: "#00bcd4",
+  secondary: "#B288C0",
   success: "#4CAF50",
   info: "#00a2ff",
   danger: "#FF5722",
   warning: "#FFC107",
   dark: "#0e1b20",
-  light: "#aaa",
+  light: "#ffab91",
   muted: "#abafb3",
   border: "#DDDFE1",
   inverse: "#2F3D4A",
@@ -20,6 +20,7 @@ const Colors = {
   /// ////////////
   white: "#fff",
   black: "#000",
+  background: "#b2ebf2",
 };
 
 const theme = createTheme({
@@ -35,10 +36,10 @@ const theme = createTheme({
   components: {
     MuiButton: {
       defaultProps: {
+        variant: "default",
+        color: "primary",
         sx: {
           marginTop: "5px",
-          color: Colors.black,
-          backgroundColor: Colors.primary,
           marginLeft: "5px",
         },
       },
@@ -53,6 +54,7 @@ const theme = createTheme({
     },
     MuiCard: {
       defaultProps: {
+        variant: "outlined",
         sx: {
           marginTop: "1px",
           height: "100%",
@@ -83,6 +85,12 @@ const theme = createTheme({
         sx: {
           marginTop: "100px",
           marginBottom: "100px",
+        },
+      },
+      MuiTypography: {
+        defaultProps: {
+          color: Colors.primary,
+          sx: { marginBottom: "4px" },
         },
       },
     },

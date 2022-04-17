@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from polls.models import Choice, Question
-from polls.serializers import ChoiceSerializer, QuestionSerializer
+from polls.serializers import ChoiceSerializer, CountSerializer, QuestionSerializer
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -19,9 +19,24 @@ class QuestionViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(question_set, many=True)
         return Response(serializer.data)
 
+    @action(detail=True, methods=["get"])
+    def list_5_questions(self, requests, pk=id):
+        pk = int(pk)
+        question_set = Question.objects.order_by("-pub_date")[pk : pk + 5]
+        serializer = self.get_serializer(question_set, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=["get"])
+    def question_count(self, requests):
+        count = Question.objects.count()
+        countDict = {"count": count}
+        serializerCount = CountSerializer(countDict, many=False)
+        return Response(serializerCount.data)
+
     def list(self, request):
         queryset = Question.objects.all()
         serializer = self.get_serializer(queryset, many=True)
+
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -33,7 +48,6 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def create(self, request):
         data = request.data
         data["user"] = request.user.id
-        print(data)
         serializer = QuestionSerializer(data=data)
         if serializer.is_valid():
             question = serializer.save()
@@ -68,7 +82,6 @@ class ChoiceViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         serializer = ChoiceSerializer(data=request.data)
-        print(request.data)
         if serializer.is_valid():
             choice = serializer.save()
             if choice:

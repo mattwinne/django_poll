@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -7,17 +8,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
 import { useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import useQuestions from "components/Questions";
 import fetchWrapper from "../fetchWrapper";
-import theme from "../styles";
 
 function Detail() {
   const location = useLocation();
   const history = useHistory();
-  const { slug } = location.state;
+  const { slug, stateCount } = location.state;
   const pageQuestion = useQuestions(slug);
   const pageChoices = pageQuestion.choices;
   const [error, setError] = useState("");
@@ -28,13 +27,13 @@ function Detail() {
   const updateVote = (id) => {
     setError("");
     fetchWrapper.get(`/api/choices/${id}/up_vote/`).then(() => {
-      history.push(`/results/${slug}`, { slug });
+      history.push(`/results/${slug}`, { slug, stateCount });
     });
   };
 
   const listChoice = (item) => {
     return (
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%" }} key={item.id}>
         <Stack spacing={6}>
           <Card>
             <CardActionArea onClick={() => updateVote(item.id)}>
@@ -49,11 +48,8 @@ function Detail() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Typography
-        variant="h4"
-        sx={{ marginBottom: "4px", color: "primary.main" }}
-      >
+    <>
+      <Typography variant="h4" color="primary">
         {pageQuestion.text}
       </Typography>
       {pageChoices ? (
@@ -61,8 +57,16 @@ function Detail() {
       ) : (
         <CircularProgress />
       )}
+      <Button
+        variant="contained"
+        onClick={() => {
+          history.push(`/`, { stateCount });
+        }}
+      >
+        Back to Polls
+      </Button>
       <Typography>{error}</Typography>
-    </ThemeProvider>
+    </>
   );
 }
 

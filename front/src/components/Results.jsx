@@ -1,22 +1,22 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CircularProgress,
   Stack,
   Typography,
 } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import React from "react";
 import useQuestions from "components/Questions";
-import theme from "../styles";
 
 let total = 0;
 
 function Results() {
   const location = useLocation();
-  const { slug } = location.state;
+  const history = useHistory();
+  const { slug, stateCount } = location.state;
   const question = useQuestions(slug);
   const results = question.choices;
   if (results) {
@@ -36,40 +36,43 @@ function Results() {
     const percent = parseInt((parseInt(result.votes, 10) / total) * 100, 10);
     if (percent === 0) {
       return (
-        <ThemeProvider theme={theme}>
-          <Typography
-            sx={{
-              marginTop: "20px",
-              marginBottom: "20px",
-              marginLeft: "15px",
-            }}
-          >
-            {resultLine}
-          </Typography>
-        </ThemeProvider>
+        <Typography
+          key={result.id}
+          sx={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            marginLeft: "15px",
+          }}
+        >
+          {resultLine}
+        </Typography>
       );
     }
 
     return (
-      <ThemeProvider theme={theme}>
-        <Box sx={{ width: `${percent}%` }}>
-          <Stack spacing={6}>
-            <Card variant="outlined" sx={{ backgroundColor: "primary.main" }}>
-              <CardContent>
-                <Typography>{resultLine}</Typography>
-              </CardContent>
-            </Card>
-          </Stack>
-        </Box>
-      </ThemeProvider>
+      <Box sx={{ width: `${percent}%` }} key={result.id}>
+        <Stack spacing={6}>
+          <Card
+            variant="outlined"
+            sx={{
+              marginTop: "1px",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#b2ebf2",
+            }}
+          >
+            <CardContent>
+              <Typography>{resultLine}</Typography>
+            </CardContent>
+          </Card>
+        </Stack>
+      </Box>
     );
   };
   return (
-    <ThemeProvider theme={theme}>
-      <Typography
-        variant="h4"
-        sx={{ marginBottom: "4px", color: "primary.main" }}
-      >
+    <>
+      <Typography variant="h4" color="primary">
         {question.text}
       </Typography>
       {results ? (
@@ -77,7 +80,15 @@ function Results() {
       ) : (
         <CircularProgress />
       )}
-    </ThemeProvider>
+      <Button
+        variant="contained"
+        onClick={() => {
+          history.push(`/`, { stateCount });
+        }}
+      >
+        Back to Polls
+      </Button>
+    </>
   );
 }
 
