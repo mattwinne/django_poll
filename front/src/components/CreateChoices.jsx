@@ -8,11 +8,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
 import { useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import fetchWrapper from "../fetchWrapper";
-import theme from "../styles";
 
 export default function CreateChoices() {
   const history = useHistory();
@@ -47,17 +45,15 @@ export default function CreateChoices() {
 
   const displayChoices = (choice) => {
     return (
-      <ThemeProvider theme={theme}>
-        <Box sx={{ width: "100%", marginBottom: "15px" }}>
-          <Stack spacing={6}>
-            <Card>
-              <CardContent>
-                <Typography key={choice}>{choice}</Typography>
-              </CardContent>
-            </Card>
-          </Stack>
-        </Box>
-      </ThemeProvider>
+      <Box sx={{ width: "100%", marginBottom: "15px" }} key={choice}>
+        <Stack spacing={6}>
+          <Card>
+            <CardContent>
+              <Typography>{choice}</Typography>
+            </CardContent>
+          </Card>
+        </Stack>
+      </Box>
     );
   };
 
@@ -65,7 +61,7 @@ export default function CreateChoices() {
     history.push("/index");
   };
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Typography
         variant="h4"
         sx={{ marginBottom: "4px", color: "primary.main" }}
@@ -85,13 +81,13 @@ export default function CreateChoices() {
         variant="outlined"
         onChange={handleChange}
       />
-      <Button onClick={handleSubmit} size="xl">
+      <Button variant="contained" onClick={handleSubmit} size="xl">
         Create Choice
       </Button>
-      <Button onClick={finish} size="xl">
+      <Button variant="contained" onClick={finish} size="xl">
         Finish
       </Button>
       <Typography>{error}</Typography>
-    </ThemeProvider>
+    </>
   );
 }

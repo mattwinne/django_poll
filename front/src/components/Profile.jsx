@@ -9,11 +9,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import fetchWrapper from "../fetchWrapper";
-import theme from "../styles";
 
 function Profile() {
   const [userName, setUserName] = useState("");
@@ -37,7 +35,7 @@ function Profile() {
   }, []);
   const listQuestion = (item) => {
     return (
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%" }} key={item.id + item.user}>
         <Stack spacing={6}>
           <Card>
             <CardActionArea
@@ -64,7 +62,7 @@ function Profile() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Typography
         variant="h4"
         sx={{ marginBottom: "4px", color: "primary.main" }}
@@ -83,7 +81,7 @@ function Profile() {
           />
         </Grid>
         <Grid item>
-          <Button onClick={changeUsername} size="xl">
+          <Button variant="contained" onClick={changeUsername} size="xl">
             Change Username
           </Button>
         </Grid>
@@ -95,7 +93,7 @@ function Profile() {
         Your Polls
       </Typography>
       {myQuestions.map((item) => listQuestion(item))}
-    </ThemeProvider>
+    </>
   );
 }
 

@@ -1,9 +1,7 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import fetchWrapper from "../fetchWrapper";
-import theme from "../styles";
 
 export default function CreatePoll() {
   const history = useHistory();
@@ -37,7 +35,7 @@ export default function CreatePoll() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Typography
         variant="h4"
         sx={{ marginBottom: "4px", color: "primary.main" }}
@@ -52,9 +50,9 @@ export default function CreatePoll() {
         variant="outlined"
         onChange={handleChange}
       />
-      <Button onClick={handleSubmit} size="xl">
+      <Button variant="contained" onClick={handleSubmit} size="xl">
         Create
       </Button>
-    </ThemeProvider>
+    </>
   );
 }

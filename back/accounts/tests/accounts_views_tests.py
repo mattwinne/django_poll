@@ -84,10 +84,10 @@ class TestAccountsAPI(APITestCase):
         # Breaking the string up to meet flake8 linting requirements
 
         JWT1 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b"
-        JWT2 = "2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0OTgy"
-        JWT3 = "NzAwMiwiaWF0IjoxNjQ4OTYzMDAyLCJqdGkiOiJhODk1"
-        JWT4 = "YzU0ZWMzZjc0M2E3YTk3ZmQ2MDBlODZhNDE3NiIsInVz"
-        JWT5 = "ZXJfaWQiOjR9.BzvFKT68XC7GQZq5v-9sP9L84HrHY30cD7oTZXGhpDo"
+        JWT2 = "2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY1MTAyNTM4"
+        JWT3 = "MywiaWF0IjoxNjUwMTYxMzgzLCJqdGkiOiI2ODUwMWVkZTkyZmQ"
+        JWT4 = "0MWU5YWFmNmQ5MDk0ZGYyMDU3MCIsInVzZXJfaWQiOjN9."
+        JWT5 = "Mpti2SbkwaqMu5TnYXDkXu_ybunjewendL-hrtNZXIs"
         JWT = JWT1 + JWT2 + JWT3 + JWT4 + JWT5
         token = {"refresh_token": JWT}
 

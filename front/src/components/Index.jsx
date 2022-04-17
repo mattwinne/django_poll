@@ -1,53 +1,87 @@
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
   CircularProgress,
+  Grid,
   Stack,
   Typography,
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { useHistory } from "react-router-dom";
-import React from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import useQuestions from "components/Questions";
+import fetchWrapper from "../fetchWrapper";
 import theme from "../styles";
 
 function Index() {
+  const location = useLocation();
   const history = useHistory();
-  const questionsInList = 5;
-  const questions = useQuestions(`${questionsInList}/list_n_questions`);
+  const [questionStart, setQuestionStart] = useState(
+    location.state ? location.state.stateCount : 0
+  );
+  const [nextButton, setNextButton] = useState("Next");
+
+  const [questionCount, SetQuestionCount] = useState(0);
+
+  useEffect(() => {
+    fetchWrapper.get(`/api/questions/question_count/`).then((res) => {
+      SetQuestionCount(res.count);
+    });
+  }, []);
+
+  const questions = useQuestions(`${questionStart}/list_5_questions`);
+  const qPerPage = 5;
+  const qLimit = questionCount - qPerPage;
+  const nextQuestions = () => {
+    if (questionStart === qLimit) {
+      setNextButton("Next");
+      setQuestionStart(0);
+    } else if (questionStart >= qLimit - qPerPage) {
+      setNextButton("Back to start");
+      setQuestionStart(qLimit);
+    } else if (questionStart < qLimit) {
+      if (questionStart >= 20) {
+      }
+      setQuestionStart(questionStart + qPerPage);
+    }
+  };
+  const prevQuestions = () => {
+    if (questionStart === 0) {
+    } else if (questionStart <= qPerPage) {
+      setQuestionStart(0);
+    } else {
+      setQuestionStart(questionStart - qPerPage);
+    }
+  };
   const listQuestion = (item) => {
     return (
-      <ThemeProvider theme={theme}>
-        <Box sx={{ width: "100%" }}>
-          <Stack spacing={6}>
-            <Card>
-              <CardActionArea
-                onClick={() =>
-                  history.push({
-                    pathname: `/detail/${item.id}`,
-                    state: { slug: item.id },
-                  })
-                }
-              >
-                <CardContent>
-                  <Typography>{item.text}</Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Stack>
-        </Box>
-      </ThemeProvider>
+      <Box sx={{ width: "100%" }} key={item.id}>
+        <Stack spacing={6}>
+          <Card>
+            <CardActionArea
+              onClick={() =>
+                history.push({
+                  pathname: `/detail/${item.id}`,
+                  state: { slug: item.id, stateCount: questionStart },
+                })
+              }
+            >
+              <CardContent>
+                <Typography>{item.text}</Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Stack>
+      </Box>
     );
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Typography
-        variant="h4"
-        sx={{ marginBottom: "4px", color: "primary.main" }}
-      >
+      <Typography color="primary" variant="h4">
         Choose a Poll
       </Typography>
       {questions.length > 0 ? (
@@ -55,6 +89,18 @@ function Index() {
       ) : (
         <CircularProgress />
       )}
+      <Grid container>
+        <Grid item xs>
+          <Button variant="contained" onClick={() => prevQuestions()}>
+            Previous
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" onClick={() => nextQuestions()}>
+            {nextButton}
+          </Button>
+        </Grid>
+      </Grid>
     </ThemeProvider>
   );
 }

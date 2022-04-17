@@ -15,3 +15,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ["id", "text", "pub_date", "choices", "user"]
+
+
+class CountSerializer(serializers.Serializer):
+    count = serializers.IntegerField()
