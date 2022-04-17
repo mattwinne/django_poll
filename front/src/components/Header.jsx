@@ -12,17 +12,51 @@ function Header() {
         <PollIcon sx={{ marginBottom: "5px" }} />
         <Typography variant="h6">Poll In One</Typography>
 
-        <Button onClick={() => history.push("/", { stateCount: 0 })}>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/", { stateCount: 0 })}
+        >
           Polls
         </Button>
-        <Button onClick={() => history.push("/profile")}>Profile</Button>
-        <Button onClick={() => history.push("/create")}>Create</Button>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/profile")}
+        >
+          Profile
+        </Button>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/create")}
+        >
+          Create
+        </Button>
 
         <Box sx={{ flexGrow: 1 }} />
 
-        <Button onClick={() => history.push("/register")}>Register</Button>
-        <Button onClick={() => history.push("/login")}>Login</Button>
-        <Button onClick={() => history.push("/logout")}>Logout</Button>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/register")}
+        >
+          Register
+        </Button>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/login")}
+        >
+          Login
+        </Button>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/logout")}
+        >
+          Logout
+        </Button>
       </Toolbar>
     </AppBar>
   );

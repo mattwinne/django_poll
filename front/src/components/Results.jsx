@@ -32,8 +32,8 @@ function Results() {
   }
 
   const displayResults = (result) => {
-    const resultLine = `${result.text} - ${result.votes}`;
     const percent = parseInt((parseInt(result.votes, 10) / total) * 100, 10);
+    const resultLine = `${result.text} ${percent / 2}%`;
     if (percent === 0) {
       return (
         <Typography
@@ -52,16 +52,7 @@ function Results() {
     return (
       <Box sx={{ width: `${percent}%` }} key={result.id}>
         <Stack spacing={6}>
-          <Card
-            variant="outlined"
-            sx={{
-              marginTop: "1px",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              backgroundColor: "#b2ebf2",
-            }}
-          >
+          <Card>
             <CardContent>
               <Typography>{resultLine}</Typography>
             </CardContent>
@@ -83,7 +74,7 @@ function Results() {
       <Button
         variant="contained"
         onClick={() => {
-          history.push(`/`, stateCount ? {stateCount} : 0);
+          history.push(`/`, stateCount ? { stateCount } : 0);
         }}
       >
         Back to Polls

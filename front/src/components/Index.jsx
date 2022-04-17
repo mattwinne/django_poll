@@ -43,14 +43,11 @@ function Index() {
       setNextButton("Back to start");
       setQuestionStart(qLimit);
     } else if (questionStart < qLimit) {
-      if (questionStart >= 20) {
-      }
       setQuestionStart(questionStart + qPerPage);
     }
   };
   const prevQuestions = () => {
-    if (questionStart === 0) {
-    } else if (questionStart <= qPerPage) {
+    if (questionStart <= qPerPage) {
       setQuestionStart(0);
     } else {
       setQuestionStart(questionStart - qPerPage);
@@ -81,7 +78,7 @@ function Index() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Typography color="primary" variant="h4">
+      <Typography color="primary" variant="h4" sx={{ marginBottom: "10px" }}>
         Choose a Poll
       </Typography>
       {questions.length > 0 ? (
@@ -91,14 +88,10 @@ function Index() {
       )}
       <Grid container>
         <Grid item xs>
-          <Button variant="contained" onClick={() => prevQuestions()}>
-            Previous
-          </Button>
+          <Button onClick={() => prevQuestions()}>Previous</Button>
         </Grid>
         <Grid item>
-          <Button variant="contained" onClick={() => nextQuestions()}>
-            {nextButton}
-          </Button>
+          <Button onClick={() => nextQuestions()}>{nextButton}</Button>
         </Grid>
       </Grid>
     </ThemeProvider>

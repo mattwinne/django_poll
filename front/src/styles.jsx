@@ -36,19 +36,24 @@ const theme = createTheme({
   components: {
     MuiButton: {
       defaultProps: {
-        variant: "default",
+        variant: "contained",
         color: "primary",
+        size: "medium",
         sx: {
           marginTop: "5px",
-          marginLeft: "5px",
+          width: "150px",
+          boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
+          border: "1px solid rgba(255, 255, 255, 0.3)",
         },
       },
     },
     MuiContainer: {
       defaultProps: {
         sx: {
+          backgroundColor: "#ffffffbf",
           marginTop: "100px",
           width: "50%",
+          borderRadius: "8px",
         },
       },
     },
@@ -56,10 +61,16 @@ const theme = createTheme({
       defaultProps: {
         variant: "outlined",
         sx: {
+          borderRadius: "8px",
+          backgroundColor: "#ffffff80",
           marginTop: "1px",
+          marginBottom: "1px",
           height: "100%",
           display: "flex",
           flexDirection: "column",
+          boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
+          border: "1px solid rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(20px)",
         },
       },
     },

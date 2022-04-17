@@ -81,7 +81,11 @@ function Profile() {
           />
         </Grid>
         <Grid item>
-          <Button variant="contained" onClick={changeUsername} size="xl">
+          <Button
+            variant="outlined"
+            sx={{ height: "58px" }}
+            onClick={changeUsername}
+          >
             Change Username
           </Button>
         </Grid>

@@ -24,12 +24,7 @@ function App() {
         <div>
           <Header />
           <main>
-            <Container
-              sx={{
-                marginTop: "100px",
-                width: "50%",
-              }}
-            >
+            <Container>
               <Switch>
                 <Route exact path="/" component={Index} />
                 <Route path="/index" component={Index} />
