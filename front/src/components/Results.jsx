@@ -83,7 +83,7 @@ function Results() {
       <Button
         variant="contained"
         onClick={() => {
-          history.push(`/`, { stateCount });
+          history.push(`/`, stateCount ? {stateCount} : 0);
         }}
       >
         Back to Polls
