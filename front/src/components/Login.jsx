@@ -10,11 +10,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import React, { useState } from "react";
 import { fetchWrapper, header } from "../fetchWrapper";
+import  { useAuth }  from "../use-auth"
+import React, { useState } from "react";
 
 export default function SignIn() {
   const history = useHistory();
+  const auth = useAuth();
   const initialFormData = Object.freeze({
     email: "",
     password: "",
@@ -46,6 +48,7 @@ export default function SignIn() {
         localStorage.setItem("access_token", res.access);
         localStorage.setItem("refresh_token", res.refresh);
         header.Authorization = `JWT ${localStorage.getItem("access_token")}`;
+        auth.signin();
         history.push("/index");
       })
       .catch((err) => {
