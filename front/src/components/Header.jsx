@@ -1,10 +1,68 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import PollIcon from "@mui/icons-material/Poll";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../use-auth";
 
 function Header() {
+  const auth = useAuth();
   const history = useHistory();
+  const [buttons, setButtons] = useState();
+
+  const logout = () => {
+    auth.signout();
+    history.push("/login");
+  };
+
+  const authButtons = () => {
+    return (
+      <>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/profile")}
+        >
+          Profile
+        </Button>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => logout()}
+        >
+          Logout
+        </Button>
+      </>
+    );
+  };
+
+  const noAuthButtons = () => {
+    return (
+      <>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/register")}
+        >
+          Register
+        </Button>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/login")}
+        >
+          Login
+        </Button>
+      </>
+    );
+  };
+
+  useEffect(() => {
+    if (auth.user) {
+      setButtons(authButtons());
+    } else {
+      setButtons(noAuthButtons());
+    }
+  }, [auth.user]);
 
   return (
     <AppBar position="relative">
@@ -12,17 +70,24 @@ function Header() {
         <PollIcon sx={{ marginBottom: "5px" }} />
         <Typography variant="h6">Poll In One</Typography>
 
-        <Button onClick={() => history.push("/", { stateCount: 0 })}>
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/", { stateCount: 0 })}
+        >
           Polls
         </Button>
-        <Button onClick={() => history.push("/profile")}>Profile</Button>
-        <Button onClick={() => history.push("/create")}>Create</Button>
+
+        <Button
+          variant="default"
+          sx={{ marginTop: "5px" }}
+          onClick={() => history.push("/create")}
+        >
+          Create
+        </Button>
 
         <Box sx={{ flexGrow: 1 }} />
-
-        <Button onClick={() => history.push("/register")}>Register</Button>
-        <Button onClick={() => history.push("/login")}>Login</Button>
-        <Button onClick={() => history.push("/logout")}>Logout</Button>
+        {buttons}
       </Toolbar>
     </AppBar>
   );
