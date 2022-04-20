@@ -4,6 +4,9 @@ import {
   Card,
   CardContent,
   CircularProgress,
+  Container,
+  Grid,
+  Paper,
   Stack,
   Typography,
 } from "@mui/material";
@@ -33,39 +36,85 @@ function Results() {
 
   const displayResults = (result) => {
     const percent = parseInt((parseInt(result.votes, 10) / total) * 100, 10);
-    const resultLine = `${result.text} ${percent / 2}%`;
+    let firstResultLine = "";
     if (percent === 0) {
-      return (
-        <Typography
-          key={result.id}
-          sx={{
-            marginTop: "20px",
-            marginBottom: "20px",
-            marginLeft: "15px",
-          }}
-        >
-          {resultLine}
-        </Typography>
-      );
+      firstResultLine = `${result.text} ${result.votes}`;
     }
 
     return (
-      <Box sx={{ width: `${percent}%` }} key={result.id}>
-        <Stack spacing={6}>
-          <Card>
-            <CardContent>
-              <Typography>{resultLine}</Typography>
-            </CardContent>
-          </Card>
-        </Stack>
-      </Box>
+      <div key={result.id}>
+        <Box position="relative">
+          <Stack spacing={0} position="absolute" sx={{ width: `100%` }}>
+            <Card>
+              <CardContent>
+                <Typography fontSize="18px" style={{ marginBlock: "auto" }}>
+                  {firstResultLine}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Stack>
+        </Box>
+        <Box sx={{ width: `${percent}%` }}>
+          <Stack spacing={0}>
+            <Card
+              sx={{
+                borderRadius: "8px",
+                backgroundColor: "primary.main",
+                marginTop: "1px",
+                marginBottom: "1px",
+                height: "100px",
+                display: "flex",
+                flexDirection: "column",
+                boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                backdropFilter: "blur(20px)",
+              }}
+            >
+              <CardContent>
+                <Grid container style={{ marginBlock: "auto" }}>
+                  <Grid item>
+                    <Typography fontSize="18px">{result.text}</Typography>
+                  </Grid>
+                  <Box sx={{ flexGrow: 1 }} />
+                  <Grid item>
+                    <Typography fontSize="18px">{result.votes}</Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Stack>
+        </Box>
+      </div>
     );
   };
   return (
-    <>
-      <Typography variant="h4" color="primary">
-        {question.text}
-      </Typography>
+    <Container>
+      <Card
+        sx={{
+          borderRadius: "8px",
+          backgroundColor: "#1980e980",
+          marginTop: "1px",
+          marginBottom: "1px",
+          height: "100px",
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
+          border: "1px solid rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(20px)",
+        }}
+      >
+        <Typography
+          color="#fff"
+          variant="h3"
+          style={{
+            marginBlock: "auto",
+            justifyContent: "center",
+            alignSelf: "center",
+          }}
+        >
+          {question.text}
+        </Typography>
+      </Card>
       {results ? (
         results.map((result) => displayResults(result))
       ) : (
@@ -74,12 +123,12 @@ function Results() {
       <Button
         variant="contained"
         onClick={() => {
-          history.push(`/`, stateCount ? { stateCount } : 0);
+          history.push(`/index`, stateCount ? { stateCount } : 0);
         }}
       >
         Back to Polls
       </Button>
-    </>
+    </Container>
   );
 }
 

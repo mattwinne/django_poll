@@ -4,6 +4,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Container,
   Grid,
   Stack,
   TextField,
@@ -62,7 +63,7 @@ function Profile() {
   }
 
   return (
-    <>
+    <Container>
       <Typography
         variant="h4"
         sx={{ marginBottom: "4px", color: "primary.main" }}
@@ -97,7 +98,7 @@ function Profile() {
         Your Polls
       </Typography>
       {myQuestions.map((item) => listQuestion(item))}
-    </>
+    </Container>
   );
 }
 

@@ -1,8 +1,8 @@
 import { createTheme } from "@mui/material/styles";
 
 const Colors = {
-  primary: "#00bcd4",
-  secondary: "#B288C0",
+  primary: "#1980E9",
+  secondary: "#FECCC5",
   success: "#4CAF50",
   info: "#00a2ff",
   danger: "#FF5722",
@@ -41,7 +41,7 @@ const theme = createTheme({
         size: "medium",
         sx: {
           marginTop: "5px",
-          width: "150px",
+          width: "160px",
           boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
           border: "1px solid rgba(255, 255, 255, 0.3)",
         },
@@ -49,10 +49,12 @@ const theme = createTheme({
     },
     MuiContainer: {
       defaultProps: {
+        display: "fixed",
+        position: "relative",
         sx: {
           backgroundColor: "#ffffffbf",
           marginTop: "100px",
-          width: "50%",
+          width: "75%",
           borderRadius: "8px",
         },
       },
@@ -65,7 +67,7 @@ const theme = createTheme({
           backgroundColor: "#ffffff80",
           marginTop: "1px",
           marginBottom: "1px",
-          height: "100%",
+          height: "100px",
           display: "flex",
           flexDirection: "column",
           boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
@@ -77,9 +79,16 @@ const theme = createTheme({
     MuiCardGrid: {
       defaultProps: {
         sx: {
-          height: "100%",
+          height: "100px",
           display: "flex",
-          flexDirection: "column",
+        },
+      },
+    },
+    MuiCardContent: {
+      defaultProps: {
+        sx: {
+          height: "100px",
+          display: "flex",
         },
       },
     },

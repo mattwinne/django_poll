@@ -82,6 +82,7 @@ export default function SignUp() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
+        position="relative"
         sx={{
           marginTop: 8,
           display: "flex",

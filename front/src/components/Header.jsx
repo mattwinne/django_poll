@@ -65,7 +65,7 @@ function Header() {
   }, [auth.user]);
 
   return (
-    <AppBar position="relative">
+    <AppBar position="relative" display="flex">
       <Toolbar>
         <PollIcon sx={{ marginBottom: "5px" }} />
         <Typography variant="h6">Poll In One</Typography>
@@ -73,7 +73,7 @@ function Header() {
         <Button
           variant="default"
           sx={{ marginTop: "5px" }}
-          onClick={() => history.push("/", { stateCount: 0 })}
+          onClick={() => history.push("/index", { stateCount: 0 })}
         >
           Polls
         </Button>

@@ -5,6 +5,7 @@ import {
   CardActionArea,
   CardContent,
   CircularProgress,
+  Container,
   Stack,
   Typography,
 } from "@mui/material";
@@ -38,7 +39,9 @@ function Detail() {
           <Card>
             <CardActionArea onClick={() => updateVote(item.id)}>
               <CardContent>
-                <Typography>{item.text}</Typography>
+                <Typography fontSize="18px" style={{ marginBlock: "auto" }}>
+                  {item.text}
+                </Typography>
               </CardContent>
             </CardActionArea>
           </Card>
@@ -48,10 +51,33 @@ function Detail() {
   };
 
   return (
-    <>
-      <Typography variant="h4" color="primary">
-        {pageQuestion.text}
-      </Typography>
+    <Container>
+      <Card
+        sx={{
+          borderRadius: "8px",
+          backgroundColor: "#1980e980",
+          marginTop: "1px",
+          marginBottom: "1px",
+          height: "100px",
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
+          border: "1px solid rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(20px)",
+        }}
+      >
+        <Typography
+          color="#fff"
+          variant="h3"
+          style={{
+            marginBlock: "auto",
+            justifyContent: "center",
+            alignSelf: "center",
+          }}
+        >
+          {pageQuestion.text}
+        </Typography>
+      </Card>
       {pageChoices ? (
         pageChoices.map((item) => listChoice(item))
       ) : (
@@ -60,13 +86,13 @@ function Detail() {
       <Button
         variant="contained"
         onClick={() => {
-          history.push(`/`, { stateCount });
+          history.push(`/index`, { stateCount });
         }}
       >
         Back to Polls
       </Button>
       <Typography>{error}</Typography>
-    </>
+    </Container>
   );
 }
 

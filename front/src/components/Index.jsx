@@ -5,6 +5,7 @@ import {
   CardActionArea,
   CardContent,
   CircularProgress,
+  Container,
   Grid,
   Stack,
   Typography,
@@ -67,7 +68,9 @@ function Index() {
               }
             >
               <CardContent>
-                <Typography>{item.text}</Typography>
+                <Typography fontSize="18px" style={{ marginBlock: "auto" }}>
+                  {item.text}
+                </Typography>
               </CardContent>
             </CardActionArea>
           </Card>
@@ -78,22 +81,47 @@ function Index() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Typography color="primary" variant="h4" sx={{ marginBottom: "10px" }}>
-        Choose a Poll
-      </Typography>
-      {questions.length > 0 ? (
-        questions.map((item) => listQuestion(item))
-      ) : (
-        <CircularProgress />
-      )}
-      <Grid container>
-        <Grid item xs>
-          <Button onClick={() => prevQuestions()}>Previous</Button>
+      <Container>
+        <Card
+          sx={{
+            borderRadius: "8px",
+            backgroundColor: "#1980e980",
+            marginTop: "1px",
+            marginBottom: "1px",
+            height: "100px",
+            display: "flex",
+            flexDirection: "column",
+            boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+            backdropFilter: "blur(20px)",
+          }}
+        >
+          <Typography
+            color="#fff"
+            variant="h3"
+            style={{
+              marginBlock: "auto",
+              justifyContent: "center",
+              alignSelf: "center",
+            }}
+          >
+            Choose a Poll
+          </Typography>
+        </Card>
+        {questions.length > 0 ? (
+          questions.map((item) => listQuestion(item))
+        ) : (
+          <CircularProgress />
+        )}
+        <Grid container>
+          <Grid item xs>
+            <Button onClick={() => prevQuestions()}>Previous</Button>
+          </Grid>
+          <Grid item>
+            <Button onClick={() => nextQuestions()}>{nextButton}</Button>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Button onClick={() => nextQuestions()}>{nextButton}</Button>
-        </Grid>
-      </Grid>
+      </Container>
     </ThemeProvider>
   );
 }
