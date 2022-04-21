@@ -4,11 +4,14 @@ import React from "react";
 export default function Background() {
   return (
     <Grid container position="absolute">
-      <Grid item xs={48} sm={24} md={12}>
-        <Card variant="basic" sx={{ marginTop: "-2px" }}>
+      <Grid item>
+        <Card
+          variant="basic"
+          square="true"
+          sx={{ backgroundColor: "bg.light" }}
+        >
           <CardMedia
-            image="https://source.unsplash.com/oZuBNC-6E2s"
-            title="Image title"
+          // image="https://source.unsplash.com/oZuBNC-6E2s"
           />
         </Card>
       </Grid>

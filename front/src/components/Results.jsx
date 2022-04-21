@@ -6,7 +6,6 @@ import {
   CircularProgress,
   Container,
   Grid,
-  Paper,
   Stack,
   Typography,
 } from "@mui/material";
@@ -47,7 +46,11 @@ function Results() {
           <Stack spacing={0} position="absolute" sx={{ width: `100%` }}>
             <Card>
               <CardContent>
-                <Typography fontSize="18px" style={{ marginBlock: "auto" }}>
+                <Typography
+                  color="txt"
+                  fontSize="18px"
+                  style={{ marginBlock: "auto" }}
+                >
                   {firstResultLine}
                 </Typography>
               </CardContent>
@@ -73,11 +76,15 @@ function Results() {
               <CardContent>
                 <Grid container style={{ marginBlock: "auto" }}>
                   <Grid item>
-                    <Typography fontSize="18px">{result.text}</Typography>
+                    <Typography color="txt" fontSize="18px">
+                      {result.text}
+                    </Typography>
                   </Grid>
                   <Box sx={{ flexGrow: 1 }} />
                   <Grid item>
-                    <Typography fontSize="18px">{result.votes}</Typography>
+                    <Typography color="txt" fontSize="18px">
+                      {result.votes}
+                    </Typography>
                   </Grid>
                 </Grid>
               </CardContent>
@@ -89,45 +96,34 @@ function Results() {
   };
   return (
     <Container>
-      <Card
-        sx={{
-          borderRadius: "8px",
-          backgroundColor: "#1980e980",
-          marginTop: "1px",
-          marginBottom: "1px",
-          height: "100px",
-          display: "flex",
-          flexDirection: "column",
-          boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
-          border: "1px solid rgba(255, 255, 255, 0.3)",
-          backdropFilter: "blur(20px)",
-        }}
-      >
-        <Typography
-          color="#fff"
-          variant="h3"
-          style={{
-            marginBlock: "auto",
-            justifyContent: "center",
-            alignSelf: "center",
+      <Box position="relative" width="100%">
+        <Card>
+          <Typography
+            color="txt"
+            variant="h4"
+            style={{
+              marginBlock: "auto",
+              justifyContent: "center",
+              alignSelf: "center",
+            }}
+          >
+            {question.text}
+          </Typography>
+        </Card>
+        {results ? (
+          results.map((result) => displayResults(result))
+        ) : (
+          <CircularProgress />
+        )}
+        <Button
+          variant="contained"
+          onClick={() => {
+            history.push(`/index`, stateCount ? { stateCount } : 0);
           }}
         >
-          {question.text}
-        </Typography>
-      </Card>
-      {results ? (
-        results.map((result) => displayResults(result))
-      ) : (
-        <CircularProgress />
-      )}
-      <Button
-        variant="contained"
-        onClick={() => {
-          history.push(`/index`, stateCount ? { stateCount } : 0);
-        }}
-      >
-        Back to Polls
-      </Button>
+          Back to Polls
+        </Button>
+      </Box>
     </Container>
   );
 }

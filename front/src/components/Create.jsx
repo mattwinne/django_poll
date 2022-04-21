@@ -1,4 +1,10 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import fetchWrapper from "../fetchWrapper";
@@ -36,7 +42,7 @@ export default function CreatePoll() {
 
   return (
     <Container>
-      <Box position="relative">
+      <Box position="relative" width="100%">
         <Typography color="primary" variant="h4">
           Make a Poll
         </Typography>

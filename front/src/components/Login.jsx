@@ -70,7 +70,6 @@ export default function SignIn() {
       <Box
         position="relative"
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -78,7 +77,7 @@ export default function SignIn() {
       >
         <Avatar sx={{ m: 1, bgcolor: "primary.main" }} />
 
-        <Typography component="h1" variant="h5">
+        <Typography color="txt" component="h1" variant="h5">
           Log in
         </Typography>
 
