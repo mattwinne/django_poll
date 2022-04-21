@@ -5,13 +5,16 @@ import {
   CardActionArea,
   CardContent,
   CircularProgress,
+  Container,
   Stack,
   Typography,
 } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import { useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import useQuestions from "components/Questions";
 import fetchWrapper from "../fetchWrapper";
+import theme from "../styles";
 
 function Detail() {
   const location = useLocation();
@@ -38,7 +41,13 @@ function Detail() {
           <Card>
             <CardActionArea onClick={() => updateVote(item.id)}>
               <CardContent>
-                <Typography>{item.text}</Typography>
+                <Typography
+                  color="txt"
+                  fontSize="18px"
+                  style={{ marginBlock: "auto" }}
+                >
+                  {item.text}
+                </Typography>
               </CardContent>
             </CardActionArea>
           </Card>
@@ -48,25 +57,39 @@ function Detail() {
   };
 
   return (
-    <>
-      <Typography variant="h4" color="primary">
-        {pageQuestion.text}
-      </Typography>
-      {pageChoices ? (
-        pageChoices.map((item) => listChoice(item))
-      ) : (
-        <CircularProgress />
-      )}
-      <Button
-        variant="contained"
-        onClick={() => {
-          history.push(`/`, { stateCount });
-        }}
-      >
-        Back to Polls
-      </Button>
-      <Typography>{error}</Typography>
-    </>
+    <ThemeProvider theme={theme}>
+      <Container>
+        <Box position="relative" width="100%">
+          <Card>
+            <Typography
+              variant="h4"
+              color="txt"
+              style={{
+                marginBlock: "auto",
+                justifyContent: "center",
+                alignSelf: "center",
+              }}
+            >
+              {pageQuestion.text}
+            </Typography>
+          </Card>
+          {pageChoices ? (
+            pageChoices.map((item) => listChoice(item))
+          ) : (
+            <CircularProgress />
+          )}
+          <Button
+            variant="contained"
+            onClick={() => {
+              history.push(`/index`, { stateCount });
+            }}
+          >
+            Back to Polls
+          </Button>
+          <Typography>{error}</Typography>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
 

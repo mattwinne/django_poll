@@ -5,6 +5,7 @@ import {
   CardActionArea,
   CardContent,
   CircularProgress,
+  Container,
   Grid,
   Stack,
   Typography,
@@ -67,7 +68,13 @@ function Index() {
               }
             >
               <CardContent>
-                <Typography>{item.text}</Typography>
+                <Typography
+                  color="txt"
+                  fontSize="18px"
+                  style={{ marginBlock: "auto" }}
+                >
+                  {item.text}
+                </Typography>
               </CardContent>
             </CardActionArea>
           </Card>
@@ -78,22 +85,36 @@ function Index() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Typography color="primary" variant="h4" sx={{ marginBottom: "10px" }}>
-        Choose a Poll
-      </Typography>
-      {questions.length > 0 ? (
-        questions.map((item) => listQuestion(item))
-      ) : (
-        <CircularProgress />
-      )}
-      <Grid container>
-        <Grid item xs>
-          <Button onClick={() => prevQuestions()}>Previous</Button>
-        </Grid>
-        <Grid item>
-          <Button onClick={() => nextQuestions()}>{nextButton}</Button>
-        </Grid>
-      </Grid>
+      <Container>
+        <Box position="relative" width="100%">
+          <Card>
+            <Typography
+              variant="h4"
+              color="txt"
+              style={{
+                marginBlock: "auto",
+                justifyContent: "center",
+                alignSelf: "center",
+              }}
+            >
+              Choose a Poll
+            </Typography>
+          </Card>
+          {questions.length > 0 ? (
+            questions.map((item) => listQuestion(item))
+          ) : (
+            <CircularProgress />
+          )}
+          <Grid container>
+            <Grid item xs>
+              <Button onClick={() => prevQuestions()}>Previous</Button>
+            </Grid>
+            <Grid item>
+              <Button onClick={() => nextQuestions()}>{nextButton}</Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
     </ThemeProvider>
   );
 }

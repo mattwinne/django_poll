@@ -1,4 +1,10 @@
-import { Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import fetchWrapper from "../fetchWrapper";
@@ -35,24 +41,24 @@ export default function CreatePoll() {
   };
 
   return (
-    <>
-      <Typography
-        variant="h4"
-        sx={{ marginBottom: "4px", color: "primary.main" }}
-      >
-        Make a Poll
-      </Typography>
-      <TextField
-        fullWidth
-        id="outlined-basic"
-        label={error}
-        name="question"
-        variant="outlined"
-        onChange={handleChange}
-      />
-      <Button variant="contained" onClick={handleSubmit} size="xl">
-        Create
-      </Button>
-    </>
+    <Container>
+      <Box position="relative" width="100%">
+        <Typography color="primary" variant="h4">
+          Make a Poll
+        </Typography>
+
+        <TextField
+          fullWidth
+          id="outlined-basic"
+          label={error}
+          name="question"
+          variant="outlined"
+          onChange={handleChange}
+        />
+        <Button variant="contained" onClick={handleSubmit} size="xl">
+          Create
+        </Button>
+      </Box>
+    </Container>
   );
 }

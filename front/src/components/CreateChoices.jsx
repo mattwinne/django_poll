@@ -4,6 +4,8 @@ import {
   Card,
   CardContent,
   CircularProgress,
+  Container,
+  Grid,
   Stack,
   TextField,
   Typography,
@@ -49,7 +51,7 @@ export default function CreateChoices() {
         <Stack spacing={6}>
           <Card>
             <CardContent>
-              <Typography>{choice}</Typography>
+              <Typography style={{ marginBlock: "auto" }}>{choice}</Typography>
             </CardContent>
           </Card>
         </Stack>
@@ -61,13 +63,33 @@ export default function CreateChoices() {
     history.push("/index");
   };
   return (
-    <>
-      <Typography
-        variant="h4"
-        sx={{ marginBottom: "4px", color: "primary.main" }}
+    <Container>
+      <Card
+        sx={{
+          borderRadius: "8px",
+          backgroundColor: "#1980e91a",
+          marginTop: "1px",
+          marginBottom: "1px",
+          height: "100px",
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0 1px 12px rgba(0, 0, 0, 0.25)",
+          border: "1px solid rgba(255, 255, 255, 0.3)",
+          backdropFilter: "blur(20px)",
+        }}
       >
-        {question}
-      </Typography>
+        <Typography
+          color="primary"
+          variant="h4"
+          style={{
+            marginBlock: "auto",
+            justifyContent: "center",
+            alignSelf: "center",
+          }}
+        >
+          {question}
+        </Typography>
+      </Card>
       {choices ? (
         choices.map((choice) => displayChoices(choice))
       ) : (
@@ -81,13 +103,21 @@ export default function CreateChoices() {
         variant="outlined"
         onChange={handleChange}
       />
-      <Button variant="contained" onClick={handleSubmit} size="xl">
-        Create Choice
-      </Button>
-      <Button variant="contained" onClick={finish} size="xl">
-        Finish
-      </Button>
+      <Grid container>
+        <Grid item>
+          <Button variant="contained" onClick={handleSubmit} size="xl">
+            Create Choice
+          </Button>
+        </Grid>
+        <Box sx={{ flexGrow: 1 }} />
+        <Grid item>
+          <Button variant="contained" onClick={finish} size="xl">
+            Finish
+          </Button>
+        </Grid>
+      </Grid>
+
       <Typography>{error}</Typography>
-    </>
+    </Container>
   );
 }

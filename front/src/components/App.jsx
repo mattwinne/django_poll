@@ -1,4 +1,4 @@
-import { Container, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import Create from "components/Create";
@@ -22,24 +22,34 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
-          <div>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=.75, user-scalable=0, maximum-scale=.75, minimum-scale=.75"
+          />
+          <div
+            style={{
+              position: "absolute",
+              backgroundColor: theme.palette.bg.main,
+              top: "0px",
+              bottom: "0px",
+              width: "100%",
+            }}
+          >
             <Header />
-            <main>
-              <Container>
-                <Switch>
-                  <Route exact path="/" component={Index} />
-                  <Route path="/index" component={Index} />
-                  <Route path="/create" component={Create} />
-                  <Route path="/createchoices" component={CreateChoices} />
-                  <Route path="/detail" component={Detail} />
-                  <Route path="/results" component={Results} />
-                  <Route path="/register" component={Register} />
-                  <Route path="/login" component={Login} />
-                  <Route path="/profile" component={Profile} />
-                  <Route component={NotFound} />
-                </Switch>
-              </Container>
-            </main>
+
+            <Switch>
+              <Route exact path="/" component={Index} />
+              <Route exact path="/index" component={Index} />
+              <Route path="/index" component={Index} />
+              <Route path="/create" component={Create} />
+              <Route path="/createchoices" component={CreateChoices} />
+              <Route path="/detail" component={Detail} />
+              <Route path="/results" component={Results} />
+              <Route path="/register" component={Register} />
+              <Route path="/login" component={Login} />
+              <Route path="/profile" component={Profile} />
+              <Route component={NotFound} />
+            </Switch>
           </div>
         </Router>
       </ThemeProvider>

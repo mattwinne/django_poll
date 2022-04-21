@@ -4,8 +4,10 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Container,
   Grid,
   Stack,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
@@ -27,6 +29,10 @@ function Profile() {
     });
   };
 
+  const darkSwitch = (e, val) => {
+    console.log(val);
+  };
+
   useEffect(() => {
     fetchWrapper.get(`/api/users/get_user_profile/`).then((res) => {
       setUserName(res.userName);
@@ -35,7 +41,7 @@ function Profile() {
   }, []);
   const listQuestion = (item) => {
     return (
-      <Box sx={{ width: "100%" }} key={item.id + item.user}>
+      <Grid item key={item.id + item.user}>
         <Stack spacing={6}>
           <Card>
             <CardActionArea
@@ -47,12 +53,12 @@ function Profile() {
               }
             >
               <CardContent>
-                <Typography>{item.text}</Typography>
+                <Typography color="txt">{item.text}</Typography>
               </CardContent>
             </CardActionArea>
           </Card>
         </Stack>
-      </Box>
+      </Grid>
     );
   };
   function changeUsername() {
@@ -62,42 +68,53 @@ function Profile() {
   }
 
   return (
-    <>
-      <Typography
-        variant="h4"
-        sx={{ marginBottom: "4px", color: "primary.main" }}
-      >
-        Profile Dashboard
-      </Typography>
-      <Grid container spacing={3} justifyContent="left">
-        <Grid item>
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label={userName}
-            name="userName"
-            size="sm"
-            onChange={handleChange}
-          />
+    <Container>
+      <Box position="relative" width="100%">
+        <Typography variant="h4" sx={{ marginBottom: "4px", color: "txt" }}>
+          Profile Dashboard
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item>
+            <Typography variant="h6" color="txt" sx={{ marginTop: "10px" }}>
+              Username
+            </Typography>
+          </Grid>
+          <Grid item>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label={userName}
+              name="userName"
+              size="sm"
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item>
+            <Button
+              variant="outlined"
+              sx={{ height: "58px" }}
+              onClick={changeUsername}
+            >
+              Change Username
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Button
-            variant="outlined"
-            sx={{ height: "58px" }}
-            onClick={changeUsername}
-          >
-            Change Username
-          </Button>
+        <Grid container spacing={2}>
+          <Grid item>
+            <Typography variant="h6" color="txt" sx={{ marginTop: "10px" }}>
+              Dark Mode
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Switch onChange={darkSwitch} />
+          </Grid>
         </Grid>
-      </Grid>
-      <Typography
-        variant="h5"
-        sx={{ marginTop: "10px", color: "primary.main" }}
-      >
-        Your Polls
-      </Typography>
-      {myQuestions.map((item) => listQuestion(item))}
-    </>
+        <Typography variant="h5" sx={{ marginTop: "10px", color: "txt" }}>
+          Your Polls
+        </Typography>
+        <Grid container>{myQuestions.map((item) => listQuestion(item))}</Grid>
+      </Box>
+    </Container>
   );
 }
 
