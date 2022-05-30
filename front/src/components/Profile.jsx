@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { useTheme, useThemeUpdate } from "../ThemeContext";
 import fetchWrapper from "../fetchWrapper";
-import { usePalette } from "../use-palette"
 
 function Profile() {
   const [userName, setUserName] = useState("");
@@ -29,17 +29,15 @@ function Profile() {
       [e.target.name]: e.target.value.trim(),
     });
   };
-  const [checked, setChecked] = useState(localStorage.getItem("dark_mode") ? true : false)
+  const toggleTheme = useThemeUpdate();
+  const [checked, setChecked] = useState(!!localStorage.getItem("dark_mode"));
   const darkSwitch = (e, val) => {
-    if (val==true) {
-      localStorage.setItem("dark_mode", "True")
-      setChecked(true)
-      history.go(0)
-    }
-    else if(val==false) {
-      localStorage.removeItem("dark_mode")
-      setChecked(false)
-      history.go(0)
+    if (val == true) {
+      setChecked(true);
+      toggleTheme();
+    } else if (val == false) {
+      setChecked(false);
+      toggleTheme();
     }
   };
 

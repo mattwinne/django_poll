@@ -10,12 +10,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
 import { useHistory, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import useQuestions from "components/Questions";
 import fetchWrapper from "../fetchWrapper";
-import theme, {resDarkTheme} from "../styles";
 
 function Index() {
   const location = useLocation();
@@ -84,36 +82,36 @@ function Index() {
   };
 
   return (
-      <Container>
-        <Box position="relative" width="100%">
-          <Card>
-            <Typography
-              variant="h4"
-              color="txt"
-              style={{
-                marginBlock: "auto",
-                justifyContent: "center",
-                alignSelf: "center",
-              }}
-            >
-              Choose a Poll
-            </Typography>
-          </Card>
-          {questions.length > 0 ? (
-            questions.map((item) => listQuestion(item))
-          ) : (
-            <CircularProgress />
-          )}
-          <Grid container>
-            <Grid item xs>
-              <Button onClick={() => prevQuestions()}>Previous</Button>
-            </Grid>
-            <Grid item>
-              <Button onClick={() => nextQuestions()}>{nextButton}</Button>
-            </Grid>
+    <Container>
+      <Box position="relative" width="100%">
+        <Card>
+          <Typography
+            variant="h4"
+            color="txt"
+            style={{
+              marginBlock: "auto",
+              justifyContent: "center",
+              alignSelf: "center",
+            }}
+          >
+            Choose a Poll
+          </Typography>
+        </Card>
+        {questions.length > 0 ? (
+          questions.map((item) => listQuestion(item))
+        ) : (
+          <CircularProgress />
+        )}
+        <Grid container>
+          <Grid item xs>
+            <Button onClick={() => prevQuestions()}>Previous</Button>
           </Grid>
-        </Box>
-      </Container>
+          <Grid item>
+            <Button onClick={() => nextQuestions()}>{nextButton}</Button>
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
   );
 }
 

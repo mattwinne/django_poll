@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import fetchWrapper from "../fetchWrapper";

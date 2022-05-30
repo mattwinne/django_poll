@@ -13,7 +13,9 @@ export const useAuth = () => {
 };
 
 function useProvideAuth() {
-  const [user, setUser] = useState(localStorage.getItem("access_token") ? true : null);
+  const [user, setUser] = useState(
+    localStorage.getItem("access_token") ? true : null
+  );
 
   const signout = () => {
     fetchWrapper
