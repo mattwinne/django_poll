@@ -27,7 +27,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class CustomSafeUserSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
     user_name = serializers.CharField(required=True)
+    dark_mode = serializers.BooleanField(required=True)
 
     class Meta:
         model = User
-        fields = ("user_name", "questions")
+        fields = ("user_name", "questions", "dark_mode")
+

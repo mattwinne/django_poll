@@ -34,9 +34,11 @@ function Profile() {
   const [checked, setChecked] = useState(darkTheme);
   const darkSwitch = (e, val) => {
     if (val == true) {
+      localStorage.setItem("darkMode", "true");
       setChecked(true);
       toggleTheme();
     } else if (val == false) {
+      localStorage.removeItem("darkMode");
       setChecked(false);
       toggleTheme();
     }

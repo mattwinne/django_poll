@@ -54,6 +54,15 @@ class UserViewSet(viewsets.ModelViewSet):
         userprofile = User.objects.get(id=request.user.id)
         serializer = self.serializer_class(userprofile)
         return Response(serializer.data)
+    
+    @action(detail=False, methods=["patch"])
+    def switch_dark_mode(self, request):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=request.user.id)
+        user.dark_mode = not user.dark_mode
+        user.save()
+        return Response(user.dark_mode)
+
 
 
 class BlacklistTokenUpdateView(APIView):
