@@ -74,6 +74,7 @@ export const components = {
   MuiContainer: {
     defaultProps: {
       sx: {
+        marginTop: "100px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -161,19 +162,20 @@ export const components = {
   },
 };
 
-let atheme = createTheme({
+const darkTheme = createTheme({
   palette: darkPalette,
 
   components,
-  root: {
-    width: "100%",
-    height: "100vh",
-    marginTop: 0,
-    zIndex: 1,
-    overflow: "hidden",
-    backgroundColor: "bg.main",
-  },
 });
-const theme = responsiveFontSizes(atheme);
+
+const atheme = createTheme({
+  palette: lightPalette,
+
+  components,
+});
+const theme = {
+  light: responsiveFontSizes(atheme),
+  dark: responsiveFontSizes(darkTheme),
+};
 
 export default theme;

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { useTheme, useThemeUpdate } from "../ThemeContext";
 import fetchWrapper from "../fetchWrapper";
 
 function Profile() {
@@ -28,9 +29,16 @@ function Profile() {
       [e.target.name]: e.target.value.trim(),
     });
   };
-
+  const toggleTheme = useThemeUpdate();
+  const [checked, setChecked] = useState(!!localStorage.getItem("dark_mode"));
   const darkSwitch = (e, val) => {
-    console.log(val);
+    if (val == true) {
+      setChecked(true);
+      toggleTheme();
+    } else if (val == false) {
+      setChecked(false);
+      toggleTheme();
+    }
   };
 
   useEffect(() => {
@@ -106,7 +114,7 @@ function Profile() {
             </Typography>
           </Grid>
           <Grid item>
-            <Switch onChange={darkSwitch} />
+            <Switch checked={checked} onChange={darkSwitch} />
           </Grid>
         </Grid>
         <Typography variant="h5" sx={{ marginTop: "10px", color: "txt" }}>

@@ -8,7 +8,6 @@ function Header() {
   const auth = useAuth();
   const history = useHistory();
   const [buttons, setButtons] = useState();
-
   const logout = () => {
     auth.signout();
     history.push("/login");
