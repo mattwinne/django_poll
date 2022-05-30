@@ -15,7 +15,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import useQuestions from "components/Questions";
 import fetchWrapper from "../fetchWrapper";
-import theme from "../styles";
+import theme, {resDarkTheme} from "../styles";
 
 function Index() {
   const location = useLocation();
@@ -84,7 +84,6 @@ function Index() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
       <Container>
         <Box position="relative" width="100%">
           <Card>
@@ -115,7 +114,6 @@ function Index() {
           </Grid>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 }
 

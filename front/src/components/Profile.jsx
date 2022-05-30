@@ -14,6 +14,7 @@ import {
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import fetchWrapper from "../fetchWrapper";
+import { usePalette } from "../use-palette"
 
 function Profile() {
   const [userName, setUserName] = useState("");
@@ -28,9 +29,18 @@ function Profile() {
       [e.target.name]: e.target.value.trim(),
     });
   };
-
+  const [checked, setChecked] = useState(localStorage.getItem("dark_mode") ? true : false)
   const darkSwitch = (e, val) => {
-    console.log(val);
+    if (val==true) {
+      localStorage.setItem("dark_mode", "True")
+      setChecked(true)
+      history.go(0)
+    }
+    else if(val==false) {
+      localStorage.removeItem("dark_mode")
+      setChecked(false)
+      history.go(0)
+    }
   };
 
   useEffect(() => {
@@ -106,7 +116,7 @@ function Profile() {
             </Typography>
           </Grid>
           <Grid item>
-            <Switch onChange={darkSwitch} />
+            <Switch checked={checked} onChange={darkSwitch} />
           </Grid>
         </Grid>
         <Typography variant="h5" sx={{ marginTop: "10px", color: "txt" }}>

@@ -161,19 +161,22 @@ export const components = {
   },
 };
 
-let atheme = createTheme({
+let darkTheme = createTheme({
   palette: darkPalette,
 
-  components,
-  root: {
-    width: "100%",
-    height: "100vh",
-    marginTop: 0,
-    zIndex: 1,
-    overflow: "hidden",
-    backgroundColor: "bg.main",
-  },
+  components: components,
 });
-const theme = responsiveFontSizes(atheme);
+const resDarkTheme = responsiveFontSizes(darkTheme);
 
-export default theme;
+let atheme = createTheme({
+  palette: lightPalette,
+
+  components: components,
+});
+const theme = {light: responsiveFontSizes(atheme), dark: responsiveFontSizes(darkTheme)}
+
+export default theme
+
+
+
+

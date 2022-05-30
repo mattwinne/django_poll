@@ -9,17 +9,22 @@ import Index from "components/Index";
 import Login from "components/Login";
 import NotFound from "components/NotFound";
 import Profile from "components/Profile";
-import React from "react";
+import React from "react"
 import Register from "components/Register";
 import Results from "components/Results";
-import { ProvideAuth } from "../use-auth";
-
-import theme from "../styles";
-
+import { ProvideAuth, useAuth } from "../use-auth";
+import { ProvidePalette, usePalette } from "../use-palette";
+import theme, {resDarkTheme} from "../styles";
+import darkMode from "../darkMode"
+export const appTheme = localStorage.getItem("dark_mode") ? theme.dark : theme.light
 function App() {
+
   return (
     <ProvideAuth>
-      <ThemeProvider theme={theme}>
+
+      <ProvidePalette>
+
+      <ThemeProvider theme={appTheme}>
         <CssBaseline />
         <Router>
           <meta
@@ -29,7 +34,7 @@ function App() {
           <div
             style={{
               position: "absolute",
-              backgroundColor: theme.palette.bg.main,
+              backgroundColor: appTheme.palette.bg.main,
               top: "0px",
               bottom: "0px",
               width: "100%",
@@ -53,6 +58,7 @@ function App() {
           </div>
         </Router>
       </ThemeProvider>
+      </ProvidePalette>
     </ProvideAuth>
   );
 }
