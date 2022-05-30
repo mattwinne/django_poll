@@ -30,7 +30,8 @@ function Profile() {
     });
   };
   const toggleTheme = useThemeUpdate();
-  const [checked, setChecked] = useState(!!localStorage.getItem("dark_mode"));
+  const darkTheme = useTheme();
+  const [checked, setChecked] = useState(darkTheme);
   const darkSwitch = (e, val) => {
     if (val == true) {
       setChecked(true);
