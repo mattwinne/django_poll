@@ -12,6 +12,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { fetchWrapper, header } from "../fetchWrapper";
 import  { useAuth }  from "../use-auth"
+import { useTheme, useThemeUpdate } from "../ThemeContext";
 import React, { useState } from "react";
 
 export default function SignIn() {
@@ -21,7 +22,7 @@ export default function SignIn() {
     email: "",
     password: "",
   });
-
+  const setTheme = useThemeUpdate();
   const [formData, updateFormData] = useState(initialFormData);
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("Password");
@@ -49,6 +50,10 @@ export default function SignIn() {
         localStorage.setItem("refresh_token", res.refresh);
         header.Authorization = `JWT ${localStorage.getItem("access_token")}`;
         auth.signin();
+        fetchWrapper.get(`/api/users/get_user_profile/`).then((nextRes) => {
+          setTheme(nextRes.darkMode);
+          localStorage.setItem("darkMode", nextRes.darkMode);
+        });
         history.push("/index");
       })
       .catch((err) => {

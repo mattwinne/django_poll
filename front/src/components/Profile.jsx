@@ -29,18 +29,20 @@ function Profile() {
       [e.target.name]: e.target.value.trim(),
     });
   };
-  const toggleTheme = useThemeUpdate();
+  const setTheme = useThemeUpdate();
   const darkTheme = useTheme();
   const [checked, setChecked] = useState(darkTheme);
   const darkSwitch = (e, val) => {
     if (val == true) {
       localStorage.setItem("darkMode", "true");
       setChecked(true);
-      toggleTheme();
+      setTheme(true);
+      fetchWrapper.patch(`/api/users/change_profile/`, { darkMode: true });
     } else if (val == false) {
-      localStorage.removeItem("darkMode");
+      localStorage.setItem("darkMode", "false");
       setChecked(false);
-      toggleTheme();
+      setTheme(false);
+      fetchWrapper.patch(`/api/users/change_profile/`, { darkMode: false });
     }
   };
 
@@ -73,8 +75,9 @@ function Profile() {
     );
   };
   function changeUsername() {
-    fetchWrapper.patch(`/api/users/change_user_name/`, formData).then((res) => {
+    fetchWrapper.patch(`/api/users/change_profile/`, formData).then((res) => {
       setUserName(res.userName);
+      console.log(res);
     });
   }
 

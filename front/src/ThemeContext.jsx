@@ -16,21 +16,29 @@ export function useThemeUpdate() {
 
 export function CustomThemeProvider({ children }) {
   // utilizes localstorage to cache setting for quick load on refresh
-  let initialTheme = !!localStorage.getItem("darkMode");
+  let initialTheme;
   // validates localstorage setting
-  fetchWrapper.get(`/api/users/get_user_profile/`).then((res) => {
-    initialTheme = res.darkMode;
-  });
+  if (localStorage.getItem("darkMode") == "true") {
+    initialTheme = true;
+  } else if (localStorage.getItem("darkMode") == "false") {
+    initialTheme = false;
+  } else {
+    fetchWrapper.get(`/api/users/get_user_profile/`).then((res) => {
+      initialTheme = res.darkMode;
+      localStorage.setItem("darkMode", res.darkMode);
+    });
+  }
+
   const [darkTheme, setDarkTheme] = useState(initialTheme);
 
-  function toggleTheme() {
-    setDarkTheme((prevDarkTheme) => !prevDarkTheme);
-    fetchWrapper.patch(`/api/users/switch_dark_mode/`);
+  function setTheme(val) {
+    setDarkTheme(val);
+    // fetchWrapper.patch(`/api/users/switch_dark_mode/`);
   }
 
   return (
     <ThemeContext.Provider value={darkTheme}>
-      <ThemeUpdateContext.Provider value={toggleTheme}>
+      <ThemeUpdateContext.Provider value={setTheme}>
         <ThemeProvider theme={darkTheme ? theme.dark : theme.light}>
           {children}
         </ThemeProvider>

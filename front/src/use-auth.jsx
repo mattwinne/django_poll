@@ -25,6 +25,7 @@ function useProvideAuth() {
       .then(() => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
+        localStorage.removeItem("darkMode");
         header.Authorization = null;
         setUser(false);
       });
