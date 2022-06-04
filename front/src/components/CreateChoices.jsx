@@ -47,7 +47,7 @@ export default function CreateChoices() {
 
   const displayChoices = (choice) => {
     return (
-      <Box sx={{ width: "100%", marginBottom: "15px" }} key={choice}>
+      <Box sx={{ width: "100%"}} key={choice}>
         <Stack spacing={6}>
           <Card>
             <CardContent>
@@ -63,7 +63,15 @@ export default function CreateChoices() {
     history.push("/index");
   };
   return (
-    <Container>
+    <Container       sx={{
+      marginTop: "100px",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "90%",
+      width: "100%",
+      borderRadius: "8px",
+    }}>
+      <Box position="relative" width="100%">
       <Card
         sx={{
           borderRadius: "8px",
@@ -102,6 +110,7 @@ export default function CreateChoices() {
         name="choice"
         variant="outlined"
         onChange={handleChange}
+        sx={{marginTop: "15px"}}
       />
       <Grid container>
         <Grid item>
@@ -118,6 +127,7 @@ export default function CreateChoices() {
       </Grid>
 
       <Typography>{error}</Typography>
+      </Box>
     </Container>
   );
 }
