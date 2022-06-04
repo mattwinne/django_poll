@@ -16,22 +16,19 @@ export default function CreatePoll() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    displayChoices()
+    displayChoices();
   };
   const displayChoices = () => {
     return (
-      <Box sx={{ width: "100%"}}>
-
-
-            <TextField
-        fullWidth
-        id="outlined-basic"
-        label="Enter choice here..."
-        name="choice"
-        variant="outlined"
-        sx={{marginTop: "15px"}}
-      />
-
+      <Box sx={{ width: "100%" }}>
+        <TextField
+          fullWidth
+          id="outlined-basic"
+          label="Enter choice here..."
+          name="choice"
+          variant="outlined"
+          sx={{ marginTop: "15px" }}
+        />
       </Box>
     );
   };
