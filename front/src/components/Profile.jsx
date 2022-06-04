@@ -31,6 +31,7 @@ function Profile() {
   };
   const setTheme = useThemeUpdate();
   const darkTheme = useTheme();
+  const [change, setChange] = useState(false);
   const [checked, setChecked] = useState(darkTheme);
   const darkSwitch = (e, val) => {
     if (val == true) {
@@ -51,24 +52,41 @@ function Profile() {
       setUserName(res.userName);
       setMyQuestions(res.questions);
     });
-  }, []);
+  }, [change]);
+
+  function deleteQuestion(id) {
+    fetchWrapper.delete(`/api/questions/${id}/`).then(() => {
+      setChange(!change);
+    });
+  }
+
   const listQuestion = (item) => {
     return (
       <Grid item key={item.id + item.user}>
         <Stack spacing={6}>
           <Card>
-            <CardActionArea
-              onClick={() =>
-                history.push({
-                  pathname: `/results/${item.id}`,
-                  state: { slug: item.id },
-                })
-              }
-            >
-              <CardContent>
+            <CardContent>
+              <CardActionArea
+                onClick={() =>
+                  history.push({
+                    pathname: `/results/${item.id}`,
+                    state: { slug: item.id },
+                  })
+                }
+              >
                 <Typography color="txt">{item.text}</Typography>
-              </CardContent>
-            </CardActionArea>
+              </CardActionArea>
+              <Button
+                variant="outlined"
+                value={item.id}
+                sx={{ height: "58px" }}
+                onClick={() => {
+                  deleteQuestion(item.id);
+                }}
+              >
+                Delete
+              </Button>
+            </CardContent>
           </Card>
         </Stack>
       </Grid>
@@ -77,7 +95,6 @@ function Profile() {
   function changeUsername() {
     fetchWrapper.patch(`/api/users/change_profile/`, formData).then((res) => {
       setUserName(res.userName);
-      console.log(res);
     });
   }
 
