@@ -22,7 +22,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["get"])
     def list_5_questions(self, requests, pk=id):
         pk = int(pk)
-        question_set = Question.objects.order_by("-pub_date")[pk:(pk + 5)]
+        question_set = Question.objects.order_by("-pub_date")[pk : (pk + 5)]
         serializer = self.get_serializer(question_set, many=True)
         return Response(serializer.data)
 

@@ -45,6 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     about = models.TextField(_("about"), max_length=500, blank=True)
     is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
+    dark_mode = models.BooleanField(default=False)
 
     objects = CustomAccountManager()
 

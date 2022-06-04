@@ -40,7 +40,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(user.user_name)
 
     @action(detail=False, methods=["patch"])
-    def change_user_name(self, request):
+    def change_profile(self, request):
         queryset = User.objects.all()
         user = get_object_or_404(queryset, pk=request.user.id)
         serializer = self.serializer_class(user, data=request.data)
