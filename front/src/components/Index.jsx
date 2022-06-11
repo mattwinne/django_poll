@@ -67,7 +67,6 @@ function Index() {
             >
               <CardContent>
                 <Typography
-                  color="txt"
                   fontSize="18px"
                   style={{ marginBlock: "auto" }}
                 >

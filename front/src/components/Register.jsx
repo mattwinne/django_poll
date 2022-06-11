@@ -90,7 +90,7 @@ export default function SignUp() {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "primary.main" }} />
-        <Typography color="txt" component="h1" variant="h5">
+        <Typography component="h1" variant="h5">
           Register
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>

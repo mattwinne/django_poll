@@ -82,7 +82,7 @@ export default function SignIn() {
       >
         <Avatar sx={{ m: 1, bgcolor: "primary.main" }} />
 
-        <Typography color="txt" component="h1" variant="h5">
+        <Typography component="h1" variant="h5">
           Log in
         </Typography>
 

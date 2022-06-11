@@ -47,8 +47,6 @@ function Results() {
             <Card>
               <CardContent>
                 <Typography
-                  color="txt"
-                  fontSize="18px"
                   style={{ marginBlock: "auto" }}
                 >
                   {firstResultLine}
@@ -76,13 +74,13 @@ function Results() {
               <CardContent>
                 <Grid container style={{ marginBlock: "auto" }}>
                   <Grid item>
-                    <Typography color="txt" fontSize="18px">
+                    <Typography>
                       {result.text}
                     </Typography>
                   </Grid>
                   <Box sx={{ flexGrow: 1 }} />
                   <Grid item>
-                    <Typography color="txt" fontSize="18px">
+                    <Typography>
                       {result.votes}
                     </Typography>
                   </Grid>
@@ -99,7 +97,6 @@ function Results() {
       <Box position="relative" width="100%">
         <Card>
           <Typography
-            color="txt"
             variant="h4"
             style={{
               marginBlock: "auto",
