@@ -42,8 +42,6 @@ function Detail() {
             <CardActionArea onClick={() => updateVote(item.id)}>
               <CardContent>
                 <Typography
-                  color="txt"
-                  fontSize="18px"
                   style={{ marginBlock: "auto" }}
                 >
                   {item.text}
@@ -63,7 +61,6 @@ function Detail() {
           <Card>
             <Typography
               variant="h4"
-              color="txt"
               style={{
                 marginBlock: "auto",
                 justifyContent: "center",

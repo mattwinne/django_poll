@@ -74,7 +74,7 @@ function Profile() {
                   })
                 }
               >
-                <Typography color="txt">{item.text}</Typography>
+                <Typography>{item.text}</Typography>
               </CardActionArea>
               <Button
                 variant="outlined"

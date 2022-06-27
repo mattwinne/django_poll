@@ -152,12 +152,11 @@ export const components = {
         marginBottom: "100px",
       },
     },
-    MuiTypography: {
-      defaultProps: {
-        sx: {
-          color: "txt",
-        },
-      },
+  },
+  MuiTypography: {
+    defaultProps: {
+        color: "txt",
+        variant: "h6"
     },
   },
 };

@@ -67,7 +67,7 @@ function Header() {
     <AppBar position="relative" display="flex">
       <Toolbar>
         <PollIcon sx={{ marginBottom: "5px" }} />
-        <Typography variant="h6">Poll In One</Typography>
+        <Typography>Poll In One</Typography>
 
         <Button
           variant="default"
