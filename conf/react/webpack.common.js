@@ -112,14 +112,7 @@ module.exports = {
         ],
       }, {
         test: /\.(gif|png|jpe?g|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-            },
-          },
-        ],
+        type: "asset/resource",
       },
     ],
   },
