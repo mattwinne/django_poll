@@ -41,7 +41,6 @@
     "style-loader": "^3.3.1",
     "babel-loader": "^8.2.3",
     "postcss-loader": "^6.2.1",
-    "node-sass": "7.0.1",
     "prop-types": "^15.8.1",
     "autoprefixer": "^10.4.2",
     "@fortawesome/react-fontawesome": "0.1.17",
