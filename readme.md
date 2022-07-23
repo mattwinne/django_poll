@@ -33,8 +33,8 @@ DEBUG=1 (alternate: 0 for production
 
 ##### Run containers   
 Set .env DEBUG value to 1
-`docker-compose build` for development
+`docker-compose up` for development
 
 Set .env DEBUG value to 0
-`docker-compose -f docker-compose.yml -f docker-compose.prod.yml build` for production
+`docker-compose -f docker-compose.yml -f docker-compose.prod.yml up` for production
 
