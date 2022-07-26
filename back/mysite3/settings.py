@@ -179,6 +179,8 @@ SIMPLE_JWT = {
 #     'http://0.0.0.0:4000',
 # ]
 
-CORS_ALLOWED_ORIGINS = ["http://0.0.0.0:4000", "http://0.0.0.0:80"]
+CORS_ALLOWED_ORIGINS = ["http://0.0.0.0:4000", "http://0.0.0.0:80", "https://0.0.0.0:443"]
 
-CSRF_TRUSTED_ORIGINS = ["http://0.0.0.0:4000", "http://0.0.0.0:80"]
+CSRF_TRUSTED_ORIGINS = ["http://0.0.0.0:4000", "http://0.0.0.0:80", "https://0.0.0.0:443"]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
