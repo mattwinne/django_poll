@@ -27,9 +27,9 @@ jobs:
         echo DEBUG=1 >> .env
         cat .env
 
-    - name: Build containers
+    - name: Build and run containers
       if: always()
-      run: docker-compose up -d --build
+      run: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 
     - name: Flake8
       if: always()
@@ -39,15 +39,15 @@ jobs:
       if: always()
       run: docker exec -u root django tox -e black
 
+    - name: Test polls
+      if: always()
+      run: docker exec -u root django tox -e pytest
+
     - name: ESLint
       if: always()
       run: docker exec react yarn lint
       continue-on-error: true
 
-    - name: Test polls
-      if: always()
-      run: docker exec -u root django tox -e pytest
-
     - name: Stop containers
       if: always()
-      run: docker-compose -f "docker-compose.yml" down
+      run: docker-compose -f docker-compose.yml -f docker-compose.dev.yml down

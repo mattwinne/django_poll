@@ -8,20 +8,23 @@ function handleResponse(response) {
     return data;
   });
 }
+
+var csrftoken = getCookie('csrftoken');
+
 export const refreshBypassURL = [
   "/api/user/logout/blacklist/",
   "/api/user/create/",
 ];
 export const header = {
-  "Access-Control-Allow-Or`igin": "*",
   Authorization: `JWT ${localStorage.getItem("access_token")}` || null,
   "Content-Type": "application/json",
   accept: "application/json",
+  'X-CSRFToken': csrftoken
 };
 export const headerNoAuth = {
-  "Access-Control-Allow-Or`igin": "*",
   "Content-Type": "application/json",
   accept: "application/json",
+  'X-CSRFToken': csrftoken
 };
 
 const fetchHeaders = (url) => {
@@ -73,6 +76,7 @@ async function get(url) {
   const requestOptions = {
     method: "GET",
     headers: fetchHeaders(url),
+    mode: "cors",
   };
   return fetch(url, requestOptions).then(handleResponse);
 }
@@ -85,6 +89,7 @@ async function patch(url, body) {
     method: "PATCH",
     headers: fetchHeaders(url),
     body: JSON.stringify(body),
+    mode: "cors",
   };
   return fetch(url, requestOptions).then(handleResponse);
 }
@@ -97,6 +102,7 @@ async function post(url, body) {
     method: "POST",
     headers: fetchHeaders(url),
     body: JSON.stringify(body),
+    mode: "cors",
   };
   return fetch(url, requestOptions).then(handleResponse);
 }
@@ -109,6 +115,7 @@ async function put(url, body) {
     method: "PUT",
     headers: fetchHeaders(url),
     body: JSON.stringify(body),
+    mode: "cors",
   };
   return fetch(url, requestOptions).then(handleResponse);
 }
@@ -120,6 +127,7 @@ async function del(url) {
   const requestOptions = {
     method: "DELETE",
     headers: fetchHeaders(url),
+    mode: "cors",
   };
   return fetch(url, requestOptions).then(handleResponse);
 }
@@ -131,5 +139,20 @@ export const fetchWrapper = {
   put,
   delete: del,
 };
+
+export function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
 
 export default fetchWrapper;

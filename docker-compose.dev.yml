@@ -1,18 +1,20 @@
 version: '3.8'
 
 services:
+  django:
+    command: python manage.py runserver 0.0.0.0:8000
+
 
   react:
     container_name: react
     build:
       context: .
       dockerfile: ./conf/react/Dockerfile
-      target: prod
+      target: dev
     volumes:
       - ./front/src:/app/src:rw
       - ./front/public:/app/public:rw
     env_file: .env
+    command: yarn run start:dev
     ports:
-     - 80:80
-    depends_on:
-      - "django"
+      - 4000:4000

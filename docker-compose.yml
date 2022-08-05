@@ -24,14 +24,3 @@ services:
       - postgres
     env_file:
       - .env
-    
-
-  react:
-    container_name: react
-    build:
-      context: .
-      dockerfile: ./conf/react/Dockerfile
-    volumes:
-      - ./front/src:/app/src:rw
-      - ./front/public:/app/public:rw
-    env_file: .env
