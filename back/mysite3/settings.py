@@ -20,11 +20,10 @@ DEBUG = int(os.environ.get("DEBUG", 0))
 APP_SERVER = os.environ.get("APP_SERVER", "")
 
 ALLOWED_HOSTS = [
-    "0.0.0.0",
     "django",
     "0.0.0.0:8000",
-    "http://0.0.0.0:4000",
-    "http://0.0.0.0:80",
+    ".pollinone.xyz",
+    os.environ.get("PRIVATE_IP"),
 ]
 
 # Application definition
@@ -104,11 +103,11 @@ WSGI_APPLICATION = "mysite3.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME", "postgres"),
-        "USER": os.environ.get("DB_USER", "postgres"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", "postgres"),
-        "HOST": os.environ.get("DB_HOST", "postgres"),
-        "PORT": os.environ.get("DB_PORT", 5432),
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": os.environ.get("DB_PORT"),
     }
 }
 
@@ -173,14 +172,8 @@ SIMPLE_JWT = {
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_TYPE_CLAIM": "token_type",
 }
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORGINS = ["http://0.0.0.0:80", "https://pollinone.xyz"]
 
-# CORS_ORIGIN_WHITELIST = [
-#     'http://0.0.0.0:4000',
-# ]
+CSRF_TRUSTED_ORIGINS = ["http://0.0.0.0:80", "https://pollinone.xyz"]
 
-CORS_ALLOWED_ORIGINS = ["http://0.0.0.0:4000", "http://0.0.0.0:80", "https://0.0.0.0:443"]
-
-CSRF_TRUSTED_ORIGINS = ["http://0.0.0.0:4000", "http://0.0.0.0:80", "https://0.0.0.0:443"]
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
