@@ -172,8 +172,8 @@ SIMPLE_JWT = {
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_TYPE_CLAIM": "token_type",
 }
-CORS_ALLOWED_ORGINS = ["http://0.0.0.0:80", "https://pollinone.xyz"]
+CORS_ALLOWED_ORGINS = ["http://127.0.0.1:80", "https://pollinone.xyz"]
 
-CSRF_TRUSTED_ORIGINS = ["http://0.0.0.0:80", "https://pollinone.xyz"]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:80", "https://pollinone.xyz"]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
