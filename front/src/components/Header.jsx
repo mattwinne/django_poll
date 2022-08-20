@@ -77,13 +77,13 @@ function Header() {
           Polls
         </Button>
 
-        <Button
+        {auth.user && <Button
           variant="default"
           sx={{ marginTop: "5px" }}
           onClick={() => history.push("/create")}
         >
           Create
-        </Button>
+        </Button>}
 
         <Box sx={{ flexGrow: 1 }} />
         {buttons}
