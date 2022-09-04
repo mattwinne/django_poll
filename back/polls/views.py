@@ -10,6 +10,7 @@ from polls.serializers import ChoiceSerializer, CountSerializer, QuestionSeriali
 
 class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
+    authentication_classes = ()
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
@@ -58,6 +59,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 
 class ChoiceViewSet(viewsets.ModelViewSet):
+    authentication_classes = ()
     permission_classes = [AllowAny]
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer

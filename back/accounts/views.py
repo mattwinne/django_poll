@@ -24,7 +24,7 @@ class CustomUserCreate(APIView):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = CustomSafeUserSerializer
 
