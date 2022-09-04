@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from polls.models import Choice, Question
@@ -9,7 +9,8 @@ from polls.serializers import ChoiceSerializer, CountSerializer, QuestionSeriali
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    authentication_classes = ()
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
@@ -58,7 +59,8 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 
 class ChoiceViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    authentication_classes = ()
+    permission_classes = [AllowAny]
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
 
