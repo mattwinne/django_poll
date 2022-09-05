@@ -1,6 +1,9 @@
-function handleResponse(response) {
+const handleResponse = (response) => {
+  const isJSON = response.headers
+    .get("content-type")
+    ?.includes("application/json");
   return response.text().then((text) => {
-    const data = text && JSON.parse(text);
+    const data = text && isJSON && JSON.parse(text);
     if (!response.ok) {
       const error = data || response.statusText;
       return Promise.reject(error);
@@ -31,7 +34,7 @@ const fetchHeaders = (url) => {
   return header;
 };
 
-function tokenExpired() {
+const tokenExpired = () => {
   if (
     localStorage.getItem("access_token") !== "undefined" &&
     localStorage.getItem("access_token") != null
@@ -47,7 +50,7 @@ function tokenExpired() {
   return false;
 }
 
-async function tokenRefresh() {
+const tokenRefresh = async () => {
   const refreshToken = localStorage.getItem("refresh_token");
   const url = "/api/token/refresh/";
   const requestOptions = {
@@ -65,7 +68,7 @@ async function tokenRefresh() {
   return response;
 }
 
-async function get(url) {
+const get = async (url) => {
   if (tokenExpired()) {
     await tokenRefresh();
   }
@@ -77,7 +80,7 @@ async function get(url) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-async function patch(url, body) {
+const patch = async (url, body) => {
   if (tokenExpired()) {
     await tokenRefresh();
   }
@@ -90,7 +93,7 @@ async function patch(url, body) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-async function post(url, body) {
+const post = async (url, body) => {
   if (tokenExpired() && refreshBypassURL.includes(url) === false) {
     await tokenRefresh();
   }
@@ -103,7 +106,7 @@ async function post(url, body) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-async function put(url, body) {
+const put = async (url, body) => {
   if (tokenExpired()) {
     await tokenRefresh();
   }
@@ -116,7 +119,7 @@ async function put(url, body) {
   return fetch(url, requestOptions).then(handleResponse);
 }
 
-async function del(url) {
+const del = async (url) => {
   if (tokenExpired()) {
     await tokenRefresh();
   }
