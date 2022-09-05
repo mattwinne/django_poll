@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from polls.models import Choice, Question
 from polls.serializers import ChoiceSerializer, CountSerializer, QuestionSerializer
@@ -46,9 +47,30 @@ class QuestionViewSet(viewsets.ModelViewSet):
         serializer = QuestionSerializer(user)
         return Response(serializer.data)
 
+    @action(
+        detail=False,
+        methods=["post"],
+        permission_classes=[IsAuthenticated],
+        authentication_classes=([JWTAuthentication]),
+    )
+    def create_question(self, request):
+        data = request.data
+        print(request)
+        data["user"] = request.user.id
+        print(data["user"])
+        serializer = QuestionSerializer(data=data)
+        if serializer.is_valid():
+            question = serializer.save()
+            if question:
+                json = serializer.data
+                return Response(json, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def create(self, request):
         data = request.data
+        print(request)
         data["user"] = request.user.id
+        print(data["user"])
         serializer = QuestionSerializer(data=data)
         if serializer.is_valid():
             question = serializer.save()
@@ -59,8 +81,8 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 
 class ChoiceViewSet(viewsets.ModelViewSet):
-    authentication_classes = ()
     permission_classes = [AllowAny]
+    authentication_classes = ()
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
 

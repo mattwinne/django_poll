@@ -39,7 +39,7 @@ export default function CreatePoll() {
     setError("");
     e.preventDefault();
     fetchWrapper
-      .post(`/api/questions/`, { text: formData.question })
+      .post(`/api/questions/create_question/`, { text: formData.question })
       .then((res) => {
         history.push(`/createchoices/${res.id}`, {
           slug: res.id,
