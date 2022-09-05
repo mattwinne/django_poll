@@ -8,7 +8,7 @@ function NotFound() {
         This page does not exist.
       </h1>
       <h1 style={{ color: "blue", fontSize: "16px" }}>
-        <Link to="/index">Back to polls</Link>
+        <Link to="/polls">Back to polls</Link>
       </h1>
     </>
   );

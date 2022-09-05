@@ -60,7 +60,7 @@ export default function CreateChoices() {
   };
 
   const finish = () => {
-    history.push("/index");
+    history.push("/polls");
   };
   return (
     <Container

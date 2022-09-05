@@ -20,9 +20,9 @@ export function CustomThemeProvider({ children }) {
   // utilizes localstorage to cache setting for quick load on refresh
   let initialTheme;
   // validates localstorage setting
-  if (localStorage.getItem("darkMode") == "true") {
+  if (localStorage.getItem("darkMode") === "true") {
     initialTheme = true;
-  } else if (localStorage.getItem("darkMode") == "false") {
+  } else if (localStorage.getItem("darkMode") === "false") {
     initialTheme = false;
   } else if (auth.user) {
     fetchWrapper.get(`/api/users/get_user_profile/`).then((res) => {
@@ -35,7 +35,7 @@ export function CustomThemeProvider({ children }) {
 
   const [darkTheme, setDarkTheme] = useState(initialTheme);
 
-  function setTheme(val) {
+  const setTheme = (val) => {
     setDarkTheme(val);
     // fetchWrapper.patch(`/api/users/switch_dark_mode/`);
   }

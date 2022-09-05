@@ -12,7 +12,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { fetchWrapper, header } from "../fetchWrapper";
 import  { useAuth }  from "../use-auth"
-import { useTheme, useThemeUpdate } from "../ThemeContext";
+import { useThemeUpdate } from "../ThemeContext";
 import React, { useState } from "react";
 
 export default function SignIn() {
@@ -54,7 +54,7 @@ export default function SignIn() {
           setTheme(nextRes.darkMode);
           localStorage.setItem("darkMode", nextRes.darkMode);
         });
-        history.push("/index");
+        history.push("/polls");
       })
       .catch((err) => {
         if (err.email) {

@@ -20,7 +20,6 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response.isUndefined) {
-      // alert("A server/network error occurred. ");
       return Promise.reject(error);
     }
 
@@ -58,10 +57,8 @@ axiosInstance.interceptors.response.use(
               return axiosInstance(originalRequest);
             });
         }
-        // console.log("Refresh token is expired", tokenParts.exp, now);
         window.location.href = "/login/";
       } else {
-        // console.log("Refresh token not available.");
         window.location.href = "/login/";
       }
     }

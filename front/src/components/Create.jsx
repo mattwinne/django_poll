@@ -11,13 +11,7 @@ export default function CreatePoll() {
 
   const [formData, updateFormData] = useState(initialFormData);
   const [error, setError] = useState("Enter question here...");
-  const handleChange = (e) => {
-    updateFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    displayChoices();
-  };
+
   const displayChoices = () => {
     return (
       <Box sx={{ width: "100%" }}>
@@ -32,6 +26,15 @@ export default function CreatePoll() {
       </Box>
     );
   };
+
+  const handleChange = (e) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+    displayChoices();
+  };
+
   const handleSubmit = (e) => {
     setError("");
     e.preventDefault();

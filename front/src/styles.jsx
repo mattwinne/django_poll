@@ -155,8 +155,8 @@ export const components = {
   },
   MuiTypography: {
     defaultProps: {
-        color: "txt",
-        variant: "h6"
+      color: "txt",
+      variant: "h6",
     },
   },
 };

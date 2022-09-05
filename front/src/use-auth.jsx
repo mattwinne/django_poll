@@ -12,10 +12,8 @@ export const useAuth = () => {
   return useContext(authContext);
 };
 
-function useProvideAuth() {
-  const [user, setUser] = useState(
-    localStorage.getItem("access_token") ? true : null
-  );
+const useProvideAuth = () => {
+  const [user, setUser] = useState(!!localStorage.getItem("access_token"));
 
   const signout = () => {
     fetchWrapper
@@ -50,4 +48,4 @@ function useProvideAuth() {
     signout,
     signin,
   };
-}
+};

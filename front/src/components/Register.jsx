@@ -59,7 +59,7 @@ export default function SignUp() {
               "access_token"
             )}`;
             auth.signin();
-            history.push("/index");
+            history.push("/polls");
           });
       })
       .catch((err) => {

@@ -10,14 +10,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useHistory, useLocation } from "react-router-dom";
+import BackButton from "./BackButton"
 import React from "react";
+import Title from "./Title";
 import useQuestions from "components/Questions";
 
 let total = 0;
 
 function Results() {
   const location = useLocation();
-  const history = useHistory();
   const { slug, stateCount } = location.state;
   const question = useQuestions(slug);
   const results = question.choices;
@@ -46,9 +47,7 @@ function Results() {
           <Stack spacing={0} position="absolute" sx={{ width: `100%` }}>
             <Card>
               <CardContent>
-                <Typography
-                  style={{ marginBlock: "auto" }}
-                >
+                <Typography style={{ marginBlock: "auto" }}>
                   {firstResultLine}
                 </Typography>
               </CardContent>
@@ -74,15 +73,11 @@ function Results() {
               <CardContent>
                 <Grid container style={{ marginBlock: "auto" }}>
                   <Grid item>
-                    <Typography>
-                      {result.text}
-                    </Typography>
+                    <Typography>{result.text}</Typography>
                   </Grid>
                   <Box sx={{ flexGrow: 1 }} />
                   <Grid item>
-                    <Typography>
-                      {result.votes}
-                    </Typography>
+                    <Typography>{result.votes}</Typography>
                   </Grid>
                 </Grid>
               </CardContent>
@@ -95,31 +90,13 @@ function Results() {
   return (
     <Container>
       <Box position="relative" width="100%">
-        <Card>
-          <Typography
-            variant="h4"
-            style={{
-              marginBlock: "auto",
-              justifyContent: "center",
-              alignSelf: "center",
-            }}
-          >
-            {question.text}
-          </Typography>
-        </Card>
+        <Title text={question.text} />
         {results ? (
           results.map((result) => displayResults(result))
         ) : (
           <CircularProgress />
         )}
-        <Button
-          variant="contained"
-          onClick={() => {
-            history.push(`/index`, stateCount ? { stateCount } : 0);
-          }}
-        >
-          Back to Polls
-        </Button>
+        <BackButton stateCount={stateCount} />
       </Box>
     </Container>
   );
