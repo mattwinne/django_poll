@@ -1,20 +1,11 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CircularProgress,
-  Container,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
+import { Box, CircularProgress, Container, Typography } from "@mui/material";
 import { useHistory, useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import useQuestions from "components/Questions";
+import BackButton from "./BackButton"
+import ListItem from "./ListItem";
+import Title from "./Title";
 import fetchWrapper from "../fetchWrapper";
-import theme from "../styles";
+import useQuestions from "components/Questions";
 
 function Detail() {
   const location = useLocation();
@@ -34,59 +25,21 @@ function Detail() {
     });
   };
 
-  const listChoice = (item) => {
-    return (
-      <Box sx={{ width: "100%" }} key={item.id}>
-        <Stack spacing={6}>
-          <Card>
-            <CardActionArea onClick={() => updateVote(item.id)}>
-              <CardContent>
-                <Typography
-                  style={{ marginBlock: "auto" }}
-                >
-                  {item.text}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Stack>
-      </Box>
-    );
-  };
-
   return (
-    <ThemeProvider theme={theme}>
-      <Container>
-        <Box position="relative" width="100%">
-          <Card>
-            <Typography
-              variant="h4"
-              style={{
-                marginBlock: "auto",
-                justifyContent: "center",
-                alignSelf: "center",
-              }}
-            >
-              {pageQuestion.text}
-            </Typography>
-          </Card>
-          {pageChoices ? (
-            pageChoices.map((item) => listChoice(item))
-          ) : (
-            <CircularProgress />
-          )}
-          <Button
-            variant="contained"
-            onClick={() => {
-              history.push(`/index`, { stateCount });
-            }}
-          >
-            Back to Polls
-          </Button>
-          <Typography>{error}</Typography>
-        </Box>
-      </Container>
-    </ThemeProvider>
+    <Container>
+      <Box position="relative" width="100%">
+        <Title text={pageQuestion.text} />
+        {pageChoices ? (
+          pageChoices.map((item) => (
+            <ListItem key={item.id} item={item} clickHandler={updateVote} />
+          ))
+        ) : (
+          <CircularProgress />
+        )}
+        <BackButton stateCount={stateCount} />
+        <Typography>{error}</Typography>
+      </Box>
+    </Container>
   );
 }
 

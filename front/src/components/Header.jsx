@@ -1,5 +1,6 @@
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
+import HeaderButton from "./HeaderButton";
 import PollIcon from "@mui/icons-material/Poll";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../use-auth";
@@ -16,20 +17,8 @@ function Header() {
   const authButtons = () => {
     return (
       <>
-        <Button
-          variant="default"
-          sx={{ marginTop: "5px" }}
-          onClick={() => history.push("/profile")}
-        >
-          Profile
-        </Button>
-        <Button
-          variant="default"
-          sx={{ marginTop: "5px" }}
-          onClick={() => logout()}
-        >
-          Logout
-        </Button>
+        <HeaderButton text="Profile" />
+        <HeaderButton text="Logout" clickHandler={logout} />
       </>
     );
   };
@@ -37,20 +26,8 @@ function Header() {
   const noAuthButtons = () => {
     return (
       <>
-        <Button
-          variant="default"
-          sx={{ marginTop: "5px" }}
-          onClick={() => history.push("/register")}
-        >
-          Register
-        </Button>
-        <Button
-          variant="default"
-          sx={{ marginTop: "5px" }}
-          onClick={() => history.push("/login")}
-        >
-          Login
-        </Button>
+        <HeaderButton text="Register" />
+        <HeaderButton text="Login" />
       </>
     );
   };
@@ -69,21 +46,9 @@ function Header() {
         <PollIcon sx={{ marginBottom: "5px" }} />
         <Typography>Poll In One</Typography>
 
-        <Button
-          variant="default"
-          sx={{ marginTop: "5px" }}
-          onClick={() => history.push("/index", { stateCount: 0 })}
-        >
-          Polls
-        </Button>
+        <HeaderButton text="Polls" />
 
-        {auth.user && <Button
-          variant="default"
-          sx={{ marginTop: "5px" }}
-          onClick={() => history.push("/create")}
-        >
-          Create
-        </Button>}
+        {auth.user && <HeaderButton text="Create" />}
 
         <Box sx={{ flexGrow: 1 }} />
         {buttons}

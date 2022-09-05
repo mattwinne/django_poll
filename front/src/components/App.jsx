@@ -1,33 +1,32 @@
 import { CssBaseline } from "@mui/material";
+import { CustomThemeProvider } from "../ThemeContext";
 import { ProvideAuth } from "../use-auth";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Create from "components/Create";
 import CreateChoices from "components/CreateChoices";
 import Detail from "components/Detail";
 import Header from "components/Header";
-import Index from "components/Index";
 import Layout from "../layout";
 import Login from "components/Login";
 import NotFound from "components/NotFound";
+import Polls from "components/Polls";
 import Profile from "components/Profile";
 import React from "react";
 import Register from "components/Register";
 import Results from "components/Results";
-import { CustomThemeProvider } from "../ThemeContext";
 
 function App() {
   return (
     <ProvideAuth>
       <CustomThemeProvider>
         <CssBaseline />
+        <Layout />
         <Router>
-          <Layout />
           <Header />
-
           <Switch>
-            <Route exact path="/" component={Index} />
-            <Route exact path="/index" component={Index} />
-            <Route path="/index" component={Index} />
+            <Route exact path="/" component={Polls} />
+            <Route exact path="/polls" component={Polls} />
+            <Route path="/polls" component={Polls} />
             <Route path="/create" component={Create} />
             <Route path="/createchoices" component={CreateChoices} />
             <Route path="/detail" component={Detail} />

@@ -1,21 +1,12 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CircularProgress,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Container, Grid } from "@mui/material";
 import { useHistory, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import useQuestions from "components/Questions";
+import ListItem from "./ListItem";
+import Title from "./Title";
 import fetchWrapper from "../fetchWrapper";
+import useQuestions from "components/Questions";
 
-function Index() {
+function Polls() {
   const location = useLocation();
   const history = useHistory();
   const [questionStart, setQuestionStart] = useState(
@@ -31,8 +22,8 @@ function Index() {
     });
   }, []);
 
-  const questions = useQuestions(`${questionStart}/list_5_questions`);
-  const qPerPage = 5;
+  const questions = useQuestions(`${questionStart}/list_4_questions`);
+  const qPerPage = 4;
   const qLimit = questionCount - qPerPage;
   const nextQuestions = () => {
     if (questionStart === qLimit) {
@@ -52,52 +43,22 @@ function Index() {
       setQuestionStart(questionStart - qPerPage);
     }
   };
-  const listQuestion = (item) => {
-    return (
-      <Box sx={{ width: "100%" }} key={item.id}>
-        <Stack spacing={6}>
-          <Card>
-            <CardActionArea
-              onClick={() =>
-                history.push({
-                  pathname: `/detail/${item.id}`,
-                  state: { slug: item.id, stateCount: questionStart },
-                })
-              }
-            >
-              <CardContent>
-                <Typography
-                  fontSize="18px"
-                  style={{ marginBlock: "auto" }}
-                >
-                  {item.text}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Stack>
-      </Box>
-    );
+
+  const questionSelect = (id) => {
+    history.push({
+      pathname: `/detail/${id}`,
+      state: { slug: id, stateCount: questionStart },
+    });
   };
 
   return (
     <Container>
       <Box position="relative" width="100%">
-        <Card>
-          <Typography
-            variant="h4"
-            color="txt"
-            style={{
-              marginBlock: "auto",
-              justifyContent: "center",
-              alignSelf: "center",
-            }}
-          >
-            Choose a Poll
-          </Typography>
-        </Card>
+        <Title text="Choose a Poll" />
         {questions.length > 0 ? (
-          questions.map((item) => listQuestion(item))
+          questions.map((item) => (
+            <ListItem key={item.id} item={item} clickHandler={questionSelect} />
+          ))
         ) : (
           <CircularProgress />
         )}
@@ -114,4 +75,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default Polls;

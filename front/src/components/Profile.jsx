@@ -12,8 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import React, { useEffect, useState } from "react";
 import { useTheme, useThemeUpdate } from "../ThemeContext";
+import React, { useEffect, useState } from "react";
 import fetchWrapper from "../fetchWrapper";
 
 function Profile() {
@@ -34,12 +34,12 @@ function Profile() {
   const [change, setChange] = useState(false);
   const [checked, setChecked] = useState(darkTheme);
   const darkSwitch = (e, val) => {
-    if (val == true) {
+    if (val === true) {
       localStorage.setItem("darkMode", "true");
       setChecked(true);
       setTheme(true);
       fetchWrapper.patch(`/api/users/change_profile/`, { darkMode: true });
-    } else if (val == false) {
+    } else if (val === false) {
       localStorage.setItem("darkMode", "false");
       setChecked(false);
       setTheme(false);
@@ -92,11 +92,11 @@ function Profile() {
       </Grid>
     );
   };
-  function changeUsername() {
+  const changeUsername = () => {
     fetchWrapper.patch(`/api/users/change_profile/`, formData).then((res) => {
       setUserName(res.userName);
     });
-  }
+  };
 
   return (
     <Container>
@@ -124,7 +124,7 @@ function Profile() {
             <Button
               variant="outlined"
               sx={{ height: "58px" }}
-              onClick={changeUsername}
+              onClick={() => changeUsername()}
             >
               Change Username
             </Button>
