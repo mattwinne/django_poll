@@ -20,10 +20,8 @@ export default function CreatePoll() {
   const minChoices = 2;
   const numOfChoices = formLength - 1; // total items minus the one question
   const disabled = numOfChoices < minChoices;
-  const [inputDisabled, setInputDisabled] = useState(true);
 
   const handleChange = (e) => {
-    setInputDisabled(true);
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -52,7 +50,6 @@ export default function CreatePoll() {
         setError(err.text);
       });
   };
-
   return (
     <Container>
       <Box position="relative" width="100%">
@@ -73,8 +70,6 @@ export default function CreatePoll() {
             return (
               <TextField
                 fullWidth
-                disabled={idx === numOfChoices && inputDisabled}
-                onClick={() => idx === numOfChoices && setInputDisabled(false)}
                 id="outlined-basic"
                 key={idx}
                 label={`Choice ${idx + 1}`}
