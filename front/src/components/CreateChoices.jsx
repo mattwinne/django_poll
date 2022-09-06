@@ -63,16 +63,7 @@ export default function CreateChoices() {
     history.push("/polls");
   };
   return (
-    <Container
-      sx={{
-        marginTop: "100px",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "90%",
-        width: "100%",
-        borderRadius: "8px",
-      }}
-    >
+    <Container>
       <Box position="relative" width="100%">
         <Card
           sx={{
@@ -112,7 +103,6 @@ export default function CreateChoices() {
           name="choice"
           variant="outlined"
           onChange={handleChange}
-          sx={{ marginTop: "15px" }}
         />
         <Grid container>
           <Grid item>

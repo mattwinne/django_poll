@@ -96,6 +96,7 @@ export const components = {
   MuiTextField: {
     defaultProps: {
       sx: {
+        marginTop: "5px",
         backgroundColor: "primary.light",
         input: { color: "txt" },
         label: { color: "txt" },
