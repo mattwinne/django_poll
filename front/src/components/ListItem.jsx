@@ -30,7 +30,11 @@ function ListItem(props) {
 
 ListItem.propTypes = {
   item: PropTypes.object.isRequired,
-  clickHandler: PropTypes.func.isRequired,
+  clickHandler: PropTypes.func,
+};
+
+ListItem.defaultProps = {
+  clickHandler: null
 };
 
 export default ListItem;
