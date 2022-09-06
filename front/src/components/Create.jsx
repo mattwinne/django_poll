@@ -1,18 +1,29 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import fetchWrapper from "../fetchWrapper";
 
 export default function CreatePoll() {
   const history = useHistory();
-  const initialFormData = Object.freeze({
-    question: "",
-  });
+  const initialFormData = Object.freeze({});
 
   const [formData, updateFormData] = useState(initialFormData);
   const [error, setError] = useState("Enter question here...");
+  const formLength = Object.keys(formData).length;
+  const minChoices = 2;
+  const numOfChoices = formLength - 1; // total items minus the one question
+  const disabled = numOfChoices < minChoices;
+  const [inputDisabled, setInputDisabled] = useState(true);
 
   const handleChange = (e) => {
+    setInputDisabled(true);
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -25,10 +36,17 @@ export default function CreatePoll() {
     fetchWrapper
       .post(`/api/questions/create_question/`, { text: formData.question })
       .then((res) => {
-        history.push(`/createchoices/${res.id}`, {
-          slug: res.id,
-          text: res.text,
-        });
+        for (let i = 0; i < numOfChoices; i++) {
+          fetchWrapper
+            .post(`/api/choices/`, {
+              text: formData[`choice${i}`],
+              question: res.id,
+            })
+            .then(() => history.push("/polls"))
+            .catch((err) => {
+              setError(err.text);
+            });
+        }
       })
       .catch((err) => {
         setError(err.text);
@@ -41,7 +59,6 @@ export default function CreatePoll() {
         <Typography color="primary" variant="h4">
           Make a Poll
         </Typography>
-
         <TextField
           fullWidth
           id="outlined-basic"
@@ -50,9 +67,36 @@ export default function CreatePoll() {
           variant="outlined"
           onChange={handleChange}
         />
-        <Button variant="contained" onClick={handleSubmit} size="xl">
-          Create
-        </Button>
+        {Array(formLength)
+          .fill(0)
+          .map((num, idx) => {
+            return (
+              <TextField
+                fullWidth
+                disabled={idx === numOfChoices && inputDisabled}
+                onClick={() => idx === numOfChoices && setInputDisabled(false)}
+                id="outlined-basic"
+                key={idx}
+                label={`Choice ${idx + 1}`}
+                name={`choice${idx}`}
+                variant="outlined"
+                onChange={handleChange}
+              />
+            );
+          })}
+        <Grid container>
+          <Box sx={{ flexGrow: 1 }} />
+          <Grid item>
+            <Button
+              disabled={disabled}
+              variant="contained"
+              onClick={handleSubmit}
+              size="xl"
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );
